@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>
+        
+        使用Github和Hexo建独立博客 · Shen Xiaotao Blog
+        
+    </title>
+    <link rel="icon" href= /assests/favicon.ico>
+    <!-- 提前加载place holder  -->
+    <style>
+        @font-face {
+            font-family: 'Oswald-Regular';
+            src: url('/font/Oswald-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'Source Sans Pro';
+            src: url('/font/Source Sans Pro.woff'),
+            url('/font/Source Sans Pro.woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Source Code Pro';
+            src: url('/font/SourceCodePro-Regular.ttf.woff'),
+            url('/font/SourceCodePro-Regular.ttf.woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        
+        .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0px;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2s ease-out 0s 1;
+        }
+        @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        99% {
+            transform: translate3d(0, 0, 0);
+        }
+        99.1% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(-226px, 0, 0);
+        }
+    }
+    </style>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Shen Xiaotao Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">使用Github和Hexo建独立博客</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Shen Xiaotao Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+    
+    <div class="site-intro-img" style="background-image: url(http://oumn0o088.bkt.clouddn.com/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            使用Github和Hexo建独立博客
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+        </p>
+        <!-- 404 -->
+        
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = Chinese>Chinese</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = R>R</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = Metabolomics>Metabolomics</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/09/09</span>
+            </div>
+            <!-- 
+
+<div class="post-share iconfont-archer">
+    <ul class="share-box" data-href = "/2017/09/09/2017-09-09-metdna-blog/" data-title = "使用Github和Hexo建独立博客" >
+        <li class="to-weibo">分享到微博</li>
+        <li class="to-wechat">分享到微信</li>
+        <li class="to-qq">分享到QQ</li>
+        <li class="to-twitter">分享到twitter</li>
+    </ul>
+</div> -->
+        
+    </div>
+</div>
+        <div class="container">
+            <main class="main post-page">
+    <article class="article-entry">
+        <center><img src="logo.png" alt=""></center>
+
+<p></p><h1><strong>Instruction of MetDNA</strong><h1><p></p>
+<p></p><h3><strong>Xiaotao Shen, Zhengjiang Zhu</strong><h3><p></p>
+<p></p><h3><code>r format(Sys.Date())</code><h3><p></p>
+<hr>
+<h3 id="Ⅰ数据准备"><a href="#Ⅰ数据准备" class="headerlink" title="Ⅰ数据准备"></a><strong>Ⅰ数据准备</strong></h3><p>MetDNA需要准备的数据包括一级数据peak table(csv格式)，二级数据(mgf格式)和样品信息sample.info(csv格式)。点击下载<a href="https://github.com/jaspershen/MetDNA/blob/master/pos.rar" target="_blank" rel="external">正离子demo数据</a>和<a href="https://github.com/jaspershen/MetDNA/blob/master/neg.rar" target="_blank" rel="external">负离子demo数据</a>。</p>
+<p><strong>Table 1: demo数据信息</strong></p>
+<table>
+<thead>
+<tr>
+<th>组别</th>
+<th>个数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QC</td>
+<td>8</td>
+<td>QC</td>
+</tr>
+<tr>
+<td>W03</td>
+<td>10</td>
+<td>野生型3天</td>
+</tr>
+<tr>
+<td>W30</td>
+<td>10</td>
+<td>野生型30天</td>
+</tr>
+<tr>
+<td>E03</td>
+<td>10</td>
+<td>突变型E3天</td>
+</tr>
+<tr>
+<td>E30</td>
+<td>10</td>
+<td>突变型E30天</td>
+</tr>
+<tr>
+<td>P03</td>
+<td>10</td>
+<td>突变型P3天</td>
+</tr>
+<tr>
+<td>P30</td>
+<td>10</td>
+<td>突变型P30天</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-一级数据"><a href="#1-一级数据" class="headerlink" title="1. 一级数据"></a><strong>1. 一级数据</strong></h3><p>一级数据可以是使用XCMS，MZmine，MS-DIAL或者其他软件处理之后的数据。第一列为代谢物峰的名字，”name”，第二列为”mz”，第三列为保留时间(RT)，<strong>且单位必须为秒</strong>，其他为样品的峰强度。</p>
+<center><img src="F:/annotation and identification/instruction/data示例.png" alt="**Figure 1: 一级数据peak table格式示例**"></center>
+
+<h3 id="2-二级数据"><a href="#2-二级数据" class="headerlink" title="2. 二级数据"></a><strong>2. 二级数据</strong></h3><p>二级质谱原始数据可以是使用QC样品采集的DDA或者targeted MS/MS数据。对于DDA数据来说，也可以是分段采集的二级数据。质谱原始二级数据需要使用ProteoWizard软件转为mgf格式，转换时参数设置参考下图。二级数据最多不能超过十个。</p>
+<center><img src="F:/annotation and identification/instruction/ProteoWizard.png" alt="**Figure 2: ProteoWizard参数设置**"></center>
+
+<h3 id="3-样品信息"><a href="#3-样品信息" class="headerlink" title="3. 样品信息"></a><strong>3. 样品信息</strong></h3><p>样品信息是样品的分组信息。第一列是样品名，”sample.name”，第二列是样品的分组信息，”group”。</p>
+<center><img src="F:/annotation and identification/instruction/sample.info示例.png" alt="**Figure 3：样品信息示例**"></center>
+
+<hr>
+<h3 id="Ⅱ-数据整理"><a href="#Ⅱ-数据整理" class="headerlink" title="Ⅱ 数据整理"></a><strong>Ⅱ 数据整理</strong></h3><p>如果是正离子数据，请建立一个新的文件夹，命名为”POS”，如果是负离子数据，请建立一个新的文件夹命名为”NEG”，然后将一级数据，二级数据和样品信息放置于此文件夹下。并将该文件夹设置为工作路径。现在<em>MetDNA</em>部署在小服务器上，因此可以将数据放在小服务器中(labdata)。例如”V:/workreport/申小涛/demo/fly/POS”。</p>
+<center><img src="F:/annotation and identification/instruction/数据整理.png" alt="**Figure 4: 将所需数据放置在文件夹中**"></center>
+
+<figure class="highlight plain"><figcaption><span>eval</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">setwd(&quot;/mnt/data/samba/labdata/workreport/申小涛/demo/fly/POS&quot;)</div><div class="line">library(MetDNA)</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="Ⅲ-数据处理"><a href="#Ⅲ-数据处理" class="headerlink" title="Ⅲ 数据处理"></a><strong>Ⅲ 数据处理</strong></h3><h3 id="1-只对正离子或者负离子处理"><a href="#1-只对正离子或者负离子处理" class="headerlink" title="1. 只对正离子或者负离子处理"></a><strong>1. 只对正离子或者负离子处理</strong></h3><p>所有的步骤可以使用一个函数<em>MetDNA</em>全部完成。</p>
+<p>运行函数<em>MetDNA</em></p>
+<figure class="highlight plain"><figcaption><span>eval</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">MetDNA(ms1.file = &quot;data.csv&quot;,</div><div class="line">       polarity = &quot;positive&quot;,</div><div class="line">       column = &quot;hilic&quot;,</div><div class="line">       ce = &quot;30&quot;,</div><div class="line">       prefer.adduct = &quot;M+H&quot;,</div><div class="line">       use.default.md = TRUE,</div><div class="line">       threads = 3,</div><div class="line">       group = c(&quot;W03&quot;, &quot;W30&quot;),</div><div class="line">       uni.test = &quot;t&quot;,</div><div class="line">       correct = TRUE,</div><div class="line">       p.cutoff = 0.01,</div><div class="line">       species = &quot;dme&quot;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>参数含义如下：</strong></p>
+</blockquote>
+<ul>
+<li>ms1.file：一级数据的名字。</li>
+<li>polarity：数据采集极性，”positive”或者”negative”。</li>
+<li>column：使用的柱子类型，”hilic”或者”rp”。</li>
+<li>ce：二级采集的碰撞能量，支持”10”，”15”，”20”，”25”，”30”，”35”，”35,15” (35±15)，”40”，<br>“45”，”50”，”55”，”60”，”65”，”70”。</li>
+<li>prefer.adduct：使用那些加合物形式的注释用于RT预测模型的建立，默认使用所有的注释，推荐正离子模式下使用”M+H”，负离子模式下使用”M-H”。</li>
+<li>use.default.md：进行保留时间预测模型建立时，是否使用默认的分子描述符，如果设置为FALSE，则会根据你的数据自动选择分子描述符。</li>
+<li>threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。</li>
+<li>group：要对哪些分组的样品进行分析，<strong>注意</strong>，计算fold change时，使用后面的样品除以前面的样品。</li>
+<li>uni.test：单变量分析的方法，”t”，Student t test；”wilcox”，Wilcox test。</li>
+<li>correct：是否需要对p值进行FDR校正。</li>
+<li>p.cutoff：选择dysregulated peak时的p值cutoff。</li>
+<li>species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus gallus (鸡)；”dre”，Danio rerio (斑马鱼)；”cel”，Caenorharomyces elegans (线虫)；<br>“sce”，Saccharomyces cerevisaiae (酵母)； “ath”，Arabidopsis thaliana (拟南芥)；<br>“smm”，Schistosoma mansoni；”pfa”，Plasmodum falciparum 3D7；<br>“tbr”，Trypanosoma brucei；”eco”， Escherichia coli K-12 MG1655(大肠杆菌)；<br>“ppu”，Pseudomonas putida KT2440；”syf”，Synechococcus elongatus。</li>
+</ul>
+<h3 id="2-对正负数据合并分析"><a href="#2-对正负数据合并分析" class="headerlink" title="2. 对正负数据合并分析"></a><strong>2. 对正负数据合并分析</strong></h3><p>正负离子分别处理之后，可以使用函数<em>MetModule2</em>合并正负离子模式的鉴定结果，进行dysregulated network analysis。</p>
+<p>运行函数<em>MetModule2</em></p>
+<figure class="highlight plain"><figcaption><span>eval</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">metModule2(group = c(&quot;W03&quot;, &quot;W30&quot;),</div><div class="line">           uni.test = &quot;t&quot;,</div><div class="line">           column = &quot;hilic&quot;,</div><div class="line">           correct = TRUE,</div><div class="line">           p.cutoff = 0.01,</div><div class="line">           threads = 3,</div><div class="line">           species = &quot;dme&quot;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>参数含义如下：</strong></p>
+</blockquote>
+<ul>
+<li>group：要对哪些分组的样品进行分析，<strong>注意</strong>，计算fold change时，使用后面的样品除以前面的样品。</li>
+<li>uni.test：单变量分析的方法，”t”，Student t test；”wilcox”，Wilcox test。</li>
+<li>column：使用的柱子类型，”hilic”或者”rp”。</li>
+<li>correct：是否需要对p值进行FDR校正。</li>
+<li>p.cutoff：选择dysregulated peak时的p值cutoff。</li>
+<li>threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。</li>
+<li>species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus gallus (鸡)；”dre”，Danio rerio (斑马鱼)；”cel”，Caenorharomyces elegans (线虫)；<br>“sce”，Saccharomyces cerevisaiae (酵母)； “ath”，Arabidopsis thaliana (拟南芥)；<br>“smm”，Schistosoma mansoni；”pfa”，Plasmodum falciparum 3D7；<br>“tbr”，Trypanosoma brucei；”eco”， Escherichia coli K-12 MG1655(大肠杆菌)；<br>“ppu”，Pseudomonas putida KT2440；”syf”，Synechococcus elongatus。</li>
+</ul>
+<p>运行函数<em>analysisReport</em></p>
+<figure class="highlight plain"><figcaption><span>eval</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">analysisReport(polarity = &quot;both&quot;)</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="Ⅳ-运行结果"><a href="#Ⅳ-运行结果" class="headerlink" title="Ⅳ 运行结果"></a><strong>Ⅳ 运行结果</strong></h3><h3 id="1-正离子或者负离子的运行结果"><a href="#1-正离子或者负离子的运行结果" class="headerlink" title="1. 正离子或者负离子的运行结果"></a><strong>1. 正离子或者负离子的运行结果</strong></h3><p><strong>MetDNA</strong>函数运行结束之后，所有的运行结果都存放在设置的路径中，包含二级谱图匹配结果，MRN注释结果，dysregulated network分析结果以及分析报告。如图5所示。</p>
+<center><img src="F:/annotation and identification/instruction/analysis.result.png" alt="Figure 5: 运行结果"></center>
+
+<h3 id="1-MetDNA-parameters-csv"><a href="#1-MetDNA-parameters-csv" class="headerlink" title="(1) MetDNA.parameters.csv"></a><strong>(1) MetDNA.parameters.csv</strong></h3><p>记录此次运行所使用的参数。</p>
+<center><img src="F:/annotation and identification/instruction/MetDNA.parameters.png" alt="Figure 6: 参数记录"></center>
+
+
+<h3 id="2-ms2-match-result-POS"><a href="#2-ms2-match-result-POS" class="headerlink" title="(2) ms2_match_result_POS"></a><strong>(2) ms2_match_result_POS</strong></h3><p>二级谱图匹配结果。包括一个csv文件，ms2.match.annotation.result.csv和一个文件夹，MS2_match_spectra。ms2.macth.annotation.result.csv是二级谱图匹配之后的结果，与MetAnalyzer处理之后的结果相同；MS2_match_spectra文件夹中包含了所有二级匹配图(Figure 6)。</p>
+<center><img src="F:/annotation and identification/instruction/二级匹配图.png" alt="Figure 7: 二级谱图匹配图"></center>
+
+<h3 id="3-MRN-annotation-result-POS"><a href="#3-MRN-annotation-result-POS" class="headerlink" title="(3) MRN_annotation_result_POS"></a><strong>(3) MRN_annotation_result_POS</strong></h3><p>二级谱图匹配结果。包括一个csv文件，ms2.match.annotation.result.csv和一个文件夹，MS2_match_spectra。ms2.macth.annotation.result.csv是二级谱图匹配之后的结果，与MetAnalyzer处理之后的结果相同；MS2_match_spectra文件夹中包含了所有二级匹配图(Figure 6)。</p>
+<center><img src="F:/annotation and identification/instruction/二级匹配图.png" alt="Figure 7: 二级谱图匹配图"></center>
+
+<h3 id="二、分步骤进行数据分析"><a href="#二、分步骤进行数据分析" class="headerlink" title="二、分步骤进行数据分析"></a><strong>二、分步骤进行数据分析</strong></h3><h3 id="1-使用二级谱图进行注释"><a href="#1-使用二级谱图进行注释" class="headerlink" title="1. 使用二级谱图进行注释"></a><strong>1. 使用二级谱图进行注释</strong></h3><p>运行函数<em>ms2Annotation</em>。</p>
+<figure class="highlight plain"><figcaption><span>eval</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ms2Annotation(ms1.file = &quot;data.csv&quot;,</div><div class="line">              polarity = &quot;positive&quot;,</div><div class="line">              column = &quot;hilic&quot;,</div><div class="line">              ce = &quot;30&quot;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>参数含义如下：</strong></p>
+</blockquote>
+<ul>
+<li>ms1.file：一级数据的名字。</li>
+<li>polarity：数据采集极性，”positive”或者”negative”。</li>
+<li>column：使用的柱子类型，”hilic”或者”rp”。</li>
+<li>ce：二级采集的碰撞能量，支持”10”，”15”，”20”，”25”，”30”，”35”，”35,15” (35±15)，”40”，<br>“45”，”50”，”55”，”60”，”65”，”70”。</li>
+</ul>
+<blockquote>
+<p><strong>输出的结果存放在ms2_match_annotation_result文件夹内:</strong></p>
+</blockquote>
+<ul>
+<li>ms2.match.annotation.result.csv：二级谱图注释结果。</li>
+<li>MS2_match_spectrum：二级谱图匹配图。</li>
+<li>intermediate_data：中间数据文件夹。</li>
+</ul>
+<p><img src="F:/annotation and identification/instruction/ms2Annotation result.png" alt="**ms2Annotation输出结果**"></p>
+<p><img src="F:/annotation and identification/instruction/二级谱图匹配结果.png" alt="**二级谱图匹配结果**"></p>
+<h3 id="2-基于MRN的注释"><a href="#2-基于MRN的注释" class="headerlink" title="2. 基于MRN的注释"></a><strong>2. 基于MRN的注释</strong></h3><p>运行函数<em>metABM</em>。</p>
+<figure class="highlight plain"><figcaption><span>eval</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">metABM(prefer.adduct = &quot;M+H&quot;,</div><div class="line">       use.default.md = TRUE,</div><div class="line">       column = &quot;hilic&quot;,</div><div class="line">       polarity = &quot;positive&quot;,</div><div class="line">       threads = 3)</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>参数含义如下：</strong></p>
+</blockquote>
+<ul>
+<li>prefer.adduct：使用那些加合物形式的注释用于RT预测模型的建立，默认使用所有的注释，推荐正离子模式下使用”M+H”，负离子模式下使用”M-H”。</li>
+<li>use.default.md：进行保留时间预测模型建立时，是否使用默认的分子描述符，如果设置为FALSE，则会根据你的数据自动选择分子描述符。</li>
+<li>polarity：数据采集极性，”positive”或者”negative”。</li>
+<li>column：使用的柱子类型，”hilic”或者”rp”。</li>
+<li>threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。</li>
+</ul>
+<blockquote>
+<p><strong>输出的结果存放在MRN_annotation_result文件内：</strong></p>
+</blockquote>
+<ul>
+<li>MRN.annotation.result.csv：metABM注释之后的结果。</li>
+<li>metABM.parameters.csv：metABM的参数。</li>
+<li>intermediate_data：中间数据文件夹。</li>
+</ul>
+<p><img src="F:/annotation and identification/instruction/metABM注释结果.png" alt="**metABM注释结果**"></p>
+<h3 id="3-Dysregulated-network分析"><a href="#3-Dysregulated-network分析" class="headerlink" title="3. Dysregulated network分析"></a><strong>3. Dysregulated network分析</strong></h3><p>运行函数<em>metModule</em>。</p>
+<figure class="highlight plain"><figcaption><span>eval</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">metModule(group = c(&quot;W03&quot;, &quot;W30&quot;),</div><div class="line">          uni.test = &quot;t&quot;,</div><div class="line">          column = &quot;hilic&quot;,</div><div class="line">          polarity = &quot;positive&quot;,</div><div class="line">          correct = TRUE,</div><div class="line">          p.cutoff = 0.01,</div><div class="line">          threads = 3,</div><div class="line">          species = &quot;dme&quot;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>参数含义如下：</strong></p>
+</blockquote>
+<ul>
+<li>group：要对哪些分组的样品进行分析，<strong>注意</strong>，计算fold change时，使用后面的样品除以前面的样品。</li>
+<li>uni.test：单变量分析的方法，”t”，student t test；”wilcox”，wilcox test；”anova”，ANOVA分析。</li>
+<li>polarity：数据采集极性，”positive”或者”negative”。</li>
+<li>column：使用的柱子类型，”hilic”或者”rp”。</li>
+<li>correct：是否需要对p值进行FDR校正。</li>
+<li>p.cutoff：选择dysregulated peak时的p值cutoff。</li>
+<li>threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。</li>
+<li>species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus gallus (鸡)；”dre”，Danio rerio (斑马鱼)；”cel”，Caenorharomyces elegans (线虫)；<br>“sce”，Saccharomyces cerevisaiae (酵母)； “ath”，Arabidopsis thaliana (拟南芥)；<br>“smm”，Schistosoma mansoni；”pfa”，Plasmodum falciparum 3D7；<br>“tbr”，Trypanosoma brucei；”eco”， Escherichia coli K-12 MG1655(大肠杆菌)；<br>“ppu”，Pseudomonas putida KT2440；”syf”，Synechococcus elongatus。</li>
+</ul>
+<blockquote>
+<p><strong>输出的结果存放在Dysregulated_network_analysis_result文件内：</strong></p>
+</blockquote>
+<ul>
+<li>metModule.parameters.csv：metModule的参数。</li>
+<li>DNA.annotation.result.csv：DNA分析之后的注释结果。</li>
+<li>volcano.plot.pdf：火山图。</li>
+<li>Module_information：包含了module分析的所有信息。</li>
+<li>pathway_information：包含了pathway分析的所有信息。</li>
+<li>intermediate_data：中间数据文件夹。</li>
+</ul>
+<p><img src="F:/annotation and identification/instruction/metModule result.png" alt="**metModule输出结果**"></p>
+<h3 id="4-生成分析报告"><a href="#4-生成分析报告" class="headerlink" title="4. 生成分析报告"></a><strong>4. 生成分析报告</strong></h3><p>运行函数<em>analysisReport</em>。</p>
+<figure class="highlight plain"><figcaption><span>eval</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">analysisReport()</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>输出的结果存放在Analysis_report文件夹内：</strong></p>
+</blockquote>
+<ul>
+<li>一份html格式的<a href="https://github.com/jaspershen/MetDNA/blob/master/demo_data/Analysis_report.html.zip" target="_blank" rel="external">分析报告</a>。</li>
+</ul>
+<p><img src="F:/annotation and identification/instruction/分析报告.png" alt="**分析报告**"></p>
+</h3></h3></h3></h3></h1></h1>
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-pager">
+        
+        
+            <li class="next">
+                <a href= "/2017/09/09/2017-09-09-github-blog/" title= 使用Github和Hexo建独立博客 >
+                    <span>Next Post</span>
+                    <span>使用Github和Hexo建独立博客</span>
+                </a>
+            </li>
+        
+    </ul>
+    <!-- 来必力City版安装代码 -->
+
+    
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMDc2Ny83MzE5>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    
+
+<!-- City版安装代码已完成 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="emailto:shenxt1990@163.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/jaspershen" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+            
+                <a href="http://weibo.com/u/2717397881?wvr=5&c=spr_web_sq_baidub_weibo_t001&sudaref=www.baidu.com" class="iconfont-archer weibo" target="_blank" title="weibo"></a>
+            
+        
+    
+        
+            
+                <a href="https://www.zhihu.com/people/shen-zu-tao-73/activities" class="iconfont-archer zhihu" target="_blank" title="zhihu"></a>
+            
+        
+    
+        
+            
+                <a href="https://stackoverflow.com/users/7579484/jasper-shen" class="iconfont-archer stack-overflow" target="_blank" title="stack-overflow"></a>
+            
+        
+    
+        
+            
+                <a href="https://www.linkedin.com/in/xiaotao-shen-b7544b106/" class="iconfont-archer linkedin" target="_blank" title="linkedin"></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span>
+        <span
+            id="theme-info">Theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <div class="back-top">&#xe639;</div>
+    <div class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-category">
+            <span class="sidebar-archive-link"><span class="iconfont-archer">&#xe67d;</span>Archive</span>
+            <span class="sidebar-tags-link"><span class="iconfont-archer">&#xe610;</span>Tag</span>
+        </div>
+    </div>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-archive">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 7 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/2017-09-09-metdna-blog/" >使用Github和Hexo建独立博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2017-09-09-github-blog/" >使用Github和Hexo建独立博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/2016-11-25-metcleaning/" >MetCleaning instruction</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/2016-12-03-keggandhmdb/" >使用R爬取HMDB和KEGG数据库</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/2012-02-22-github-pages/" >使用Github Pages建独立博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/2017-02-12-firstblog2017/" >2017年的第一篇博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/2016-11-25-first-blog/" >我的第一篇博客</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name"><a href= "#">life</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Chinese</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Github</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Blog</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">R</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Metabolomics</a></span>
+    
+    </div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #888; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tag-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var jsInfo = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+
