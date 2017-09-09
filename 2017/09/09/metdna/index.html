@@ -150,9 +150,7 @@
     <article class="article-entry">
         <p><img src="logo.png" alt=""></p>
 <hr>
-<h3 id="Ⅰ-数据准备"><a href="#Ⅰ-数据准备" class="headerlink" title="Ⅰ 数据准备"></a><strong>Ⅰ 数据准备</strong></h3><p>MetDNA需要准备的数据包括一级数据peak table(csv格式)，二级数据(mgf格式)和样品信息sample.info(csv格式)。点击下载<a href="https://github.com/jaspershen/MetDNA/blob/master/pos.rar" target="_blank" rel="external">正离子demo数据</a>和<a href="https://github.com/jaspershen/MetDNA/blob/master/neg.rar" target="_blank" rel="external">负离子demo数据</a>。</p>
-<p><strong>Table 1: demo数据信息</strong></p>
-<table>
+<h3 id="Ⅰ数据准备"><a href="#Ⅰ数据准备" class="headerlink" title="Ⅰ数据准备"></a><strong>Ⅰ数据准备</strong></h3><h4 id="MetDNA需要准备的数据包括一级数据peak-table-csv格式-，二级数据-mgf格式-和样品信息sample-info-csv格式-。点击下载正离子demo数据和负离子demo数据。"><a href="#MetDNA需要准备的数据包括一级数据peak-table-csv格式-，二级数据-mgf格式-和样品信息sample-info-csv格式-。点击下载正离子demo数据和负离子demo数据。" class="headerlink" title="MetDNA需要准备的数据包括一级数据peak table(csv格式)，二级数据(mgf格式)和样品信息sample.info(csv格式)。点击下载正离子demo数据和负离子demo数据。"></a>MetDNA需要准备的数据包括一级数据peak table(csv格式)，二级数据(mgf格式)和样品信息sample.info(csv格式)。点击下载<a href="https://github.com/jaspershen/MetDNA/blob/master/pos.rar" target="_blank" rel="external">正离子demo数据</a>和<a href="https://github.com/jaspershen/MetDNA/blob/master/neg.rar" target="_blank" rel="external">负离子demo数据</a>。</h4><h4 id="Table-1-demo数据信息"><a href="#Table-1-demo数据信息" class="headerlink" title="Table 1: demo数据信息"></a><strong>Table 1: demo数据信息</strong></h4><table>
 <thead>
 <tr>
 <th>组别</th>
@@ -198,142 +196,78 @@
 </tr>
 </tbody>
 </table>
-<h3 id="1-一级数据"><a href="#1-一级数据" class="headerlink" title="1. 一级数据"></a><strong>1. 一级数据</strong></h3><p>一级数据可以是使用XCMS，MZmine，MS-DIAL或者其他软件处理之后的数据。第一列为代谢物峰的名字，”name”，第二列为”mz”，第三列为保留时间(RT)，<strong>且单位必须为秒</strong>，其他为样品的峰强度。</p>
-<p><img src="data示例.png" alt="**Figure 1: 一级数据peak table格式示例**"></p>
-<h3 id="2-二级数据"><a href="#2-二级数据" class="headerlink" title="2. 二级数据"></a><strong>2. 二级数据</strong></h3><p>二级质谱原始数据可以是使用QC样品采集的DDA或者targeted MS/MS数据。对于DDA数据来说，也可以是分段采集的二级数据。质谱原始二级数据需要使用ProteoWizard软件转为mgf格式，转换时参数设置参考下图。二级数据最多不能超过十个。</p>
-<p><img src="ProteoWizard.png" alt="**Figure 2: ProteoWizard参数设置**"></p>
-<h3 id="3-样品信息"><a href="#3-样品信息" class="headerlink" title="3. 样品信息"></a><strong>3. 样品信息</strong></h3><p>样品信息是样品的分组信息。第一列是样品名，”sample.name”，第二列是样品的分组信息，”group”。</p>
-<p><img src="sample.info示例.png" alt="**Figure 3：样品信息示例**"></p>
+<h3 id="1-一级数据"><a href="#1-一级数据" class="headerlink" title="1. 一级数据"></a><strong>1. 一级数据</strong></h3><h4 id="一级数据可以是使用XCMS，MZmine，MS-DIAL或者其他软件处理之后的数据。第一列为代谢物峰的名字，”name”，第二列为”mz”，第三列为保留时间-RT-，且单位必须为秒，其他为样品的峰强度。"><a href="#一级数据可以是使用XCMS，MZmine，MS-DIAL或者其他软件处理之后的数据。第一列为代谢物峰的名字，”name”，第二列为”mz”，第三列为保留时间-RT-，且单位必须为秒，其他为样品的峰强度。" class="headerlink" title="一级数据可以是使用XCMS，MZmine，MS-DIAL或者其他软件处理之后的数据。第一列为代谢物峰的名字，”name”，第二列为”mz”，第三列为保留时间(RT)，且单位必须为秒，其他为样品的峰强度。"></a>一级数据可以是使用XCMS，MZmine，MS-DIAL或者其他软件处理之后的数据。第一列为代谢物峰的名字，”name”，第二列为”mz”，第三列为保留时间(RT)，<strong>且单位必须为秒</strong>，其他为样品的峰强度。</h4><p><img src="data.example.png" alt="**Figure 1: 一级数据peak table格式示例**"></p>
+<h3 id="2-二级数据"><a href="#2-二级数据" class="headerlink" title="2. 二级数据"></a><strong>2. 二级数据</strong></h3><h4 id="二级质谱原始数据可以是使用QC样品采集的DDA或者targeted-MS-MS数据。对于DDA数据来说，也可以是分段采集的二级数据。质谱原始二级数据需要使用ProteoWizard软件转为mgf格式，转换时参数设置参考下图。二级数据最多不能超过十个。"><a href="#二级质谱原始数据可以是使用QC样品采集的DDA或者targeted-MS-MS数据。对于DDA数据来说，也可以是分段采集的二级数据。质谱原始二级数据需要使用ProteoWizard软件转为mgf格式，转换时参数设置参考下图。二级数据最多不能超过十个。" class="headerlink" title="二级质谱原始数据可以是使用QC样品采集的DDA或者targeted MS/MS数据。对于DDA数据来说，也可以是分段采集的二级数据。质谱原始二级数据需要使用ProteoWizard软件转为mgf格式，转换时参数设置参考下图。二级数据最多不能超过十个。"></a>二级质谱原始数据可以是使用QC样品采集的DDA或者targeted MS/MS数据。对于DDA数据来说，也可以是分段采集的二级数据。质谱原始二级数据需要使用ProteoWizard软件转为mgf格式，转换时参数设置参考下图。二级数据最多不能超过十个。</h4><p><a href="ProteoWizard.png"><strong>Figure 2: ProteoWizard参数设置</strong></a></p>
+<h3 id="3-样品信息"><a href="#3-样品信息" class="headerlink" title="3. 样品信息"></a><strong>3. 样品信息</strong></h3><h4 id="样品信息是样品的分组信息。第一列是样品名，”sample-name”，第二列是样品的分组信息，”group”。"><a href="#样品信息是样品的分组信息。第一列是样品名，”sample-name”，第二列是样品的分组信息，”group”。" class="headerlink" title="样品信息是样品的分组信息。第一列是样品名，”sample.name”，第二列是样品的分组信息，”group”。"></a>样品信息是样品的分组信息。第一列是样品名，”sample.name”，第二列是样品的分组信息，”group”。</h4><p><img src="sample.info示例.png" alt="**Figure 3：样品信息示例**"></p>
 <hr>
-<h3 id="Ⅱ-数据整理"><a href="#Ⅱ-数据整理" class="headerlink" title="Ⅱ 数据整理"></a><strong>Ⅱ 数据整理</strong></h3><p>如果是正离子数据，请建立一个新的文件夹，命名为”POS”，如果是负离子数据，请建立一个新的文件夹命名为”NEG”，然后将一级数据，二级数据和样品信息放置于此文件夹下。并将该文件夹设置为工作路径。现在<em>MetDNA</em>部署在小服务器上，因此可以将数据放在小服务器中(labdata)。例如”V:/workreport/申小涛/demo/fly/POS”。</p>
-<p><img src="数据整理.png" alt="**Figure 4: 将所需数据放置在文件夹中**"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">setwd(&quot;/mnt/data/samba/labdata/workreport/申小涛/demo/fly/POS&quot;)</div><div class="line">library(MetDNA)</div></pre></td></tr></table></figure>
+<h3 id="Ⅱ-数据整理"><a href="#Ⅱ-数据整理" class="headerlink" title="Ⅱ 数据整理"></a><strong>Ⅱ 数据整理</strong></h3><h4 id="如果是正离子数据，请建立一个新的文件夹，命名为”POS”，如果是负离子数据，请建立一个新的文件夹命名为”NEG”，然后将一级数据，二级数据和样品信息放置于此文件夹下。并将该文件夹设置为工作路径。现在MetDNA部署在小服务器上，因此可以将数据放在小服务器中-labdata-。例如”V-workreport-申小涛-demo-fly-POS”。"><a href="#如果是正离子数据，请建立一个新的文件夹，命名为”POS”，如果是负离子数据，请建立一个新的文件夹命名为”NEG”，然后将一级数据，二级数据和样品信息放置于此文件夹下。并将该文件夹设置为工作路径。现在MetDNA部署在小服务器上，因此可以将数据放在小服务器中-labdata-。例如”V-workreport-申小涛-demo-fly-POS”。" class="headerlink" title="如果是正离子数据，请建立一个新的文件夹，命名为”POS”，如果是负离子数据，请建立一个新的文件夹命名为”NEG”，然后将一级数据，二级数据和样品信息放置于此文件夹下。并将该文件夹设置为工作路径。现在MetDNA部署在小服务器上，因此可以将数据放在小服务器中(labdata)。例如”V:/workreport/申小涛/demo/fly/POS”。"></a>如果是正离子数据，请建立一个新的文件夹，命名为”POS”，如果是负离子数据，请建立一个新的文件夹命名为”NEG”，然后将一级数据，二级数据和样品信息放置于此文件夹下。并将该文件夹设置为工作路径。现在<em>MetDNA</em>部署在小服务器上，因此可以将数据放在小服务器中(labdata)。例如”V:/workreport/申小涛/demo/fly/POS”。</h4><p><img src="数据整理.png" alt="**Figure 4: 将所需数据放置在文件夹中**"></p>
+<h4 id="设置工作路径。"><a href="#设置工作路径。" class="headerlink" title="设置工作路径。"></a>设置工作路径。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">setwd(&quot;/mnt/data/samba/labdata/workreport/申小涛/demo/fly/POS&quot;)</div><div class="line">library(MetDNA)</div></pre></td></tr></table></figure>
 <hr>
-<h3 id="Ⅲ-数据处理"><a href="#Ⅲ-数据处理" class="headerlink" title="Ⅲ 数据处理"></a><strong>Ⅲ 数据处理</strong></h3><h3 id="1-只对正离子或者负离子处理"><a href="#1-只对正离子或者负离子处理" class="headerlink" title="1. 只对正离子或者负离子处理"></a><strong>1. 只对正离子或者负离子处理</strong></h3><p>所有的步骤可以使用一个函数<em>MetDNA</em>全部完成。</p>
-<p>运行函数<em>MetDNA</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">MetDNA(ms1.file = &quot;data.csv&quot;,</div><div class="line">       polarity = &quot;positive&quot;,</div><div class="line">       column = &quot;hilic&quot;,</div><div class="line">       ce = &quot;30&quot;,</div><div class="line">       prefer.adduct = &quot;M+H&quot;,</div><div class="line">       use.default.md = TRUE,</div><div class="line">       threads = 3,</div><div class="line">       group = c(&quot;W03&quot;, &quot;W30&quot;),</div><div class="line">       uni.test = &quot;t&quot;,</div><div class="line">       correct = TRUE,</div><div class="line">       p.cutoff = 0.01,</div><div class="line">       species = &quot;dme&quot;)</div></pre></td></tr></table></figure>
+<h3 id="Ⅲ-数据处理"><a href="#Ⅲ-数据处理" class="headerlink" title="Ⅲ 数据处理"></a><strong>Ⅲ 数据处理</strong></h3><h3 id="1-只对正离子或者负离子处理"><a href="#1-只对正离子或者负离子处理" class="headerlink" title="1. 只对正离子或者负离子处理"></a><strong>1. 只对正离子或者负离子处理</strong></h3><h4 id="所有的步骤可以使用一个函数MetDNA全部完成。"><a href="#所有的步骤可以使用一个函数MetDNA全部完成。" class="headerlink" title="所有的步骤可以使用一个函数MetDNA全部完成。"></a>所有的步骤可以使用一个函数<em>MetDNA</em>全部完成。</h4><h4 id="运行函数MetDNA。"><a href="#运行函数MetDNA。" class="headerlink" title="运行函数MetDNA。"></a>运行函数<em>MetDNA</em>。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">MetDNA(ms1.file = &quot;data.csv&quot;,</div><div class="line">       polarity = &quot;positive&quot;,</div><div class="line">       column = &quot;hilic&quot;,</div><div class="line">       ce = &quot;30&quot;,</div><div class="line">       prefer.adduct = &quot;M+H&quot;,</div><div class="line">       use.default.md = TRUE,</div><div class="line">       threads = 3,</div><div class="line">       group = c(&quot;W03&quot;, &quot;W30&quot;),</div><div class="line">       uni.test = &quot;t&quot;,</div><div class="line">       correct = TRUE,</div><div class="line">       p.cutoff = 0.01,</div><div class="line">       species = &quot;dme&quot;)</div></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>参数含义如下：</strong></p>
 </blockquote>
 <ul>
-<li>ms1.file：一级数据的名字。</li>
-<li>polarity：数据采集极性，”positive”或者”negative”。</li>
-<li>column：使用的柱子类型，”hilic”或者”rp”。</li>
-<li>ce：二级采集的碰撞能量，支持”10”，”15”，”20”，”25”，”30”，”35”，”35,15” (35±15)，”40”，<br>“45”，”50”，”55”，”60”，”65”，”70”。</li>
-<li>prefer.adduct：使用那些加合物形式的注释用于RT预测模型的建立，默认使用所有的注释，推荐正离子模式下使用”M+H”，负离子模式下使用”M-H”。</li>
-<li>use.default.md：进行保留时间预测模型建立时，是否使用默认的分子描述符，如果设置为FALSE，则会根据你的数据自动选择分子描述符。</li>
-<li>threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。</li>
-<li>group：要对哪些分组的样品进行分析，<strong>注意</strong>，计算fold change时，使用后面的样品除以前面的样品。</li>
-<li>uni.test：单变量分析的方法，”t”，Student t test；”wilcox”，Wilcox test。</li>
-<li>correct：是否需要对p值进行FDR校正。</li>
-<li>p.cutoff：选择dysregulated peak时的p值cutoff。</li>
-<li>species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus gallus (鸡)；”dre”，Danio rerio (斑马鱼)；”cel”，Caenorharomyces elegans (线虫)；<br>“sce”，Saccharomyces cerevisaiae (酵母)； “ath”，Arabidopsis thaliana (拟南芥)；<br>“smm”，Schistosoma mansoni；”pfa”，Plasmodum falciparum 3D7；<br>“tbr”，Trypanosoma brucei；”eco”， Escherichia coli K-12 MG1655(大肠杆菌)；<br>“ppu”，Pseudomonas putida KT2440；”syf”，Synechococcus elongatus。</li>
+<li><h4 id="ms1-file：一级数据的名字。"><a href="#ms1-file：一级数据的名字。" class="headerlink" title="ms1.file：一级数据的名字。"></a>ms1.file：一级数据的名字。</h4></li>
+<li><h4 id="polarity：数据采集极性，”positive”或者”negative”。"><a href="#polarity：数据采集极性，”positive”或者”negative”。" class="headerlink" title="polarity：数据采集极性，”positive”或者”negative”。"></a>polarity：数据采集极性，”positive”或者”negative”。</h4></li>
+<li><h4 id="column：使用的柱子类型，”hilic”或者”rp”。"><a href="#column：使用的柱子类型，”hilic”或者”rp”。" class="headerlink" title="column：使用的柱子类型，”hilic”或者”rp”。"></a>column：使用的柱子类型，”hilic”或者”rp”。</h4></li>
+<li><h4 id="ce：二级采集的碰撞能量，支持”10”，”15”，”20”，”25”，”30”，”35”，”35-15”-35±15-，”40”，-“45”，”50”，”55”，”60”，”65”，”70”。"><a href="#ce：二级采集的碰撞能量，支持”10”，”15”，”20”，”25”，”30”，”35”，”35-15”-35±15-，”40”，-“45”，”50”，”55”，”60”，”65”，”70”。" class="headerlink" title="ce：二级采集的碰撞能量，支持”10”，”15”，”20”，”25”，”30”，”35”，”35,15” (35±15)，”40”， “45”，”50”，”55”，”60”，”65”，”70”。"></a>ce：二级采集的碰撞能量，支持”10”，”15”，”20”，”25”，”30”，”35”，”35,15” (35±15)，”40”， “45”，”50”，”55”，”60”，”65”，”70”。</h4></li>
+<li><h4 id="prefer-adduct：使用那些加合物形式的注释用于RT预测模型的建立，默认使用所有的注释，推荐正离子模式下使用”M-H”，负离子模式下使用”M-H”。"><a href="#prefer-adduct：使用那些加合物形式的注释用于RT预测模型的建立，默认使用所有的注释，推荐正离子模式下使用”M-H”，负离子模式下使用”M-H”。" class="headerlink" title="prefer.adduct：使用那些加合物形式的注释用于RT预测模型的建立，默认使用所有的注释，推荐正离子模式下使用”M+H”，负离子模式下使用”M-H”。"></a>prefer.adduct：使用那些加合物形式的注释用于RT预测模型的建立，默认使用所有的注释，推荐正离子模式下使用”M+H”，负离子模式下使用”M-H”。</h4></li>
+<li><h4 id="use-default-md：进行保留时间预测模型建立时，是否使用默认的分子描述符，如果设置为FALSE，则会根据你的数据自动选择分子描述符。"><a href="#use-default-md：进行保留时间预测模型建立时，是否使用默认的分子描述符，如果设置为FALSE，则会根据你的数据自动选择分子描述符。" class="headerlink" title="use.default.md：进行保留时间预测模型建立时，是否使用默认的分子描述符，如果设置为FALSE，则会根据你的数据自动选择分子描述符。"></a>use.default.md：进行保留时间预测模型建立时，是否使用默认的分子描述符，如果设置为FALSE，则会根据你的数据自动选择分子描述符。</h4></li>
+<li><h4 id="threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。"><a href="#threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。" class="headerlink" title="threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。"></a>threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。</h4></li>
+<li><h4 id="group：要对哪些分组的样品进行分析，注意，计算fold-change时，使用后面的样品除以前面的样品。"><a href="#group：要对哪些分组的样品进行分析，注意，计算fold-change时，使用后面的样品除以前面的样品。" class="headerlink" title="group：要对哪些分组的样品进行分析，注意，计算fold change时，使用后面的样品除以前面的样品。"></a>group：要对哪些分组的样品进行分析，<strong>注意</strong>，计算fold change时，使用后面的样品除以前面的样品。</h4></li>
+<li><h4 id="uni-test：单变量分析的方法，”t”，Student-t-test；”wilcox”，Wilcox-test。"><a href="#uni-test：单变量分析的方法，”t”，Student-t-test；”wilcox”，Wilcox-test。" class="headerlink" title="uni.test：单变量分析的方法，”t”，Student t test；”wilcox”，Wilcox test。"></a>uni.test：单变量分析的方法，”t”，Student t test；”wilcox”，Wilcox test。</h4></li>
+<li><h4 id="correct：是否需要对p值进行FDR校正。"><a href="#correct：是否需要对p值进行FDR校正。" class="headerlink" title="correct：是否需要对p值进行FDR校正。"></a>correct：是否需要对p值进行FDR校正。</h4></li>
+<li><h4 id="p-cutoff：选择dysregulated-peak时的p值cutoff。"><a href="#p-cutoff：选择dysregulated-peak时的p值cutoff。" class="headerlink" title="p.cutoff：选择dysregulated peak时的p值cutoff。"></a>p.cutoff：选择dysregulated peak时的p值cutoff。</h4></li>
+<li><h4 id="species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus-gallus-鸡-；”dre”，Danio-rerio-斑马鱼-；”cel”，Caenorharomyces-elegans-线虫-；”sce”，Saccharomyces-cerevisaiae-酵母-；-“ath”，Arabidopsis-thaliana-拟南芥-；”smm”，Schistosoma-mansoni；”pfa”，Plasmodum-falciparum-3D7；”tbr”，Trypanosoma-brucei；”eco”，-Escherichia-coli-K-12-MG1655-大肠杆菌-；”ppu”，Pseudomonas-putida-KT2440；”syf”，Synechococcus-elongatus。"><a href="#species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus-gallus-鸡-；”dre”，Danio-rerio-斑马鱼-；”cel”，Caenorharomyces-elegans-线虫-；”sce”，Saccharomyces-cerevisaiae-酵母-；-“ath”，Arabidopsis-thaliana-拟南芥-；”smm”，Schistosoma-mansoni；”pfa”，Plasmodum-falciparum-3D7；”tbr”，Trypanosoma-brucei；”eco”，-Escherichia-coli-K-12-MG1655-大肠杆菌-；”ppu”，Pseudomonas-putida-KT2440；”syf”，Synechococcus-elongatus。" class="headerlink" title="species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus gallus (鸡)；”dre”，Danio rerio (斑马鱼)；”cel”，Caenorharomyces elegans (线虫)；”sce”，Saccharomyces cerevisaiae (酵母)； “ath”，Arabidopsis thaliana (拟南芥)；”smm”，Schistosoma mansoni；”pfa”，Plasmodum falciparum 3D7；”tbr”，Trypanosoma brucei；”eco”， Escherichia coli K-12 MG1655(大肠杆菌)；”ppu”，Pseudomonas putida KT2440；”syf”，Synechococcus elongatus。"></a>species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus gallus (鸡)；”dre”，Danio rerio (斑马鱼)；”cel”，Caenorharomyces elegans (线虫)；”sce”，Saccharomyces cerevisaiae (酵母)； “ath”，Arabidopsis thaliana (拟南芥)；”smm”，Schistosoma mansoni；”pfa”，Plasmodum falciparum 3D7；”tbr”，Trypanosoma brucei；”eco”， Escherichia coli K-12 MG1655(大肠杆菌)；”ppu”，Pseudomonas putida KT2440；”syf”，Synechococcus elongatus。</h4></li>
 </ul>
-<h3 id="2-对正负数据合并分析"><a href="#2-对正负数据合并分析" class="headerlink" title="2. 对正负数据合并分析"></a><strong>2. 对正负数据合并分析</strong></h3><p>正负离子分别处理之后，可以使用函数<em>MetModule2</em>合并正负离子模式的鉴定结果，进行dysregulated network analysis。</p>
-<p>运行函数<em>MetModule2</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">metModule2(group = c(&quot;W03&quot;, &quot;W30&quot;),</div><div class="line">           uni.test = &quot;t&quot;,</div><div class="line">           column = &quot;hilic&quot;,</div><div class="line">           correct = TRUE,</div><div class="line">           p.cutoff = 0.01,</div><div class="line">           threads = 3,</div><div class="line">           species = &quot;dme&quot;)</div></pre></td></tr></table></figure>
+<h3 id="2-对正负数据合并分析"><a href="#2-对正负数据合并分析" class="headerlink" title="2. 对正负数据合并分析"></a><strong>2. 对正负数据合并分析</strong></h3><h4 id="正负离子分别处理之后，可以使用函数metModule2函数合并正负离子模式的鉴定结果，进行dysregulated-network-analysis。"><a href="#正负离子分别处理之后，可以使用函数metModule2函数合并正负离子模式的鉴定结果，进行dysregulated-network-analysis。" class="headerlink" title="正负离子分别处理之后，可以使用函数metModule2函数合并正负离子模式的鉴定结果，进行dysregulated network analysis。"></a>正负离子分别处理之后，可以使用函数<em>metModule2</em>函数合并正负离子模式的鉴定结果，进行dysregulated network analysis。</h4><h4 id="运行函数MetModule2"><a href="#运行函数MetModule2" class="headerlink" title="运行函数MetModule2"></a>运行函数<em>MetModule2</em></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">metModule2(group = c(&quot;W03&quot;, &quot;W30&quot;),</div><div class="line">           uni.test = &quot;t&quot;,</div><div class="line">           column = &quot;hilic&quot;,</div><div class="line">           correct = TRUE,</div><div class="line">           p.cutoff = 0.01,</div><div class="line">           threads = 3,</div><div class="line">           species = &quot;dme&quot;)</div></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>参数含义如下：</strong></p>
 </blockquote>
 <ul>
-<li>group：要对哪些分组的样品进行分析，<strong>注意</strong>，计算fold change时，使用后面的样品除以前面的样品。</li>
-<li>uni.test：单变量分析的方法，”t”，Student t test；”wilcox”，Wilcox test。</li>
-<li>column：使用的柱子类型，”hilic”或者”rp”。</li>
-<li>correct：是否需要对p值进行FDR校正。</li>
-<li>p.cutoff：选择dysregulated peak时的p值cutoff。</li>
-<li>threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。</li>
-<li>species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus gallus (鸡)；”dre”，Danio rerio (斑马鱼)；”cel”，Caenorharomyces elegans (线虫)；<br>“sce”，Saccharomyces cerevisaiae (酵母)； “ath”，Arabidopsis thaliana (拟南芥)；<br>“smm”，Schistosoma mansoni；”pfa”，Plasmodum falciparum 3D7；<br>“tbr”，Trypanosoma brucei；”eco”， Escherichia coli K-12 MG1655(大肠杆菌)；<br>“ppu”，Pseudomonas putida KT2440；”syf”，Synechococcus elongatus。</li>
+<li><h4 id="group：要对哪些分组的样品进行分析，注意，计算fold-change时，使用后面的样品除以前面的样品。-1"><a href="#group：要对哪些分组的样品进行分析，注意，计算fold-change时，使用后面的样品除以前面的样品。-1" class="headerlink" title="group：要对哪些分组的样品进行分析，注意，计算fold change时，使用后面的样品除以前面的样品。"></a>group：要对哪些分组的样品进行分析，<strong>注意</strong>，计算fold change时，使用后面的样品除以前面的样品。</h4></li>
+<li><h4 id="uni-test：单变量分析的方法，”t”，Student-t-test；”wilcox”，Wilcox-test。-1"><a href="#uni-test：单变量分析的方法，”t”，Student-t-test；”wilcox”，Wilcox-test。-1" class="headerlink" title="uni.test：单变量分析的方法，”t”，Student t test；”wilcox”，Wilcox test。"></a>uni.test：单变量分析的方法，”t”，Student t test；”wilcox”，Wilcox test。</h4></li>
+<li><h4 id="column：使用的柱子类型，”hilic”或者”rp”。-1"><a href="#column：使用的柱子类型，”hilic”或者”rp”。-1" class="headerlink" title="column：使用的柱子类型，”hilic”或者”rp”。"></a>column：使用的柱子类型，”hilic”或者”rp”。</h4></li>
+<li><h4 id="correct：是否需要对p值进行FDR校正。-1"><a href="#correct：是否需要对p值进行FDR校正。-1" class="headerlink" title="correct：是否需要对p值进行FDR校正。"></a>correct：是否需要对p值进行FDR校正。</h4></li>
+<li><h4 id="p-cutoff：选择dysregulated-peak时的p值cutoff。-1"><a href="#p-cutoff：选择dysregulated-peak时的p值cutoff。-1" class="headerlink" title="p.cutoff：选择dysregulated peak时的p值cutoff。"></a>p.cutoff：选择dysregulated peak时的p值cutoff。</h4></li>
+<li><h4 id="threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。-1"><a href="#threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。-1" class="headerlink" title="threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。"></a>threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。</h4></li>
+<li><h4 id="species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus-gallus-鸡-；”dre”，Danio-rerio-斑马鱼-；”cel”，Caenorharomyces-elegans-线虫-；”sce”，Saccharomyces-cerevisaiae-酵母-；-“ath”，Arabidopsis-thaliana-拟南芥-；”smm”，Schistosoma-mansoni；”pfa”，Plasmodum-falciparum-3D7；”tbr”，Trypanosoma-brucei；”eco”，-Escherichia-coli-K-12-MG1655-大肠杆菌-；”ppu”，Pseudomonas-putida-KT2440；”syf”，Synechococcus-elongatus。-1"><a href="#species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus-gallus-鸡-；”dre”，Danio-rerio-斑马鱼-；”cel”，Caenorharomyces-elegans-线虫-；”sce”，Saccharomyces-cerevisaiae-酵母-；-“ath”，Arabidopsis-thaliana-拟南芥-；”smm”，Schistosoma-mansoni；”pfa”，Plasmodum-falciparum-3D7；”tbr”，Trypanosoma-brucei；”eco”，-Escherichia-coli-K-12-MG1655-大肠杆菌-；”ppu”，Pseudomonas-putida-KT2440；”syf”，Synechococcus-elongatus。-1" class="headerlink" title="species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus gallus (鸡)；”dre”，Danio rerio (斑马鱼)；”cel”，Caenorharomyces elegans (线虫)；”sce”，Saccharomyces cerevisaiae (酵母)； “ath”，Arabidopsis thaliana (拟南芥)；”smm”，Schistosoma mansoni；”pfa”，Plasmodum falciparum 3D7；”tbr”，Trypanosoma brucei；”eco”， Escherichia coli K-12 MG1655(大肠杆菌)；”ppu”，Pseudomonas putida KT2440；”syf”，Synechococcus elongatus。"></a>species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus gallus (鸡)；”dre”，Danio rerio (斑马鱼)；”cel”，Caenorharomyces elegans (线虫)；”sce”，Saccharomyces cerevisaiae (酵母)； “ath”，Arabidopsis thaliana (拟南芥)；”smm”，Schistosoma mansoni；”pfa”，Plasmodum falciparum 3D7；”tbr”，Trypanosoma brucei；”eco”， Escherichia coli K-12 MG1655(大肠杆菌)；”ppu”，Pseudomonas putida KT2440；”syf”，Synechococcus elongatus。</h4></li>
 </ul>
-<p>运行函数<em>analysisReport</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">analysisReport(polarity = &quot;both&quot;)</div></pre></td></tr></table></figure>
+<h4 id="运行函数analysisReport得到分析报告。"><a href="#运行函数analysisReport得到分析报告。" class="headerlink" title="运行函数analysisReport得到分析报告。"></a>运行函数<em>analysisReport</em>得到分析报告。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">analysisReport(polarity = &quot;both&quot;)</div></pre></td></tr></table></figure>
 <hr>
-<h3 id="Ⅳ-运行结果"><a href="#Ⅳ-运行结果" class="headerlink" title="Ⅳ 运行结果"></a><strong>Ⅳ 运行结果</strong></h3><h3 id="1-正离子或者负离子的运行结果"><a href="#1-正离子或者负离子的运行结果" class="headerlink" title="1. 正离子或者负离子的运行结果"></a><strong>1. 正离子或者负离子的运行结果</strong></h3><p><strong>MetDNA</strong>函数运行结束之后，所有的运行结果都存放在设置的路径中，包含二级谱图匹配结果，MRN注释结果，dysregulated network分析结果以及分析报告。如图5所示。</p>
-<p><img src="analysis.result.png" alt="Figure 5: 运行结果"></p>
-<h3 id="1-MetDNA-parameters-csv"><a href="#1-MetDNA-parameters-csv" class="headerlink" title="(1) MetDNA.parameters.csv"></a><strong>(1) MetDNA.parameters.csv</strong></h3><p>记录此次运行所使用的参数。</p>
-<p><img src="MetDNA.parameters.png" alt="Figure 6: 参数记录"></p>
-<h3 id="2-ms2-match-result-POS"><a href="#2-ms2-match-result-POS" class="headerlink" title="(2) ms2_match_result_POS"></a><strong>(2) ms2_match_result_POS</strong></h3><p>二级谱图匹配结果。包括一个csv文件，ms2.match.annotation.result.csv和一个文件夹，MS2_match_spectra。ms2.macth.annotation.result.csv是二级谱图匹配之后的结果，与MetAnalyzer处理之后的结果相同；MS2_match_spectra文件夹中包含了所有二级匹配图(Figure 6)。</p>
-<p><img src="instruction/二级匹配图.png" alt="Figure 7: 二级谱图匹配图"></p>
-<h3 id="3-MRN-annotation-result-POS"><a href="#3-MRN-annotation-result-POS" class="headerlink" title="(3) MRN_annotation_result_POS"></a><strong>(3) MRN_annotation_result_POS</strong></h3><p>二级谱图匹配结果。包括一个csv文件，ms2.match.annotation.result.csv和一个文件夹，MS2_match_spectra。ms2.macth.annotation.result.csv是二级谱图匹配之后的结果，与MetAnalyzer处理之后的结果相同；MS2_match_spectra文件夹中包含了所有二级匹配图(Figure 6)。</p>
-<p><img src="二级匹配图.png" alt="Figure 7: 二级谱图匹配图"></p>
-<h3 id="二、分步骤进行数据分析"><a href="#二、分步骤进行数据分析" class="headerlink" title="二、分步骤进行数据分析"></a><strong>二、分步骤进行数据分析</strong></h3><h3 id="1-使用二级谱图进行注释"><a href="#1-使用二级谱图进行注释" class="headerlink" title="1. 使用二级谱图进行注释"></a><strong>1. 使用二级谱图进行注释</strong></h3><p>运行函数<em>ms2Annotation</em>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ms2Annotation(ms1.file = &quot;data.csv&quot;,</div><div class="line">              polarity = &quot;positive&quot;,</div><div class="line">              column = &quot;hilic&quot;,</div><div class="line">              ce = &quot;30&quot;)</div></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>参数含义如下：</strong></p>
-</blockquote>
-<ul>
-<li>ms1.file：一级数据的名字。</li>
-<li>polarity：数据采集极性，”positive”或者”negative”。</li>
-<li>column：使用的柱子类型，”hilic”或者”rp”。</li>
-<li>ce：二级采集的碰撞能量，支持”10”，”15”，”20”，”25”，”30”，”35”，”35,15” (35±15)，”40”，<br>“45”，”50”，”55”，”60”，”65”，”70”。</li>
+<h3 id="Ⅳ-运行结果"><a href="#Ⅳ-运行结果" class="headerlink" title="Ⅳ 运行结果"></a><strong>Ⅳ 运行结果</strong></h3><h3 id="1-正离子或者负离子的运行结果"><a href="#1-正离子或者负离子的运行结果" class="headerlink" title="1. 正离子或者负离子的运行结果"></a><strong>1. 正离子或者负离子的运行结果</strong></h3><h4 id="MetDNA函数运行结束之后，所有的运行结果都存放在设置的路径中，包含二级谱图匹配结果，MRN注释结果，dysregulated-network分析结果以及分析报告。如图5所示。"><a href="#MetDNA函数运行结束之后，所有的运行结果都存放在设置的路径中，包含二级谱图匹配结果，MRN注释结果，dysregulated-network分析结果以及分析报告。如图5所示。" class="headerlink" title="MetDNA函数运行结束之后，所有的运行结果都存放在设置的路径中，包含二级谱图匹配结果，MRN注释结果，dysregulated network分析结果以及分析报告。如图5所示。"></a><strong>MetDNA</strong>函数运行结束之后，所有的运行结果都存放在设置的路径中，包含二级谱图匹配结果，MRN注释结果，dysregulated network分析结果以及分析报告。如图5所示。</h4><p><img src="analysis.result.png" alt="**Figure 5: 运行结果**"></p>
+<h3 id="1-MetDNA-parameters-csv"><a href="#1-MetDNA-parameters-csv" class="headerlink" title="(1) MetDNA.parameters.csv"></a><strong>(1) MetDNA.parameters.csv</strong></h3><h4 id="记录此次运行所使用的参数。"><a href="#记录此次运行所使用的参数。" class="headerlink" title="记录此次运行所使用的参数。"></a>记录此次运行所使用的参数。</h4><p><img src="MetDNA.parameters.png" alt="**Figure 6: 参数记录**"></p>
+<h3 id="2-ms2-match-result-POS"><a href="#2-ms2-match-result-POS" class="headerlink" title="(2) ms2_match_result_POS"></a><strong>(2) ms2_match_result_POS</strong></h3><h4 id="二级谱图匹配结果。包括一个csv文件，ms2-match-annotation-result-csv和一个文件夹，MS2-match-spectra。ms2-macth-annotation-result-csv是二级谱图匹配之后的结果，与MetAnalyzer处理之后的结果相同；MS2-match-spectra文件夹中包含了所有二级匹配图-Figure-6-。"><a href="#二级谱图匹配结果。包括一个csv文件，ms2-match-annotation-result-csv和一个文件夹，MS2-match-spectra。ms2-macth-annotation-result-csv是二级谱图匹配之后的结果，与MetAnalyzer处理之后的结果相同；MS2-match-spectra文件夹中包含了所有二级匹配图-Figure-6-。" class="headerlink" title="二级谱图匹配结果。包括一个csv文件，ms2.match.annotation.result.csv和一个文件夹，MS2_match_spectra。ms2.macth.annotation.result.csv是二级谱图匹配之后的结果，与MetAnalyzer处理之后的结果相同；MS2_match_spectra文件夹中包含了所有二级匹配图(Figure 6)。"></a>二级谱图匹配结果。包括一个csv文件，ms2.match.annotation.result.csv和一个文件夹，MS2_match_spectra。ms2.macth.annotation.result.csv是二级谱图匹配之后的结果，与MetAnalyzer处理之后的结果相同；MS2_match_spectra文件夹中包含了所有二级匹配图(Figure 6)。</h4><p><img src="二级匹配图.png" alt="**Figure 7: 二级谱图匹配图**"></p>
+<h3 id="3-MRN-annotation-result-POS"><a href="#3-MRN-annotation-result-POS" class="headerlink" title="(3) MRN_annotation_result_POS"></a><strong>(3) MRN_annotation_result_POS</strong></h3><h4 id="基于metabolic-reacion-network注释结果。包括两个csv文件，metABM-parameters-csv和MRN-annotation-result-csv。MRN-annotation-result-csv是使用MRN注释结果-Figure-8-。"><a href="#基于metabolic-reacion-network注释结果。包括两个csv文件，metABM-parameters-csv和MRN-annotation-result-csv。MRN-annotation-result-csv是使用MRN注释结果-Figure-8-。" class="headerlink" title="基于metabolic reacion network注释结果。包括两个csv文件，metABM.parameters.csv和MRN.annotation.result.csv。MRN.annotation.result.csv是使用MRN注释结果(Figure 8)。"></a>基于metabolic reacion network注释结果。包括两个csv文件，metABM.parameters.csv和MRN.annotation.result.csv。MRN.annotation.result.csv是使用MRN注释结果(Figure 8)。</h4><p><img src="MRN.annotation.result.png" alt="**Figure 8: MRN annotation result**"></p>
+<h4 id="其中："><a href="#其中：" class="headerlink" title="其中："></a>其中：</h4><ul>
+<li><h4 id="annotation-from-ID：该peak的该注释来自于哪个metabolite-ID"><a href="#annotation-from-ID：该peak的该注释来自于哪个metabolite-ID" class="headerlink" title="annotation.from.ID：该peak的该注释来自于哪个metabolite(ID);"></a>annotation.from.ID：该peak的该注释来自于哪个metabolite(ID);</h4></li>
+<li><h4 id="annotation-from-peak：该peak的该注释来自于哪个peak"><a href="#annotation-from-peak：该peak的该注释来自于哪个peak" class="headerlink" title="annotation.from.peak：该peak的该注释来自于哪个peak;"></a>annotation.from.peak：该peak的该注释来自于哪个peak;</h4></li>
+<li><h4 id="ID：注释代谢物结果的KEGG-ID"><a href="#ID：注释代谢物结果的KEGG-ID" class="headerlink" title="ID：注释代谢物结果的KEGG ID;"></a>ID：注释代谢物结果的KEGG ID;</h4></li>
+<li><h4 id="compound-name：注释结果的名字；"><a href="#compound-name：注释结果的名字；" class="headerlink" title="compound.name：注释结果的名字；"></a>compound.name：注释结果的名字；</h4></li>
+<li><h4 id="isotope：同位素信息；"><a href="#isotope：同位素信息；" class="headerlink" title="isotope：同位素信息；"></a>isotope：同位素信息；</h4></li>
+<li><h4 id="adduct：加合物信息；"><a href="#adduct：加合物信息；" class="headerlink" title="adduct：加合物信息；"></a>adduct：加合物信息；</h4></li>
+<li><h4 id="Formula：化学结构式；"><a href="#Formula：化学结构式；" class="headerlink" title="Formula：化学结构式；"></a>Formula：化学结构式；</h4></li>
+<li><h4 id="score：注释打分；"><a href="#score：注释打分；" class="headerlink" title="score：注释打分；"></a>score：注释打分；</h4></li>
+<li><h4 id="peak-group：peak-group；"><a href="#peak-group：peak-group；" class="headerlink" title="peak.group：peak group；"></a>peak.group：peak group；</h4></li>
+<li><h4 id="confidence：对注释的peak-group打分。"><a href="#confidence：对注释的peak-group打分。" class="headerlink" title="confidence：对注释的peak group打分。"></a>confidence：对注释的peak group打分。</h4></li>
 </ul>
-<blockquote>
-<p><strong>输出的结果存放在ms2_match_annotation_result文件夹内:</strong></p>
-</blockquote>
-<ul>
-<li>ms2.match.annotation.result.csv：二级谱图注释结果。</li>
-<li>MS2_match_spectrum：二级谱图匹配图。</li>
-<li>intermediate_data：中间数据文件夹。</li>
+<h3 id="4-Dysregulated-network-analsysi-result-POS"><a href="#4-Dysregulated-network-analsysi-result-POS" class="headerlink" title="(4) Dysregulated_network_analsysi_result_POS"></a><strong>(4) Dysregulated_network_analsysi_result_POS</strong></h3><h4 id="Dysregulated-network分析的结果。其中包括一个pdf文件，volcano-plot-pdf-Figure-9-，两个csv文件，metModule-parameters-csv和DNA-annotation-result-csv以及两个文件夹，module-information-Figure-10-和pathway-inforamtion-Figure-11-。"><a href="#Dysregulated-network分析的结果。其中包括一个pdf文件，volcano-plot-pdf-Figure-9-，两个csv文件，metModule-parameters-csv和DNA-annotation-result-csv以及两个文件夹，module-information-Figure-10-和pathway-inforamtion-Figure-11-。" class="headerlink" title="Dysregulated network分析的结果。其中包括一个pdf文件，volcano.plot.pdf(Figure: 9)，两个csv文件，metModule.parameters.csv和DNA.annotation.result.csv以及两个文件夹，module_information(Figure 10)和pathway_inforamtion (Figure 11)。"></a>Dysregulated network分析的结果。其中包括一个pdf文件，volcano.plot.pdf(Figure: 9)，两个csv文件，metModule.parameters.csv和DNA.annotation.result.csv以及两个文件夹，module_information(Figure 10)和pathway_inforamtion (Figure 11)。</h4><h4 id="1-volcano-plot是选取差异代谢物峰的火山图。"><a href="#1-volcano-plot是选取差异代谢物峰的火山图。" class="headerlink" title="1) volcano.plot是选取差异代谢物峰的火山图。"></a>1) volcano.plot是选取差异代谢物峰的火山图。</h4><p><img src="volcano.plot.png" alt="**Figure 9: Volcano plot**"></p>
+<h4 id="2-DNA-annotation-result-csv是通过dysregulated-network对注释结果进行筛选以及KEGG-database注释之后的注释结果。"><a href="#2-DNA-annotation-result-csv是通过dysregulated-network对注释结果进行筛选以及KEGG-database注释之后的注释结果。" class="headerlink" title="2) DNA.annotation.result.csv是通过dysregulated network对注释结果进行筛选以及KEGG database注释之后的注释结果。"></a>2) DNA.annotation.result.csv是通过dysregulated network对注释结果进行筛选以及KEGG database注释之后的注释结果。</h4><h4 id="3-module-information文件夹中包含了dysregulated-module的分析结果。其中module-result-csv是module的信息。module-overview-pdf是module结果的总览-Figure-10-。module-heatmap-pdf是对module进行定量分析之后的热图-Figure-11-。boxplot文件夹中包含了module在两组间的定量结果-Figure-12-。Module-MSE-analysis文件夹中包含了对每个module进行功能注释-MSEA-的结果-Figure-13-。"><a href="#3-module-information文件夹中包含了dysregulated-module的分析结果。其中module-result-csv是module的信息。module-overview-pdf是module结果的总览-Figure-10-。module-heatmap-pdf是对module进行定量分析之后的热图-Figure-11-。boxplot文件夹中包含了module在两组间的定量结果-Figure-12-。Module-MSE-analysis文件夹中包含了对每个module进行功能注释-MSEA-的结果-Figure-13-。" class="headerlink" title="3) module_information文件夹中包含了dysregulated module的分析结果。其中module.result.csv是module的信息。module.overview.pdf是module结果的总览(Figure 10)。module.heatmap.pdf是对module进行定量分析之后的热图(Figure 11)。boxplot文件夹中包含了module在两组间的定量结果(Figure 12)。Module_MSE analysis文件夹中包含了对每个module进行功能注释(MSEA)的结果(Figure 13)。"></a>3) module_information文件夹中包含了dysregulated module的分析结果。其中module.result.csv是module的信息。module.overview.pdf是module结果的总览(Figure 10)。module.heatmap.pdf是对module进行定量分析之后的热图(Figure 11)。boxplot文件夹中包含了module在两组间的定量结果(Figure 12)。Module_MSE analysis文件夹中包含了对每个module进行功能注释(MSEA)的结果(Figure 13)。</h4><p><img src="module.overview.png" alt="**Figure 10: Module overview**"></p>
+<p><img src="module.heatmap.png" alt="**Figure 11: Module heatmap**"></p>
+<p><img src="module1.boxplot.png" alt="**Figure 12: Module boxplot**"></p>
+<p><img src="module1.MSEA.png" alt="**Figure 13: Module MSEA result**"></p>
+<h4 id="3-pathway-information文件夹中包含了pathway的分析结果-Figure-14-。"><a href="#3-pathway-information文件夹中包含了pathway的分析结果-Figure-14-。" class="headerlink" title="3) pathway_information文件夹中包含了pathway的分析结果(Figure 14)。"></a>3) pathway_information文件夹中包含了pathway的分析结果(Figure 14)。</h4><p><img src="pathway.information.png" alt="**Figure 14: Pathway information**"></p>
+<h4 id="其中：-1"><a href="#其中：-1" class="headerlink" title="其中："></a>其中：</h4><ul>
+<li><h4 id="boxplot：该文件夹中含有每个pathway的定量信息"><a href="#boxplot：该文件夹中含有每个pathway的定量信息" class="headerlink" title="boxplot：该文件夹中含有每个pathway的定量信息;"></a>boxplot：该文件夹中含有每个pathway的定量信息;</h4></li>
+<li><h4 id="dysregulated-network-overview：该图表示dysregulated-network的pathway分析结果"><a href="#dysregulated-network-overview：该图表示dysregulated-network的pathway分析结果" class="headerlink" title="dysregulated.network.overview：该图表示dysregulated network的pathway分析结果;"></a>dysregulated.network.overview：该图表示dysregulated network的pathway分析结果;</h4></li>
+<li><h4 id="dysregulated-netwrok-MSEA-csv：dysregulated-network的MSEA分析结果"><a href="#dysregulated-netwrok-MSEA-csv：dysregulated-network的MSEA分析结果" class="headerlink" title="dysregulated.netwrok.MSEA.csv：dysregulated network的MSEA分析结果;"></a>dysregulated.netwrok.MSEA.csv：dysregulated network的MSEA分析结果;</h4></li>
+<li><h4 id="dysregulated-netwrok-MSEA-pdf：dysregulated-network的MSEA分析结果"><a href="#dysregulated-netwrok-MSEA-pdf：dysregulated-network的MSEA分析结果" class="headerlink" title="dysregulated.netwrok.MSEA.pdf：dysregulated network的MSEA分析结果;"></a>dysregulated.netwrok.MSEA.pdf：dysregulated network的MSEA分析结果;</h4></li>
+<li><h4 id="dysregulated-networks-for-cytoscape-txt：用于cytoscape作图的数据；"><a href="#dysregulated-networks-for-cytoscape-txt：用于cytoscape作图的数据；" class="headerlink" title="dysregulated.networks.for.cytoscape.txt：用于cytoscape作图的数据；"></a>dysregulated.networks.for.cytoscape.txt：用于cytoscape作图的数据；</h4></li>
+<li><h4 id="dysregulated-networks-attribute-txt：用于cytoscape作图的节点属性数据；"><a href="#dysregulated-networks-attribute-txt：用于cytoscape作图的节点属性数据；" class="headerlink" title="dysregulated.networks.attribute.txt：用于cytoscape作图的节点属性数据；"></a>dysregulated.networks.attribute.txt：用于cytoscape作图的节点属性数据；</h4></li>
+<li><h4 id="pathway-heatmap-pdf：dysregulated-network的pathway定量的heatmap。"><a href="#pathway-heatmap-pdf：dysregulated-network的pathway定量的heatmap。" class="headerlink" title="pathway.heatmap.pdf：dysregulated network的pathway定量的heatmap。"></a>pathway.heatmap.pdf：dysregulated network的pathway定量的heatmap。</h4></li>
 </ul>
-<p><img src="ms2Annotation result.png" alt="**ms2Annotation输出结果**"></p>
-<p><img src="二级谱图匹配结果.png" alt="**二级谱图匹配结果**"></p>
-<h3 id="2-基于MRN的注释"><a href="#2-基于MRN的注释" class="headerlink" title="2. 基于MRN的注释"></a><strong>2. 基于MRN的注释</strong></h3><p>运行函数<em>metABM</em>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">metABM(prefer.adduct = &quot;M+H&quot;,</div><div class="line">       use.default.md = TRUE,</div><div class="line">       column = &quot;hilic&quot;,</div><div class="line">       polarity = &quot;positive&quot;,</div><div class="line">       threads = 3)</div></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>参数含义如下：</strong></p>
-</blockquote>
-<ul>
-<li>prefer.adduct：使用那些加合物形式的注释用于RT预测模型的建立，默认使用所有的注释，推荐正离子模式下使用”M+H”，负离子模式下使用”M-H”。</li>
-<li>use.default.md：进行保留时间预测模型建立时，是否使用默认的分子描述符，如果设置为FALSE，则会根据你的数据自动选择分子描述符。</li>
-<li>polarity：数据采集极性，”positive”或者”negative”。</li>
-<li>column：使用的柱子类型，”hilic”或者”rp”。</li>
-<li>threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。</li>
-</ul>
-<blockquote>
-<p><strong>输出的结果存放在MRN_annotation_result文件内：</strong></p>
-</blockquote>
-<ul>
-<li>MRN.annotation.result.csv：metABM注释之后的结果。</li>
-<li>metABM.parameters.csv：metABM的参数。</li>
-<li>intermediate_data：中间数据文件夹。</li>
-</ul>
-<p><img src="metABM注释结果.png" alt="**metABM注释结果**"></p>
-<h3 id="3-Dysregulated-network分析"><a href="#3-Dysregulated-network分析" class="headerlink" title="3. Dysregulated network分析"></a><strong>3. Dysregulated network分析</strong></h3><p>运行函数<em>metModule</em>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">metModule(group = c(&quot;W03&quot;, &quot;W30&quot;),</div><div class="line">          uni.test = &quot;t&quot;,</div><div class="line">          column = &quot;hilic&quot;,</div><div class="line">          polarity = &quot;positive&quot;,</div><div class="line">          correct = TRUE,</div><div class="line">          p.cutoff = 0.01,</div><div class="line">          threads = 3,</div><div class="line">          species = &quot;dme&quot;)</div></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>参数含义如下：</strong></p>
-</blockquote>
-<ul>
-<li>group：要对哪些分组的样品进行分析，<strong>注意</strong>，计算fold change时，使用后面的样品除以前面的样品。</li>
-<li>uni.test：单变量分析的方法，”t”，student t test；”wilcox”，wilcox test；”anova”，ANOVA分析。</li>
-<li>polarity：数据采集极性，”positive”或者”negative”。</li>
-<li>column：使用的柱子类型，”hilic”或者”rp”。</li>
-<li>correct：是否需要对p值进行FDR校正。</li>
-<li>p.cutoff：选择dysregulated peak时的p值cutoff。</li>
-<li>threads：使用线程数，默认为3，可以根据电脑本身配置进行修改。</li>
-<li>species：所研究样品的物种来源，”dme”，果蝇；”hsa”，人类；”mmu”，小鼠；”rat”，大鼠，”bta”，牛；”gga”，Gallus gallus (鸡)；”dre”，Danio rerio (斑马鱼)；”cel”，Caenorharomyces elegans (线虫)；<br>“sce”，Saccharomyces cerevisaiae (酵母)； “ath”，Arabidopsis thaliana (拟南芥)；<br>“smm”，Schistosoma mansoni；”pfa”，Plasmodum falciparum 3D7；<br>“tbr”，Trypanosoma brucei；”eco”， Escherichia coli K-12 MG1655(大肠杆菌)；<br>“ppu”，Pseudomonas putida KT2440；”syf”，Synechococcus elongatus。</li>
-</ul>
-<blockquote>
-<p><strong>输出的结果存放在Dysregulated_network_analysis_result文件内：</strong></p>
-</blockquote>
-<ul>
-<li>metModule.parameters.csv：metModule的参数。</li>
-<li>DNA.annotation.result.csv：DNA分析之后的注释结果。</li>
-<li>volcano.plot.pdf：火山图。</li>
-<li>Module_information：包含了module分析的所有信息。</li>
-<li>pathway_information：包含了pathway分析的所有信息。</li>
-<li>intermediate_data：中间数据文件夹。</li>
-</ul>
-<p><img src="metModule result.png" alt="**metModule输出结果**"></p>
-<h3 id="4-生成分析报告"><a href="#4-生成分析报告" class="headerlink" title="4. 生成分析报告"></a><strong>4. 生成分析报告</strong></h3><p>运行函数<em>analysisReport</em>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">analysisReport()</div></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>输出的结果存放在Analysis_report文件夹内：</strong></p>
-</blockquote>
-<ul>
-<li>一份html格式的<a href="https://github.com/jaspershen/MetDNA/blob/master/demo_data/Analysis_report.html.zip" target="_blank" rel="external">分析报告</a>。</li>
-</ul>
-<p><img src="分析报告.png" alt="**分析报告**"></p>
-
+<h3 id="5-Analysis-report-POS"><a href="#5-Analysis-report-POS" class="headerlink" title="(5) Analysis_report_POS"></a><strong>(5) Analysis_report_POS</strong></h3><h4 id="对数据处理分析结果的总结。输出的结果存放在Analysis-report文件夹内。包括一份html格式的分析报告。"><a href="#对数据处理分析结果的总结。输出的结果存放在Analysis-report文件夹内。包括一份html格式的分析报告。" class="headerlink" title="对数据处理分析结果的总结。输出的结果存放在Analysis_report文件夹内。包括一份html格式的分析报告。"></a>对数据处理分析结果的总结。输出的结果存放在Analysis_report文件夹内。包括一份html格式的<a href="http://rpubs.com/Jasper/metdna_analysis_report" target="_blank" rel="external">分析报告</a>。</h4>
     </article>
     <!-- 前后页  -->
     <ul class="post-pager">
@@ -527,12 +461,12 @@
     
     
     
-    <div class="archive-year"> Invalid date </div>
+    <div class="archive-year"> 2017 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/metdna/" >MetDNA instruction</a>
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2017-09-09-github-blog/" >使用Github和Hexo建独立博客</a>
         </li>
     
     
@@ -541,12 +475,12 @@
     
         </ul>
     
-    <div class="archive-year"> 2017 </div>
+    <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2017-09-09-github-blog/" >使用Github和Hexo建独立博客</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/metdna/" >MetDNA instruction</a>
         </li>
     
     
@@ -602,7 +536,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/2012-02-22-github-pages/" >使用Github Pages建独立博客</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/2016-11-25-first-blog/" >我的第一篇博客</a>
         </li>
     
     
@@ -616,7 +550,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/2016-11-25-first-blog/" >我的第一篇博客</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/09/09/2012-02-22-github-pages/" >使用Github Pages建独立博客</a>
         </li>
     
     </div>
@@ -628,13 +562,13 @@
     
         <span class="sidebar-tag-name"><a href= "#">Chinese</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">Github</a></span>
-    
-        <span class="sidebar-tag-name"><a href= "#">Blog</a></span>
-    
         <span class="sidebar-tag-name"><a href= "#">R</a></span>
     
         <span class="sidebar-tag-name"><a href= "#">Metabolomics</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Github</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Blog</a></span>
     
     </div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
