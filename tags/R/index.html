@@ -1,86 +1,203 @@
 <!DOCTYPE html>
 <html>
-    <head>
+    <!-- title -->
+
+
+
+
+
+<head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>
-        
-        Shen Blog
-        
-    </title>
-    <link rel="icon" href= favicon.ico>
-    <!-- 提前加载place holder  -->
-    <style>
-        @font-face {
-            font-family: 'Oswald-Regular';
-            src: url('/font/Oswald-Regular.ttf');
-        }
-        @font-face {
-            font-family: 'Source Sans Pro';
-            src: url('/font/Source Sans Pro.woff'),
-            url('/font/Source Sans Pro.woff2');
-            font-weight: normal;
-            font-style: normal;
-        }
-        @font-face {
-            font-family: 'Source Code Pro';
-            src: url('/font/SourceCodePro-Regular.ttf.woff'),
-            url('/font/SourceCodePro-Regular.ttf.woff2');
-            font-weight: normal;
-            font-style: normal;
-        }
-        
-        
-        .site-intro-placeholder {
+    <meta name="description" content="">
+    <title>Shen Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
         position: absolute;
         z-index: -2;
         top: 0;
-        left: 0px;
+        left: 0;
         width: calc(100% + 300px);
         height: 100%;
         background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
         background-position: center center;
         transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2s ease-out 0s 1;
-        }
-        @keyframes gradient-move {
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
         0% {
             transform: translate3d(-226px, 0, 0);
         }
-        99% {
+        100% {
             transform: translate3d(0, 0, 0);
         }
-        99.1% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(-226px, 0, 0);
-        }
     }
-    </style>
-    <link rel="stylesheet" href="/css/style.css">
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+        
+    <link rel="icon" href= /favicon.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
     <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
-    
     <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
     <!-- 百度统计  -->
     
     <!-- 谷歌统计  -->
     
 </head>
+
     
     
 <header class="header">
 
+    <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
     
     <a class="home-link" href=/>Jasper Shen</a>
 </header>
     <div class="wrapper">
-        <div class="site-intro">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+>
     
     <!-- 主页  -->
-    
+            
     <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
@@ -93,78 +210,153 @@
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+        </p>
         <!-- 文章页meta -->
         
     </div>
 </div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
 
-        <div class="container">
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
             <main class="main index-page">
     
     
     
         <article class="index-post">
-            <a class="content-show-full" href = "/2017/10/09/2017-10-11.pipline.function/" >
-                    <h2 class="abstract-title">
-                        
-                        <span>R管道函数</span>
-                    </h2>
-                <div class="abstract-content">
-                    R中的管道函数管道函数是R语言中为了减少过多使用中间变量而创建的，R语言本身没有没有自带管道函数，第三方包中提供了管道函数的使用，我使用的是stringr包。以前不怎么使用，现在开始试着使用管道...
-                </div>
+            <a class="abstract-title" href = "/2017/10/09/2017-10-11.pipline.function/" >
+                
+                    <span>R管道函数</span>
             </a>
+            <div class="abstract-content">
+                R中的管道函数管道函数是R语言中为了减少过多使用中间变量而创建的，R语言本身没有没有自带管道函数，第三方包中提供了管道函数的使用，我使用的是stringr包。以前不怎么使用，现在开始试着使用管道...
+            </div>
             <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/09</span>
+                </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-href = Chinese>Chinese</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href = R>R</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "R">R</a>
     
 </div>
                 
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer"></span><span class="abstract-time">2017/10/09</span>
-                </div>
             </div>
         </article>
     
     
     
         <article class="index-post">
-            <a class="content-show-full" href = "/2017/09/09/2017-09-09-metdna-blog/" >
-                    <h2 class="abstract-title">
-                        
-                        <span>MetDNA instruction</span>
-                    </h2>
-                <div class="abstract-content">
-                    
+            <a class="abstract-title" href = "/2017/09/09/2017-09-09-metdna-blog/" >
+                
+                    <span>MetDNA instruction</span>
+            </a>
+            <div class="abstract-content">
+                
 Instruction of MetDNA (version 0.99.11)
 Xiaotao Shen, Zhengjiang Zhu
 
 
 问题报告  如果有任何问题出现，请点击此处给我留言...
-                </div>
-            </a>
+            </div>
             <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/09/09</span>
+                </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-href = Chinese>Chinese</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href = R>R</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "R">R</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href = Metabolomics>Metabolomics</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Metabolomics">Metabolomics</a>
     
 </div>
                 
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer"></span><span class="abstract-time">2017/09/09</span>
-                </div>
             </div>
         </article>
     
@@ -174,7 +366,7 @@ Xiaotao Shen, Zhengjiang Zhu
             <!-- profile -->
             
         </div>
-        <footer class="footer">
+        <footer class="footer footer-unloaded">
     <!-- social  -->
     
     <div class="social">
@@ -182,43 +374,52 @@ Xiaotao Shen, Zhengjiang Zhu
     
         
             
-                <a href="emailto:shenxt1990@163.com" class="iconfont-archer email" title=email ></a>
+                <a href="mailto:shenxt1990@163.com" class="iconfont-archer email" title=email ></a>
             
         
     
         
             
-                <a href="//github.com/jaspershen" class="iconfont-archer github" target="_blank" title="github"></a>
+                <a href="//github.com/jaspershen" class="iconfont-archer github" target="_blank" title=github></a>
             
         
     
         
             
-                <a href="http://weibo.com/u/2717397881?wvr=5&c=spr_web_sq_baidub_weibo_t001&sudaref=www.baidu.com" class="iconfont-archer weibo" target="_blank" title="weibo"></a>
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="http://ow5z7hup5.bkt.clouddn.com/wechatid.jpg" />
+                </span>
             
         
     
         
             
-                <a href="https://www.zhihu.com/people/shen-zu-tao-73/activities" class="iconfont-archer zhihu" target="_blank" title="zhihu"></a>
+                <a href="http://weibo.com/u/2717397881?wvr=5&c=spr_web_sq_baidub_weibo_t001&sudaref=www.baidu.com" class="iconfont-archer weibo" target="_blank" title=weibo></a>
             
         
     
         
             
-                <a href="/www.zhulab.cn" class="iconfont-archer zhulab" target="_blank" title="zhulab"></a>
+                <a href="https://www.zhihu.com/people/shen-zu-tao-73/activities" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
             
         
     
         
             
-                <a href="https://stackoverflow.com/users/7579484/jasper-shen" class="iconfont-archer stack-overflow" target="_blank" title="stack-overflow"></a>
+                <a href="https://stackoverflow.com/users/7579484/jasper-shen" class="iconfont-archer stack-overflow" target="_blank" title=stack-overflow></a>
             
         
     
         
             
-                <a href="https://www.linkedin.com/in/xiaotao-shen-b7544b106/" class="iconfont-archer linkedin" target="_blank" title="linkedin"></a>
+                <a href="https://www.linkedin.com/in/xiaotao-shen-b7544b106/" class="iconfont-archer linkedin" target="_blank" title=linkedin></a>
+            
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
             
         
     
@@ -227,30 +428,31 @@ Xiaotao Shen, Zhengjiang Zhu
     
     <!-- powered by Hexo  -->
     <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span>
-        <span
-            id="theme-info">Theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">archer</a></span>
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
     </div>
     <!-- 不蒜子  -->
     
     <div class="busuanzi-container">
-        <span id="busuanzi_container_site_pv">Welcome, No. <span id="busuanzi_value_site_pv"></span>
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
         </span>
     </div>
     
 </footer>
     </div>
-    <div class="back-top">&#xe639;</div>
-    <div class="sidebar">
-    <div class="sidebar-header">
-        <div class="sidebar-category">
-            <span class="sidebar-archive-link"><span class="iconfont-archer">&#xe67d;</span>Archive</span>
-            <span class="sidebar-tags-link"><span class="iconfont-archer">&#xe610;</span>Tag</span>
-        </div>
-    </div>
+    <!-- toc -->
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
     <div class="sidebar-content sidebar-content-show-archive">
-          <div class="sidebar-archive">
+          <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
     
     
     
@@ -409,17 +611,17 @@ Xiaotao Shen, Zhengjiang Zhu
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2017-09-09-metdna-blog/" >MetDNA instruction</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2016-11-25-first-blog/" >我的第一篇博客</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2016-11-25-metcleaning/" >MetCleaning instruction</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2017-09-09-metdna-blog/" >MetDNA instruction</a>
         </li>
     
     
@@ -444,33 +646,34 @@ Xiaotao Shen, Zhengjiang Zhu
     
     </div>
   </div>
-        <div class="sidebar-tags">
+        <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name"><a href= "#">Chinese</a></span>
+        <span class="sidebar-tag-name" data-tags="life"><span class="iconfont-archer">&#xe606;</span>life</span>
     
-        <span class="sidebar-tag-name"><a href= "#">Github</a></span>
+        <span class="sidebar-tag-name" data-tags="Chinese"><span class="iconfont-archer">&#xe606;</span>Chinese</span>
     
-        <span class="sidebar-tag-name"><a href= "#">Blog</a></span>
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
     
-        <span class="sidebar-tag-name"><a href= "#">life</a></span>
+        <span class="sidebar-tag-name" data-tags="Blog"><span class="iconfont-archer">&#xe606;</span>Blog</span>
     
-        <span class="sidebar-tag-name"><a href= "#">Hexo</a></span>
+        <span class="sidebar-tag-name" data-tags="R"><span class="iconfont-archer">&#xe606;</span>R</span>
     
-        <span class="sidebar-tag-name"><a href= "#">博客</a></span>
+        <span class="sidebar-tag-name" data-tags="Metabolomics"><span class="iconfont-archer">&#xe606;</span>Metabolomics</span>
     
-        <span class="sidebar-tag-name"><a href= "#">R</a></span>
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
     
-        <span class="sidebar-tag-name"><a href= "#">Metabolomics</a></span>
+        <span class="sidebar-tag-name" data-tags="博客"><span class="iconfont-archer">&#xe606;</span>博客</span>
     
     </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
     缺失模块。<br/>
     1、请确保node版本大于6.2<br/>
     2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
     <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
     3、在根目录_config.yml里添加配置：
-    <pre style="color: #888; font-size: 0.6rem;">
+    <pre style="color: #787878; font-size: 0.6rem;">
 jsonContent:
   meta: false
   pages: false
@@ -487,24 +690,53 @@ jsonContent:
     link: false
     permalink: false
     excerpt: false
-    categories: false
+    categories: true
     tags: true</pre>
     </div> 
-    <div class="sidebar-tag-list"></div>
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="github-technology"><span class="iconfont-archer">&#xe60a;</span>github-technology</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese"><span class="iconfont-archer">&#xe60a;</span>Chinese</span>
+    
+        <span class="sidebar-category-name" data-categories="R-software"><span class="iconfont-archer">&#xe60a;</span>R-software</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R"><span class="iconfont-archer">&#xe60a;</span>Chinese/R</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/Life"><span class="iconfont-archer">&#xe60a;</span>Chinese/Life</span>
+    
+        <span class="sidebar-category-name" data-categories="R-software/Metabolomics"><span class="iconfont-archer">&#xe60a;</span>R-software/Metabolomics</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R/Hexo"><span class="iconfont-archer">&#xe60a;</span>Chinese/R/Hexo</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R/Hexo/博客"><span class="iconfont-archer">&#xe60a;</span>Chinese/R/Hexo/博客</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
 </div>
     </div>
 </div> 
     <script>
-    var jsInfo = {
-        root: '/'
+    var siteMeta = {
+        root: '/',
+        author: 'Japser Shen'
     }
 </script>
-    <!-- 不蒜子  -->
+
+    <!-- busuanzi  -->
     
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     
-    <!-- CNZZ统计  -->
+    <!-- CNZZ  -->
     
     </div>
+    <!-- async load share.js -->
+    
     </body>
 </html>
+
+
