@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <title>
         
-        Shen Blog
+        Hexo博客绑定域名 · Shen Blog
         
     </title>
     <link rel="icon" href= favicon.ico>
@@ -68,11 +68,22 @@
     
 </head>
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Jasper Shen</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Hexo博客绑定域名</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Jasper Shen</a>
 </header>
@@ -81,61 +92,102 @@
     
     <!-- 主页  -->
     
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    
+    <!-- 404页  -->
+    
+    <div class="site-intro-img" style="background-image: url(http://ow5z7hup5.bkt.clouddn.com/moutin.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            Hexo博客绑定域名
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+        </p>
+        <!-- 404 -->
+        
         <!-- 文章页meta -->
         
-    </div>
-</div>
-
-        <div class="container">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="content-show-full" href = "/2017/09/09/2017-09-09-github-blog/" >
-                    <h2 class="abstract-title">
-                        
-                        <span>使用Github和Hexo建独立博客</span>
-                    </h2>
-                <div class="abstract-content">
-                    参考了一篇非常好的文章，然后结合自己的实际问题，讲解如何使用github结合hexo建立个人的独立博客。
-1. Hexo介绍Hexo是基于NodeJs的静态博客框架，简单、轻量，其生成的静态网页...
-                </div>
-            </a>
-            <div class="abstract-post-meta">
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-href = Chinese>Chinese</a>
     
         <a class="post-tag" href="javascript:void(0);" data-href = Github>Github</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href = Blog>Blog</a>
+        <a class="post-tag" href="javascript:void(0);" data-href = Hexo>Hexo</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = 博客>博客</a>
     
 </div>
-                
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer"></span><span class="abstract-time">2017/09/09</span>
-                </div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/04/13</span>
             </div>
-        </article>
+        
+    </div>
+</div>
+
+        <div class="container">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="如何将Hexo博客绑定自己的域名？"><a href="#如何将Hexo博客绑定自己的域名？" class="headerlink" title="如何将Hexo博客绑定自己的域名？"></a><font color="salmon">如何将Hexo博客绑定自己的域名？</font></h3><p>构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。</p>
+<h3 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a><font color="salmon">购买域名</font></h3><p>我是在<a href="https://sg.godaddy.com/zh/" target="_blank" rel="external">godaddy</a>上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。</p>
+<h3 id="域名设置"><a href="#域名设置" class="headerlink" title="域名设置"></a><font color="salmon">域名设置</font></h3><p>购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。</p>
+<p><img src="域名设置1.png" alt=""></p>
+<p>然后点击添加，分别添加两个记录。第一个记录</p>
+<ul>
+<li>类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该<a href="http://ip.chinaz.com/" target="_blank" rel="external">网站</a>，直接输入博客地址即可，如shenxt.github.io。</li>
+<li>类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。</li>
+</ul>
+<p><img src="域名设置2.png" alt=""></p>
+<p>然后保存即可。</p>
+<h3 id="博客设置"><a href="#博客设置" class="headerlink" title="博客设置"></a><font color="salmon">博客设置</font></h3><p>在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo c</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure></p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a><font color="salmon">测试</font></h3><p>一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-pager">
+        
+        
+            <li class="next">
+                <a href= "/2017/10/09/2017-10-11.pipline.function/" title= R管道函数 >
+                    <span>Next Post</span>
+                    <span>R管道函数</span>
+                </a>
+            </li>
+        
+    </ul>
+    <!-- 来必力City版安装代码 -->
+
     
-    <!-- paginator  -->
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMDc2Ny83MzE5>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
     
+
+<!-- City版安装代码已完成 -->
 </main>
             <!-- profile -->
             
