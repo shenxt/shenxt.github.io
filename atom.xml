@@ -73,9 +73,9 @@
       <category term="Life" scheme="http://yoursite.com/categories/Chinese/Life/"/>
     
     
-      <category term="life" scheme="http://yoursite.com/tags/life/"/>
-    
       <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
+    
+      <category term="life" scheme="http://yoursite.com/tags/life/"/>
     
   </entry>
   
@@ -128,9 +128,9 @@
       <category term="Life" scheme="http://yoursite.com/categories/Chinese/Life/"/>
     
     
-      <category term="life" scheme="http://yoursite.com/tags/life/"/>
-    
       <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
+    
+      <category term="life" scheme="http://yoursite.com/tags/life/"/>
     
   </entry>
   
