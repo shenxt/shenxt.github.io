@@ -1,0 +1,32 @@
+<hr>
+<p>layout: post<br>title: 爬去MassBank数据<br>tags:</p>
+<pre><code>- Chinese
+- Metabolomics
+</code></pre><p>categories:</p>
+<pre><code>- Chinese
+- Metabolomics
+</code></pre><hr>
+<h3 id="利用R语言爬去MassBank数据库"><a href="#利用R语言爬去MassBank数据库" class="headerlink" title="利用R语言爬去MassBank数据库"></a><font color=salmon>利用R语言爬去MassBank数据库</font></h3><p>直接把代码记录如下：</p>
+<pre><code>library(rvest)
+url &lt;- &quot;http://www.massbank.jp/SVN/OpenData/record/Athens_Univ/&quot;
+met.id &lt;- read_html(url)
+met.id &lt;- html_text(met.id)
+met.id &lt;- strsplit(x = met.id, split = &quot;\n&quot;)[[1]]
+met.id &lt;- met.id[grep(&quot;.txt&quot;, met.id)]
+met.id &lt;- stringr::str_trim(met.id)
+
+
+athens_univ &lt;- vector(mode = &quot;list&quot;, length = length(met.id))
+
+for(i in 1:length(athens_univ)){
+  cat(i, &quot; &quot;)
+  temp.url &lt;- paste(&quot;http://www.massbank.jp/SVN/OpenData/record/Athens_Univ/&quot;, met.id[i], &quot;/&quot;, sep = &quot;&quot;)
+  met.ms2 &lt;- read_html(temp.url)
+  met.ms2 &lt;- html_text(met.ms2)
+  met.ms2 &lt;- strsplit(x = met.ms2, split = &quot;\r\n&quot;)[[1]]
+  athens_univ[[i]] &lt;- met.ms2
+}
+
+
+names(athens_univ) &lt;- gsub(pattern = &quot;.txt&quot;, replacement = &quot;&quot;, x = met.id)
+</code></pre>

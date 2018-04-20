@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[爬去MassBank数据]]></title>
+    <url>%2F2018%2F04%2F20%2F2018-04-13-hexo-domain-name%2F2018-04-13-massbank-database-get%2F</url>
+    <content type="text"><![CDATA[利用R语言爬去MassBank数据库直接把代码记录如下： 12345678910111213141516171819202122library(rvest)url &lt;- &quot;http://www.massbank.jp/SVN/OpenData/record/Athens_Univ/&quot;met.id &lt;- read_html(url)met.id &lt;- html_text(met.id)met.id &lt;- strsplit(x = met.id, split = &quot;\n&quot;)[[1]]met.id &lt;- met.id[grep(&quot;.txt&quot;, met.id)]met.id &lt;- stringr::str_trim(met.id)athens_univ &lt;- vector(mode = &quot;list&quot;, length = length(met.id))for(i in 1:length(athens_univ))&#123; cat(i, &quot; &quot;) temp.url &lt;- paste(&quot;http://www.massbank.jp/SVN/OpenData/record/Athens_Univ/&quot;, met.id[i], &quot;/&quot;, sep = &quot;&quot;) met.ms2 &lt;- read_html(temp.url) met.ms2 &lt;- html_text(met.ms2) met.ms2 &lt;- strsplit(x = met.ms2, split = &quot;\r\n&quot;)[[1]] athens_univ[[i]] &lt;- met.ms2&#125;names(athens_univ) &lt;- gsub(pattern = &quot;.txt&quot;, replacement = &quot;&quot;, x = met.id)]]></content>
+      <categories>
+        <category>Chinese</category>
+        <category>Metabolomics</category>
+      </categories>
+      <tags>
+        <tag>Chinese</tag>
+        <tag>Metabolomics</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo博客绑定域名]]></title>
     <url>%2F2018%2F04%2F13%2F2018-04-13-hexo-domain-name%2F</url>
     <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
@@ -39,8 +52,8 @@
         <category>Life</category>
       </categories>
       <tags>
-        <tag>life</tag>
         <tag>Chinese</tag>
+        <tag>life</tag>
       </tags>
   </entry>
   <entry>
@@ -52,8 +65,8 @@
         <category>Life</category>
       </categories>
       <tags>
-        <tag>life</tag>
         <tag>Chinese</tag>
+        <tag>life</tag>
       </tags>
   </entry>
   <entry>
