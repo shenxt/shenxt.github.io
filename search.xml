@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[爬去MassBank数据]]></title>
+    <title><![CDATA[爬取MassBank数据]]></title>
     <url>%2F2018%2F04%2F20%2F2018-04-13-hexo-domain-name%2F2018-04-13-massbank-database-get%2F</url>
     <content type="text"><![CDATA[利用R语言爬去MassBank数据库直接把代码记录如下： 12345678910111213141516171819202122library(rvest)url &lt;- &quot;http://www.massbank.jp/SVN/OpenData/record/Athens_Univ/&quot;met.id &lt;- read_html(url)met.id &lt;- html_text(met.id)met.id &lt;- strsplit(x = met.id, split = &quot;\n&quot;)[[1]]met.id &lt;- met.id[grep(&quot;.txt&quot;, met.id)]met.id &lt;- stringr::str_trim(met.id)athens_univ &lt;- vector(mode = &quot;list&quot;, length = length(met.id))for(i in 1:length(athens_univ))&#123; cat(i, &quot; &quot;) temp.url &lt;- paste(&quot;http://www.massbank.jp/SVN/OpenData/record/Athens_Univ/&quot;, met.id[i], &quot;/&quot;, sep = &quot;&quot;) met.ms2 &lt;- read_html(temp.url) met.ms2 &lt;- html_text(met.ms2) met.ms2 &lt;- strsplit(x = met.ms2, split = &quot;\r\n&quot;)[[1]] athens_univ[[i]] &lt;- met.ms2&#125;names(athens_univ) &lt;- gsub(pattern = &quot;.txt&quot;, replacement = &quot;&quot;, x = met.id)]]></content>
       <categories>
@@ -52,8 +52,8 @@
         <category>Life</category>
       </categories>
       <tags>
-        <tag>Chinese</tag>
         <tag>life</tag>
+        <tag>Chinese</tag>
       </tags>
   </entry>
   <entry>
@@ -65,8 +65,8 @@
         <category>Life</category>
       </categories>
       <tags>
-        <tag>Chinese</tag>
         <tag>life</tag>
+        <tag>Chinese</tag>
       </tags>
   </entry>
   <entry>
