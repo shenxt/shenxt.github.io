@@ -65,6 +65,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         
     <link rel="icon" href= /favicon.ico>
     <script>
@@ -175,12 +177,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Xiaotao Shen</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name"></a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Xiaotao Shen</a>
 </header>
@@ -194,24 +207,61 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(http://ow5z7hup5.bkt.clouddn.com/moutin.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            [Untitled Post]
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/05/16</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
@@ -295,155 +345,85 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="代谢组数据标准化包MetNormalizer介绍"><a href="#代谢组数据标准化包MetNormalizer介绍" class="headerlink" title="代谢组数据标准化包MetNormalizer介绍"></a>代谢组数据标准化包MetNormalizer介绍</h3><hr>
+<h4 id="为什么要做标准化"><a href="#为什么要做标准化" class="headerlink" title="为什么要做标准化"></a>为什么要做标准化</h4><p>基于质谱的代谢组学数据由于各种因素，比如质谱信号漂移，色谱柱污染，等等，会导致采集的数据有很多的系统误差存在，这些系统误差如果不去除掉，会严重影响数据质量，并进而影响从数据中挖掘有效信息的能力。比如下面图就分别显示了批次内（intra-batch）以及批次间（inter-batch）的系统误差，可以看到系统误差还是非常严重和明显的。因此对于质谱代谢组学数据来说，数据的标准化（data normalization）是必不可少的一步。</p>
+<p><img src="intra and inter batch variation.png" alt="批次内和批次间误差"></p>
+<h4 id="代谢组学数据标准化的方法"><a href="#代谢组学数据标准化的方法" class="headerlink" title="代谢组学数据标准化的方法"></a>代谢组学数据标准化的方法</h4><p>代谢组学数据进行标准化的方法大致可以分为三种。</p>
+<ul>
+<li>内标标准化：在样品中加入内标，然后对所有的峰都使用该内标进行校正。但是这种方法使用一个或者几个内标对所有的峰进行标准哈，并不可靠，因此用的不多。</li>
+<li>基于样品本身：比如使用样品中所有峰的平均值、中位值或者总和对所有峰进行校正。另外还有比如PQN等等方法。</li>
+<li>第三种在代谢组学数据中最为常见的标准化方法是基于QC（质量控制）样本的数据标准化。简单来说，就是将所要采集的所有样本取等量混合起来，组成QC样本，然后在采集数据的时候，每隔一定数量的样品，插入一针QC样本。因为QC样本都是一样的，因此可以用QC样本来模拟数据采集过程中信号的变化。得到数据之后，对每一个峰（peak），都将QC作为训练集，然后建立预测模型，预测信号变化，从而对样品中的信号进行校正。</li>
+</ul>
+<p><img src="QC sample.png" alt="QC样品"></p>
+<p><img src="workflow.png" alt="QC normalization workflow"></p>
+<h4 id="基于QC和支持向量机的数据标准化R包：MetNormalizer"><a href="#基于QC和支持向量机的数据标准化R包：MetNormalizer" class="headerlink" title="基于QC和支持向量机的数据标准化R包：MetNormalizer"></a>基于QC和支持向量机的数据标准化R包：MetNormalizer</h4><p>我再读博期间的第一个项目就是建立一个基于QC样品的数据标准化方法，我们最后选择了一个非常有用并且常用的机器学习方法，SVR（支持向量机回归），最后的方法我们做成了一个R包，MetNormalizer。具体的内容可以参考我的文章，<a href="http://ow5z7hup5.bkt.clouddn.com/2016%20Metabolomics%20MetNormalizer.pdf" target="_blank" rel="external">Normalization and Integration of Large-Scale Metabolomics Data Using Support Vector Regression</a>。下面就用MetNormalizer自带的示例数据示范如何使用。</p>
+<ul>
+<li><p>安装MetNormalizer<br>MetNormalizer的源代码托管在github上，可以直接从github安装。在R控制台中输入下列代码，进行安装。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if(!require(devtools))&#123;</div><div class="line">install.packages(&quot;devtools&quot;)</div><div class="line">&#125;</div><div class="line">devtools::install_github(&quot;jaspershen/MetNormalizer&quot;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>准备数据<br>以MetNormalizer自带数据为例。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#首先加载MetNormalizer包</div><div class="line">library(MetNormalizer)</div><div class="line">#设置工作路径</div><div class="line">setwd(&quot;F:/test&quot;)#根据自己实际情况设置路径</div><div class="line">data(DemoData, package = &quot;MetNormalizer&quot;)</div><div class="line">#输出数据为csv格式</div><div class="line">write.csv(data, &quot;data.csv&quot;, row.names = FALSE)</div><div class="line">write.csv(sample.info, &quot;sample.info.csv&quot;, row.names = FALSE)</div></pre></td></tr></table></figure>
+<p>其中data为MS1 peak table，可以来源于任何的处理软件，如XCMS，MS-DIAL等。注意前三列必须为name(峰的名字)，m/z和RT。然后其他列为样本的intensity。</p>
+<p><img src="data.png" alt="data"></p>
+<p>sample.info为样品信息，用来提供样品的信息。一共三列，第一列sample.name(样品名字)，然后依次是injection.order和class。class用来指明样品的种类，”Subject”说明该样品为生物样品，注意S要大写；QC是指样品为QC样品。</p>
+<p><img src="sample.info.png" alt="data"></p>
+<ul>
+<li>开始处理数据<br>然后开始运行函数。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MetNormalizer(minfrac.qc = 0,</div><div class="line">              minfrac.sample = 0,</div><div class="line">              threads = 3,</div><div class="line">              peakplot = TRUE)</div></pre></td></tr></table></figure>
+<ul>
+<li>处理结果</li>
+</ul>
+<p>最后所有的处理结果都存放在<em>svr normalization result</em>文件夹中。</p>
+<p><img src="result.png" alt="result"></p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/20/2018-04-13-hexo-domain-name/2018-04-13-massbank-database-get/" title= 爬取MassBank数据 >
+                    <div class="prevTitle">爬取MassBank数据</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMDc2Ny83MzE5>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+
+<!-- City版安装代码已完成 -->
     
     
+    <!--PC版-->
+
+    <!--PC版-->
+
+
     
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/20/2018-04-13-hexo-domain-name/2018-04-13-massbank-database-get/" >
-                
-                    <span>爬取MassBank数据</span>
-            </a>
-            <div class="abstract-content">
-                利用R语言爬去MassBank数据库直接把代码记录如下：
-12345678910111213141516171819202122library(rvest)url &lt;- &quot;htt...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/20</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Metabolomics">Metabolomics</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/13/2018-04-13-hexo-domain-name/" >
-                
-                    <span>Hexo博客绑定域名</span>
-            </a>
-            <div class="abstract-content">
-                如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.m...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/13</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Github">Github</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Hexo">Hexo</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "博客">博客</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/10/09/2017-10-11.pipline.function/" >
-                
-                    <span>R管道函数</span>
-            </a>
-            <div class="abstract-content">
-                R中的管道函数管道函数是R语言中为了减少过多使用中间变量而创建的，R语言本身没有没有自带管道函数，第三方包中提供了管道函数的使用，我使用的是stringr包。以前不怎么使用，现在开始试着使用管道...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/09</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "R">R</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/10/09/2017-10-09.poetry/" >
-                
-                    <span>偶然翻到的文章</span>
-            </a>
-            <div class="abstract-content">
-                整理笔记的发现别人都说翻看以前的空间觉得自己以前写的东西宛若智障，这两天在翻看以前的笔记，也有这种感觉，因此，该删的删，直到看到了这篇文章，是在15年6月26号写的，现在想起来，虽然只有两年多的...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/09</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "life">life</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/10/04/2017-10-03.in.erdos/" >
-                
-                    <span>鄂尔多斯之旅</span>
-            </a>
-            <div class="abstract-content">
-                重返内蒙虽然在呼和浩特待了四年的时间，度过了自己的大学生活，但是对内蒙古和呼市的了解却非常的匮乏，也仅仅限于内蒙古大学周围的那片区域。毕业已经四年多了，博士都快毕业了，但是自从毕业之后还没有到过...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/04</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "life">life</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    <!-- paginator  -->
-    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -538,6 +518,24 @@
 
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#代谢组数据标准化包MetNormalizer介绍"><span class="toc-number">1.</span> <span class="toc-text">代谢组数据标准化包MetNormalizer介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要做标准化"><span class="toc-number">1.1.</span> <span class="toc-text">为什么要做标准化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代谢组学数据标准化的方法"><span class="toc-number">1.2.</span> <span class="toc-text">代谢组学数据标准化的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于QC和支持向量机的数据标准化R包：MetNormalizer"><span class="toc-number">1.3.</span> <span class="toc-text">基于QC和支持向量机的数据标准化R包：MetNormalizer</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -871,6 +869,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
