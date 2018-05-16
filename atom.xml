@@ -38,6 +38,27 @@
   </entry>
   
   <entry>
+    <title></title>
+    <link href="http://yoursite.com/2018/05/16/metabolomics-data-normalization/"/>
+    <id>http://yoursite.com/2018/05/16/metabolomics-data-normalization/</id>
+    <published>2018-05-16T10:48:28.000Z</published>
+    <updated>2018-05-16T10:48:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="代谢组数据标准化包MetNormalizer介绍"><a href="#代谢组数据标准化包MetNormalizer介绍" class="headerlink" title="代谢组数据标准化包MetNormalizer介绍"></a>代谢组数据标准化包MetNormalizer介绍</h3><hr><h4 id="为什么要做标准化"><a href="#为什么要做标准化" class="headerlink" title="为什么要做标准化"></a>为什么要做标准化</h4><p>基于质谱的代谢组学数据由于各种因素，比如质谱信号漂移，色谱柱污染，等等，会导致采集的数据有很多的系统误差存在，这些系统误差如果不去除掉，会严重影响数据质量，并进而影响从数据中挖掘有效信息的能力。比如下面图就分别显示了批次内（intra-batch）以及批次间（inter-batch）的系统误差，可以看到系统误差还是非常严重和明显的。因此对于质谱代谢组学数据来说，数据的标准化（data normalization）是必不可少的一步。</p><p><img src="intra and inter batch variation.png" alt="批次内和批次间误差"></p><h4 id="代谢组学数据标准化的方法"><a href="#代谢组学数据标准化的方法" class="headerlink" title="代谢组学数据标准化的方法"></a>代谢组学数据标准化的方法</h4><p>代谢组学数据进行标准化的方法大致可以分为三种。</p><ul><li>内标标准化：在样品中加入内标，然后对所有的峰都使用该内标进行校正。但是这种方法使用一个或者几个内标对所有的峰进行标准哈，并不可靠，因此用的不多。</li><li>基于样品本身：比如使用样品中所有峰的平均值、中位值或者总和对所有峰进行校正。另外还有比如PQN等等方法。</li><li>第三种在代谢组学数据中最为常见的标准化方法是基于QC（质量控制）样本的数据标准化。简单来说，就是将所要采集的所有样本取等量混合起来，组成QC样本，然后在采集数据的时候，每隔一定数量的样品，插入一针QC样本。因为QC样本都是一样的，因此可以用QC样本来模拟数据采集过程中信号的变化。得到数据之后，对每一个峰（peak），都将QC作为训练集，然后建立预测模型，预测信号变化，从而对样品中的信号进行校正。</li></ul><p><img src="QC sample.png" alt="QC样品"></p><p><img src="workflow.png" alt="QC normalization workflow"></p><h4 id="基于QC和支持向量机的数据标准化R包：MetNormalizer"><a href="#基于QC和支持向量机的数据标准化R包：MetNormalizer" class="headerlink" title="基于QC和支持向量机的数据标准化R包：MetNormalizer"></a>基于QC和支持向量机的数据标准化R包：MetNormalizer</h4><p>我再读博期间的第一个项目就是建立一个基于QC样品的数据标准化方法，我们最后选择了一个非常有用并且常用的机器学习方法，SVR（支持向量机回归），最后的方法我们做成了一个R包，MetNormalizer。具体的内容可以参考我的文章，<a href="http://ow5z7hup5.bkt.clouddn.com/2016%20Metabolomics%20MetNormalizer.pdf" target="_blank" rel="external">Normalization and Integration of Large-Scale Metabolomics Data Using Support Vector Regression</a>。下面就用MetNormalizer自带的示例数据示范如何使用。</p><ul><li><p>安装MetNormalizer<br>MetNormalizer的源代码托管在github上，可以直接从github安装。在R控制台中输入下列代码，进行安装。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if(!require(devtools))&#123;</div><div class="line">install.packages(&quot;devtools&quot;)</div><div class="line">&#125;</div><div class="line">devtools::install_github(&quot;jaspershen/MetNormalizer&quot;)</div></pre></td></tr></table></figure></li><li><p>准备数据<br>以MetNormalizer自带数据为例。</p></li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#首先加载MetNormalizer包</div><div class="line">library(MetNormalizer)</div><div class="line">#设置工作路径</div><div class="line">setwd(&quot;F:/test&quot;)#根据自己实际情况设置路径</div><div class="line">data(DemoData, package = &quot;MetNormalizer&quot;)</div><div class="line">#输出数据为csv格式</div><div class="line">write.csv(data, &quot;data.csv&quot;, row.names = FALSE)</div><div class="line">write.csv(sample.info, &quot;sample.info.csv&quot;, row.names = FALSE)</div></pre></td></tr></table></figure><p>其中data为MS1 peak table，可以来源于任何的处理软件，如XCMS，MS-DIAL等。注意前三列必须为name(峰的名字)，m/z和RT。然后其他列为样本的intensity。</p><p><img src="data.png" alt="data"></p><p>sample.info为样品信息，用来提供样品的信息。一共三列，第一列sample.name(样品名字)，然后依次是injection.order和class。class用来指明样品的种类，”Subject”说明该样品为生物样品，注意S要大写；QC是指样品为QC样品。</p><p><img src="sample.info.png" alt="data"></p><ul><li>开始处理数据<br>然后开始运行函数。</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MetNormalizer(minfrac.qc = 0,</div><div class="line">              minfrac.sample = 0,</div><div class="line">              threads = 3,</div><div class="line">              peakplot = TRUE)</div></pre></td></tr></table></figure><ul><li>处理结果</li></ul><p>最后所有的处理结果都存放在<em>svr normalization result</em>文件夹中。</p><p><img src="result.png" alt="result"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;代谢组数据标准化包MetNormalizer介绍&quot;&gt;&lt;a href=&quot;#代谢组数据标准化包MetNormalizer介绍&quot; class=&quot;headerlink&quot; title=&quot;代谢组数据标准化包MetNormalizer介绍&quot;&gt;&lt;/a&gt;代谢组数据标准化包MetNo
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>爬取MassBank数据</title>
     <link href="http://yoursite.com/2018/04/20/2018-04-13-hexo-domain-name/2018-04-13-massbank-database-get/"/>
     <id>http://yoursite.com/2018/04/20/2018-04-13-hexo-domain-name/2018-04-13-massbank-database-get/</id>
@@ -123,9 +144,9 @@
       <category term="Life" scheme="http://yoursite.com/categories/Chinese/Life/"/>
     
     
-      <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
-    
       <category term="life" scheme="http://yoursite.com/tags/life/"/>
+    
+      <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
     
   </entry>
   
@@ -178,9 +199,9 @@
       <category term="Life" scheme="http://yoursite.com/categories/Chinese/Life/"/>
     
     
-      <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
-    
       <category term="life" scheme="http://yoursite.com/tags/life/"/>
+    
+      <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
     
   </entry>
   
