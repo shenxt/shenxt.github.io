@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>R语言入门 · Shen Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /favicon.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Xiaotao Shen</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">R语言入门</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Xiaotao Shen</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(http://ow5z7hup5.bkt.clouddn.com/moutin.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            R语言入门
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "R语言">R语言</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "组学基础">组学基础</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/06/03</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h5 id="这篇文章开始介绍R的基本知识，来让初步学习R语言的同学们能够快速入门。已经入门的同学请略过本文，否则你将浪费人生中的十分钟。。。"><a href="#这篇文章开始介绍R的基本知识，来让初步学习R语言的同学们能够快速入门。已经入门的同学请略过本文，否则你将浪费人生中的十分钟。。。" class="headerlink" title="这篇文章开始介绍R的基本知识，来让初步学习R语言的同学们能够快速入门。已经入门的同学请略过本文，否则你将浪费人生中的十分钟。。。"></a>这篇文章开始介绍R的基本知识，来让初步学习R语言的同学们能够快速入门。已经入门的同学请略过本文，<strong>否则你将浪费人生中的十分钟。。。</strong></h5><h3 id="1-数据结构"><a href="#1-数据结构" class="headerlink" title="1. 数据结构"></a>1. 数据结构</h3><h4 id="向量-（vector）：R语言中的战斗机"><a href="#向量-（vector）：R语言中的战斗机" class="headerlink" title="向量 （vector）：R语言中的战斗机"></a>向量 （vector）：R语言中的战斗机</h4><h5 id="向量类型是R语言的核心，很多运算都涉及到向量。我们先来一个最简单的向量。"><a href="#向量类型是R语言的核心，很多运算都涉及到向量。我们先来一个最简单的向量。" class="headerlink" title="向量类型是R语言的核心，很多运算都涉及到向量。我们先来一个最简单的向量。"></a>向量类型是R语言的核心，很多运算都涉及到向量。我们先来一个最简单的向量。</h5><h5 id="直接在控制台（Rstudio左下角的那个地方）中输入："><a href="#直接在控制台（Rstudio左下角的那个地方）中输入：" class="headerlink" title="直接在控制台（Rstudio左下角的那个地方）中输入："></a>直接在控制台（Rstudio左下角的那个地方）中输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">x &lt;- 3</div><div class="line">x</div></pre></td></tr></table></figure>
+<h5 id="x就是一个向量，一维的，3就是元素，只是只有一个，光杆司令。"><a href="#x就是一个向量，一维的，3就是元素，只是只有一个，光杆司令。" class="headerlink" title="x就是一个向量，一维的，3就是元素，只是只有一个，光杆司令。"></a>x就是一个向量，一维的，3就是元素，只是只有一个，光杆司令。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">y &lt;- c(1, 2, 3)</div><div class="line">y</div><div class="line">length(y)</div><div class="line">y[1]</div><div class="line">y[3]</div><div class="line">x[1]</div></pre></td></tr></table></figure>
+<h5 id="“-lt-”是R语言中赋予的符号，在这个公式中，意味着我们把3这个值赋给x这个变量名，这样x就是3，但是3不一定是x。"><a href="#“-lt-”是R语言中赋予的符号，在这个公式中，意味着我们把3这个值赋给x这个变量名，这样x就是3，但是3不一定是x。" class="headerlink" title="“&lt;-”是R语言中赋予的符号，在这个公式中，意味着我们把3这个值赋给x这个变量名，这样x就是3，但是3不一定是x。"></a>“&lt;-”是R语言中赋予的符号，在这个公式中，意味着我们把3这个值赋给x这个变量名，这样x就是3，但是3不一定是x。</h5><h5 id="我们再创建一个长度不是1的向量，"><a href="#我们再创建一个长度不是1的向量，" class="headerlink" title="我们再创建一个长度不是1的向量，"></a>我们再创建一个长度不是1的向量，</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">y &lt;- c(1, 2, 3)</div><div class="line">y</div><div class="line">length(y)</div><div class="line">y[1]</div><div class="line">y[3]</div><div class="line">x[1]</div></pre></td></tr></table></figure>
+<h5 id="y就是一个长度为3的向量。length函数是用来查看向量长度的函数。对于y向量来说，他的元素就是1-2-3。向量中的元素是有顺序的，第一个从1开始计算，比如我想要查看向量y的第一个元素，那么就使用y-1-。y-1-代表的就是向量y的第一个元素，那么同样的y的第三个元素就是y-3-。"><a href="#y就是一个长度为3的向量。length函数是用来查看向量长度的函数。对于y向量来说，他的元素就是1-2-3。向量中的元素是有顺序的，第一个从1开始计算，比如我想要查看向量y的第一个元素，那么就使用y-1-。y-1-代表的就是向量y的第一个元素，那么同样的y的第三个元素就是y-3-。" class="headerlink" title="y就是一个长度为3的向量。length函数是用来查看向量长度的函数。对于y向量来说，他的元素就是1,2,3。向量中的元素是有顺序的，第一个从1开始计算，比如我想要查看向量y的第一个元素，那么就使用y[1]。y[1]代表的就是向量y的第一个元素，那么同样的y的第三个元素就是y[3]。"></a>y就是一个长度为3的向量。length函数是用来查看向量长度的函数。对于y向量来说，他的元素就是1,2,3。向量中的元素是有顺序的，第一个从1开始计算，比如我想要查看向量y的第一个元素，那么就使用y[1]。y[1]代表的就是向量y的第一个元素，那么同样的y的第三个元素就是y[3]。</h5><h4 id="矩阵（matrix）："><a href="#矩阵（matrix）：" class="headerlink" title="矩阵（matrix）："></a>矩阵（matrix）：</h4><h5 id="R中的矩阵概念跟数学中完全一样。矩阵可以理解为二维的向量，也就是包括行数和列数。下面我们举个栗子："><a href="#R中的矩阵概念跟数学中完全一样。矩阵可以理解为二维的向量，也就是包括行数和列数。下面我们举个栗子：" class="headerlink" title="R中的矩阵概念跟数学中完全一样。矩阵可以理解为二维的向量，也就是包括行数和列数。下面我们举个栗子："></a>R中的矩阵概念跟数学中完全一样。矩阵可以理解为二维的向量，也就是包括行数和列数。下面我们举个栗子：</h5><p><img src="https://note.youdao.com/favicon.ico" alt="image"></p>
+<p><img src="https://note.youdao.com/yws/public/resource/65076dda883d93a792dc64163dec905a/xmlnote/C5243CEBF42A43FFBD8F9F48EA00113C/18906" alt="image"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">m &lt;- rbind(c(1,2), c(2,3))</div><div class="line">m</div></pre></td></tr></table></figure>
+<h5 id="rbind是一个函数，我们简单介绍一下。rbind直接从字面上理解是row-combine，也就是行组合。什么意思呢？就是把几个向量按照行从上到下组合起来。用图可以很好地理解：（灵魂画师上线。。。）"><a href="#rbind是一个函数，我们简单介绍一下。rbind直接从字面上理解是row-combine，也就是行组合。什么意思呢？就是把几个向量按照行从上到下组合起来。用图可以很好地理解：（灵魂画师上线。。。）" class="headerlink" title="rbind是一个函数，我们简单介绍一下。rbind直接从字面上理解是row combine，也就是行组合。什么意思呢？就是把几个向量按照行从上到下组合起来。用图可以很好地理解：（灵魂画师上线。。。）"></a>rbind是一个函数，我们简单介绍一下。rbind直接从字面上理解是row combine，也就是行组合。什么意思呢？就是把几个向量按照行从上到下组合起来。用图可以很好地理解：（灵魂画师上线。。。）</h5><p><img src="https://note.youdao.com/yws/public/resource/65076dda883d93a792dc64163dec905a/xmlnote/ECBE039B1F874792A3A8A6FCAE9D2700/17899" alt=""></p>
+<h5 id="rbind函数就是把向量1和2然后按照行组合起来，成为一个新的矩阵。从这上面可以看到必须满足两个条件，向量1和2必须长度一致。同样还有一个函数，cbind，大家应该猜到了，就是column-combine，也就是把几个向量按照列从左到右组合。"><a href="#rbind函数就是把向量1和2然后按照行组合起来，成为一个新的矩阵。从这上面可以看到必须满足两个条件，向量1和2必须长度一致。同样还有一个函数，cbind，大家应该猜到了，就是column-combine，也就是把几个向量按照列从左到右组合。" class="headerlink" title="rbind函数就是把向量1和2然后按照行组合起来，成为一个新的矩阵。从这上面可以看到必须满足两个条件，向量1和2必须长度一致。同样还有一个函数，cbind，大家应该猜到了，就是column combine，也就是把几个向量按照列从左到右组合。"></a>rbind函数就是把向量1和2然后按照行组合起来，成为一个新的矩阵。从这上面可以看到必须满足两个条件，向量1和2必须长度一致。同样还有一个函数，cbind，大家应该猜到了，就是column combine，也就是把几个向量按照列从左到右组合。</h5><h5 id="比如"><a href="#比如" class="headerlink" title="比如"></a>比如</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">m2 &lt;- cbind(c(1,2,3,4), c(2,3,4,5))</div><div class="line">dim(m2)</div></pre></td></tr></table></figure>
+<h5 id="dim是查看矩阵的行数和列数。那么，怎么查看矩阵的某个元素呢？和向量一样，需要使用-来看，但是要看单个元素，得使用行数和列数来进行确定，比如"><a href="#dim是查看矩阵的行数和列数。那么，怎么查看矩阵的某个元素呢？和向量一样，需要使用-来看，但是要看单个元素，得使用行数和列数来进行确定，比如" class="headerlink" title="dim是查看矩阵的行数和列数。那么，怎么查看矩阵的某个元素呢？和向量一样，需要使用[]来看，但是要看单个元素，得使用行数和列数来进行确定，比如:"></a><strong>dim是查看矩阵的行数和列数。那么，怎么查看矩阵的某个元素呢？和向量一样，需要使用[]来看，但是要看单个元素，得使用行数和列数来进行确定，比如:</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">m2[1,2]</div></pre></td></tr></table></figure>
+<h5 id="就是指m2的第1行和第2列的元素是什么东东。"><a href="#就是指m2的第1行和第2列的元素是什么东东。" class="headerlink" title="就是指m2的第1行和第2列的元素是什么东东。"></a>就是指m2的第1行和第2列的元素是什么东东。</h5><h5 id="那么，能够直接从矩阵中提取子向量和子矩阵呢？当然阔以："><a href="#那么，能够直接从矩阵中提取子向量和子矩阵呢？当然阔以：" class="headerlink" title="那么，能够直接从矩阵中提取子向量和子矩阵呢？当然阔以："></a>那么，能够直接从矩阵中提取子向量和子矩阵呢？当然阔以：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">m2[2,]</div><div class="line">m2[,1]</div><div class="line">m2[c(1,2),]</div><div class="line">m2[2,]#就是指m2的第2行的所有元素</div><div class="line">m2[,1]#就是指m2的第1列的所有元素</div><div class="line">m2[c(1,2),]#就是指把m2的第1和第2行的矩阵</div></pre></td></tr></table></figure>
+<h5 id="注意：-也就是井号，是注释的意思，也就是-后面的代码是不会运行的，所以如果你想要对代码进行注释说明，那么就可以像上面一样，加一个-号，然后在后面写下注释的内容。"><a href="#注意：-也就是井号，是注释的意思，也就是-后面的代码是不会运行的，所以如果你想要对代码进行注释说明，那么就可以像上面一样，加一个-号，然后在后面写下注释的内容。" class="headerlink" title="注意：#也就是井号，是注释的意思，也就是#后面的代码是不会运行的，所以如果你想要对代码进行注释说明，那么就可以像上面一样，加一个#号，然后在后面写下注释的内容。"></a>注意：#也就是井号，是注释的意思，也就是#后面的代码是不会运行的，所以如果你想要对代码进行注释说明，那么就可以像上面一样，加一个#号，然后在后面写下注释的内容。</h5><h4 id="数据框（data-frame）"><a href="#数据框（data-frame）" class="headerlink" title="数据框（data.frame）"></a>数据框（data.frame）</h4><h5 id="数据框和矩阵是非常类似的，但是完全不一样的，就是矩阵中的元素类型必须一致，而数据框中的元素类型则可以不同。"><a href="#数据框和矩阵是非常类似的，但是完全不一样的，就是矩阵中的元素类型必须一致，而数据框中的元素类型则可以不同。" class="headerlink" title="数据框和矩阵是非常类似的，但是完全不一样的，就是矩阵中的元素类型必须一致，而数据框中的元素类型则可以不同。"></a>数据框和矩阵是非常类似的，但是完全不一样的，就是矩阵中的元素类型必须一致，而数据框中的元素类型则可以不同。</h5><h5 id="比如我们有3个同学的语文，数学成绩。第一列是同学的名字（字符型，character），第二列是语文成绩（数字型，numeric），第三列是数学成绩（数字型，numeric）。这时候就得使用数据框了。"><a href="#比如我们有3个同学的语文，数学成绩。第一列是同学的名字（字符型，character），第二列是语文成绩（数字型，numeric），第三列是数学成绩（数字型，numeric）。这时候就得使用数据框了。" class="headerlink" title="比如我们有3个同学的语文，数学成绩。第一列是同学的名字（字符型，character），第二列是语文成绩（数字型，numeric），第三列是数学成绩（数字型，numeric）。这时候就得使用数据框了。"></a>比如我们有3个同学的语文，数学成绩。第一列是同学的名字（字符型，character），第二列是语文成绩（数字型，numeric），第三列是数学成绩（数字型，numeric）。这时候就得使用数据框了。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">d &lt;- data.frame(name = c(&quot;Shen&quot;, &quot;Li&quot;, &quot;Tu&quot;),</div><div class="line">Yuwen = c(90, 95, 100),</div><div class="line">Shuxue = c(85,80,90))</div><div class="line">d</div></pre></td></tr></table></figure>
+<h5 id="使用函数data-frame建立数据框。name，Yuwen，Shuxue是建立好之后的数据框d的列名。"><a href="#使用函数data-frame建立数据框。name，Yuwen，Shuxue是建立好之后的数据框d的列名。" class="headerlink" title="使用函数data.frame建立数据框。name，Yuwen，Shuxue是建立好之后的数据框d的列名。"></a>使用函数data.frame建立数据框。name，Yuwen，Shuxue是建立好之后的数据框d的列名。</h5><h5 id="前面介绍了R语言中的最为常见的几种数据结构，差不多可以满足我们后面的需求了。后面再遇到新的东西，我们再介绍。"><a href="#前面介绍了R语言中的最为常见的几种数据结构，差不多可以满足我们后面的需求了。后面再遇到新的东西，我们再介绍。" class="headerlink" title="前面介绍了R语言中的最为常见的几种数据结构，差不多可以满足我们后面的需求了。后面再遇到新的东西，我们再介绍。"></a>前面介绍了R语言中的最为常见的几种数据结构，差不多可以满足我们后面的需求了。后面再遇到新的东西，我们再介绍。</h5><h3 id="2-函数"><a href="#2-函数" class="headerlink" title="2. 函数"></a>2. 函数</h3><h5 id="和其他语言一样，函数是R语言中的战斗机。和数学概念一样，y-f-x-，也就是输入变量x，然后经过函数f的处理，得到结果y。"><a href="#和其他语言一样，函数是R语言中的战斗机。和数学概念一样，y-f-x-，也就是输入变量x，然后经过函数f的处理，得到结果y。" class="headerlink" title="和其他语言一样，函数是R语言中的战斗机。和数学概念一样，y = f(x)，也就是输入变量x，然后经过函数f的处理，得到结果y。"></a>和其他语言一样，函数是R语言中的战斗机。和数学概念一样，y = f(x)，也就是输入变量x，然后经过函数f的处理，得到结果y。</h5><h5 id="函数也是一个对象，比如："><a href="#函数也是一个对象，比如：" class="headerlink" title="函数也是一个对象，比如："></a>函数也是一个对象，比如：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">fun &lt;- function(a, b) &#123;</div><div class="line">a + b</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="fun就是一个最为简单的函数。他要做的就是把a和b加起来，输出a和b之和。在这里面，a和b是形参（形式参数），不是具体的参数。只是用来把位置占起来。那么我们使用fun来做一个简单的计算："><a href="#fun就是一个最为简单的函数。他要做的就是把a和b加起来，输出a和b之和。在这里面，a和b是形参（形式参数），不是具体的参数。只是用来把位置占起来。那么我们使用fun来做一个简单的计算：" class="headerlink" title="fun就是一个最为简单的函数。他要做的就是把a和b加起来，输出a和b之和。在这里面，a和b是形参（形式参数），不是具体的参数。只是用来把位置占起来。那么我们使用fun来做一个简单的计算："></a>fun就是一个最为简单的函数。他要做的就是把a和b加起来，输出a和b之和。在这里面，a和b是形参（形式参数），不是具体的参数。只是用来把位置占起来。那么我们使用fun来做一个简单的计算：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fun(1,2)</div></pre></td></tr></table></figure>
+<h5 id="这时候1和2就是实参（实际参数），也就是把1和2带进去，计算1和2的和。很多函数（也就是功能）都是别人已经写好的，比如求和sum，求根sqrt等等。-函数写好之后，很多都在不同的包（package）中，下面就介绍一下R语言中的包。"><a href="#这时候1和2就是实参（实际参数），也就是把1和2带进去，计算1和2的和。很多函数（也就是功能）都是别人已经写好的，比如求和sum，求根sqrt等等。-函数写好之后，很多都在不同的包（package）中，下面就介绍一下R语言中的包。" class="headerlink" title="这时候1和2就是实参（实际参数），也就是把1和2带进去，计算1和2的和。很多函数（也就是功能）都是别人已经写好的，比如求和sum，求根sqrt等等。 函数写好之后，很多都在不同的包（package）中，下面就介绍一下R语言中的包。"></a>这时候1和2就是实参（实际参数），也就是把1和2带进去，计算1和2的和。很多函数（也就是功能）都是别人已经写好的，比如求和sum，求根sqrt等等。 函数写好之后，很多都在不同的包（package）中，下面就介绍一下R语言中的包。</h5><h3 id="3-包（package）"><a href="#3-包（package）" class="headerlink" title="3. 包（package）"></a>3. 包（package）</h3><h5 id="R包，类似C、Python中库的概念，指包含特定领域的函数、数据、文档等的集合。通过调用包，可以直接使用包中现成的数据、函数等，使开发方便快捷高效。"><a href="#R包，类似C、Python中库的概念，指包含特定领域的函数、数据、文档等的集合。通过调用包，可以直接使用包中现成的数据、函数等，使开发方便快捷高效。" class="headerlink" title="R包，类似C、Python中库的概念，指包含特定领域的函数、数据、文档等的集合。通过调用包，可以直接使用包中现成的数据、函数等，使开发方便快捷高效。"></a>R包，类似C、Python中库的概念，指包含特定领域的函数、数据、文档等的集合。通过调用包，可以直接使用包中现成的数据、函数等，使开发方便快捷高效。</h5><ul>
+<li>R的强大在于包含了各种各样的包，使用包非常有利于便捷开发。</li>
+<li>一些功能在现有的包中并不存在，需要自己实现，实现后通过打包方便代码的复用。</li>
+<li>每个包涵括一个领域相关的函数数据文档等，通过包可以有效地组织代码结构，有利于开发。</li>
+</ul>
+<h5 id="在R中，所有的函数都是封装好，放在包中的，包是R语言互相交流的最好方法。下面简单介绍一下包的安装，使用，等我们后面会介绍怎么创建，分享自己的R包。"><a href="#在R中，所有的函数都是封装好，放在包中的，包是R语言互相交流的最好方法。下面简单介绍一下包的安装，使用，等我们后面会介绍怎么创建，分享自己的R包。" class="headerlink" title="在R中，所有的函数都是封装好，放在包中的，包是R语言互相交流的最好方法。下面简单介绍一下包的安装，使用，等我们后面会介绍怎么创建，分享自己的R包。"></a>在R中，所有的函数都是封装好，放在包中的，包是R语言互相交流的最好方法。下面简单介绍一下包的安装，使用，等我们后面会介绍怎么创建，分享自己的R包。</h5><h4 id="如何找到自己的需要的R包"><a href="#如何找到自己的需要的R包" class="headerlink" title="如何找到自己的需要的R包"></a>如何找到自己的需要的R包</h4><h5 id="大家要相信很多方法都已经是存在的了，所以你能想到的功能，很多已经被别人做过了，已经有了现成的工具可以使用，也就是R包。因此，如果想实现一个功能，首先要想到的就是是不是已经存在了这样的工具，而不是自己去写。那么如何找到自己所需要的R包呢，这时候就得靠搜索引擎了（谷歌一下，你就知道）。当然，在我大天朝，谷歌早已经404了，如果你能够使用，或者能够翻墙接触到这个万恶的网站，那是最好的，如果不行，那就用必应（必应内心OS：终于想我到了啊。。。），最次，使用百度（百度：嗯？）。"><a href="#大家要相信很多方法都已经是存在的了，所以你能想到的功能，很多已经被别人做过了，已经有了现成的工具可以使用，也就是R包。因此，如果想实现一个功能，首先要想到的就是是不是已经存在了这样的工具，而不是自己去写。那么如何找到自己所需要的R包呢，这时候就得靠搜索引擎了（谷歌一下，你就知道）。当然，在我大天朝，谷歌早已经404了，如果你能够使用，或者能够翻墙接触到这个万恶的网站，那是最好的，如果不行，那就用必应（必应内心OS：终于想我到了啊。。。），最次，使用百度（百度：嗯？）。" class="headerlink" title="大家要相信很多方法都已经是存在的了，所以你能想到的功能，很多已经被别人做过了，已经有了现成的工具可以使用，也就是R包。因此，如果想实现一个功能，首先要想到的就是是不是已经存在了这样的工具，而不是自己去写。那么如何找到自己所需要的R包呢，这时候就得靠搜索引擎了（谷歌一下，你就知道）。当然，在我大天朝，谷歌早已经404了，如果你能够使用，或者能够翻墙接触到这个万恶的网站，那是最好的，如果不行，那就用必应（必应内心OS：终于想我到了啊。。。），最次，使用百度（百度：嗯？）。"></a>大家要相信很多方法都已经是存在的了，所以你能想到的功能，很多已经被别人做过了，已经有了现成的工具可以使用，也就是R包。因此，如果想实现一个功能，首先要想到的就是是不是已经存在了这样的工具，而不是自己去写。那么如何找到自己所需要的R包呢，这时候就得靠搜索引擎了（谷歌一下，你就知道）。当然，在我大天朝，谷歌早已经404了，如果你能够使用，或者能够<del>翻墙</del>接触到这个万恶的网站，那是最好的，如果不行，那就用必应（必应内心OS：终于想我到了啊。。。），最次，使用百度（百度：嗯？）。</h5><h4 id="如何安装R包"><a href="#如何安装R包" class="headerlink" title="如何安装R包"></a>如何安装R包</h4><h5 id="R包一般会公开在三个地方："><a href="#R包一般会公开在三个地方：" class="headerlink" title="R包一般会公开在三个地方："></a>R包一般会公开在三个地方：</h5><ul>
+<li>CRAN：The Comprehensive R Archive Network，这是R core team的R包官方存放地方。安装放在这些的R的网址是<a href="https://mirrors.tongji.edu.cn/CRAN/" target="_blank" rel="external">https://mirrors.tongji.edu.cn/CRAN/</a>，怎么安装这些包呢？使用下面代码即可：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">install.packages(&quot;package.name&quot;)#将package.name替换为自己的要安装的包的名字即可。</div></pre></td></tr></table></figure>
+<ul>
+<li>Bioconductor：这个是大部分的生信相关的包存放的地方，网址<a href="https://www.bioconductor.org/" target="_blank" rel="external">https://www.bioconductor.org/</a>，安装使用代码如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## try http:// if https:// URLs are not supported</div><div class="line">source(&quot;https://bioconductor.org/biocLite.R&quot;)</div><div class="line">biocLite(&quot;package.name&quot;)#将package.name替换为自己的要安装的包的名字即可。</div></pre></td></tr></table></figure>
+<ul>
+<li>Github：CRAN和bioconductor都需要经过一定的审核，才可以发布，因此另外一个最为常用的代码托管网站，<a href="https://github.com/" target="_blank" rel="external">github</a>，就更为常用友好了，只要把自己写的代码和包放在github上，就可以安装R包了。安装github上的R包，需要使用到R语言大神<a href="http://hadley.nz/" target="_blank" rel="external">Hadley Wickham</a>写的包，devtools了。因此，首选需要安装这个包，代码如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">install.packages(&quot;devtools&quot;)</div><div class="line">library(devtools)</div><div class="line">install_github(&quot;user.name/package.name&quot;)#其中user.name是github作者的用户名。</div></pre></td></tr></table></figure>
+<h4 id="如何获得R包及函数的帮助文档"><a href="#如何获得R包及函数的帮助文档" class="headerlink" title="如何获得R包及函数的帮助文档"></a>如何获得R包及函数的帮助文档</h4><h5 id="安装包之后，如要观察这个包里面所有的函数，以及这个R的说明，比如对于我们刚才安装的sxtTools这个包。我们就可以使用下面代码看这个包里面都含有哪些函数："><a href="#安装包之后，如要观察这个包里面所有的函数，以及这个R的说明，比如对于我们刚才安装的sxtTools这个包。我们就可以使用下面代码看这个包里面都含有哪些函数：" class="headerlink" title="安装包之后，如要观察这个包里面所有的函数，以及这个R的说明，比如对于我们刚才安装的sxtTools这个包。我们就可以使用下面代码看这个包里面都含有哪些函数："></a>安装包之后，如要观察这个包里面所有的函数，以及这个R的说明，比如对于我们刚才安装的sxtTools这个包。我们就可以使用下面代码看这个包里面都含有哪些函数：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">help(package = &quot;sxtTools&quot;)</div></pre></td></tr></table></figure>
+<p><img src="https://note.youdao.com/yws/public/resource/65076dda883d93a792dc64163dec905a/xmlnote/222CB5AF6D0044E4B1C5B4C78C2FE30B/18919" alt=""></p>
+<h5 id="如果想看某个具体的函数的信息，可以使用下面的代码："><a href="#如果想看某个具体的函数的信息，可以使用下面的代码：" class="headerlink" title="如果想看某个具体的函数的信息，可以使用下面的代码："></a>如果想看某个具体的函数的信息，可以使用下面的代码：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?installBioc</div></pre></td></tr></table></figure>
+<p><img src="https://note.youdao.com/yws/public/resource/65076dda883d93a792dc64163dec905a/xmlnote/6C773E8B327C4138B564EC9294D3B4C3/18924" alt=""></p>
+<h5 id="每个函数都有详细的说明，可以通过看这些详细的官方文档来学习怎么使用，如果想更便捷，那就直接上"><a href="#每个函数都有详细的说明，可以通过看这些详细的官方文档来学习怎么使用，如果想更便捷，那就直接上" class="headerlink" title="每个函数都有详细的说明，可以通过看这些详细的官方文档来学习怎么使用，如果想更便捷，那就直接上"></a>每个函数都有详细的说明，可以通过看这些详细的官方文档来学习怎么使用，如果想更便捷，那就直接上<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">#### 下期预告</div><div class="line"></div><div class="line">##### 下期我们开始学习怎么读取，输出数据，敬请期待</div></pre></td></tr></table></figure></h5><h4 id="PS：所有的代码，都放在了我的github上，大家猛戳阅读原文获得代码"><a href="#PS：所有的代码，都放在了我的github上，大家猛戳阅读原文获得代码" class="headerlink" title="PS：所有的代码，都放在了我的github上，大家猛戳阅读原文获得代码"></a>PS：所有的代码，都放在了我的github上，大家猛戳<strong>阅读原文</strong>获得代码</h4>
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/06/03/R-study3/" title= 数据的读取和输出 >
+                    <div class="nextTitle">数据的读取和输出</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/06/03/R-study1/" title= Rstudio的使用 >
+                    <div class="prevTitle">Rstudio的使用</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMDc2Ny83MzE5>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:shenxt1990@163.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/jaspershen" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="http://ow5z7hup5.bkt.clouddn.com/wechatid.jpg" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="http://ow5z7hup5.bkt.clouddn.com/qrcode_for_gh_5f4396a2e4c3_430.jpg" />
+                </span>
+            
+        
+    
+        
+            
+                <a href="http://weibo.com/u/2717397881?wvr=5&c=spr_web_sq_baidub_weibo_t001&sudaref=www.baidu.com" class="iconfont-archer weibo" target="_blank" title=weibo></a>
+            
+        
+    
+        
+            
+                <a href="https://www.zhihu.com/people/shen-zu-tao-73/activities" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+            
+                <a href="https://www.facebook.com/xiaotao.shen.3" class="iconfont-archer facebook" target="_blank" title=facebook></a>
+            
+        
+    
+        
+            
+                <a href="https://stackoverflow.com/users/7579484/jasper-shen" class="iconfont-archer stack-overflow" target="_blank" title=stack-overflow></a>
+            
+        
+    
+        
+            
+                <a href="https://www.linkedin.com/in/xiaotao-shen-b7544b106/" class="iconfont-archer linkedin" target="_blank" title=linkedin></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info"><a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank"></a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#这篇文章开始介绍R的基本知识，来让初步学习R语言的同学们能够快速入门。已经入门的同学请略过本文，否则你将浪费人生中的十分钟。。。"><span class="toc-number">1.</span> <span class="toc-text">这篇文章开始介绍R的基本知识，来让初步学习R语言的同学们能够快速入门。已经入门的同学请略过本文，否则你将浪费人生中的十分钟。。。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-数据结构"><span class="toc-number"></span> <span class="toc-text">1. 数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#向量-（vector）：R语言中的战斗机"><span class="toc-number"></span> <span class="toc-text">向量 （vector）：R语言中的战斗机</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#向量类型是R语言的核心，很多运算都涉及到向量。我们先来一个最简单的向量。"><span class="toc-number">1.</span> <span class="toc-text">向量类型是R语言的核心，很多运算都涉及到向量。我们先来一个最简单的向量。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#直接在控制台（Rstudio左下角的那个地方）中输入："><span class="toc-number">2.</span> <span class="toc-text">直接在控制台（Rstudio左下角的那个地方）中输入：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#x就是一个向量，一维的，3就是元素，只是只有一个，光杆司令。"><span class="toc-number">3.</span> <span class="toc-text">x就是一个向量，一维的，3就是元素，只是只有一个，光杆司令。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#“-lt-”是R语言中赋予的符号，在这个公式中，意味着我们把3这个值赋给x这个变量名，这样x就是3，但是3不一定是x。"><span class="toc-number">4.</span> <span class="toc-text">“<-”是R语言中赋予的符号，在这个公式中，意味着我们把3这个值赋给x这个变量名，这样x就是3，但是3不一定是x。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#我们再创建一个长度不是1的向量，"><span class="toc-number">5.</span> <span class="toc-text">我们再创建一个长度不是1的向量，</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#y就是一个长度为3的向量。length函数是用来查看向量长度的函数。对于y向量来说，他的元素就是1-2-3。向量中的元素是有顺序的，第一个从1开始计算，比如我想要查看向量y的第一个元素，那么就使用y-1-。y-1-代表的就是向量y的第一个元素，那么同样的y的第三个元素就是y-3-。"><span class="toc-number">6.</span> <span class="toc-text">y就是一个长度为3的向量。length函数是用来查看向量长度的函数。对于y向量来说，他的元素就是1,2,3。向量中的元素是有顺序的，第一个从1开始计算，比如我想要查看向量y的第一个元素，那么就使用y[1]。y[1]代表的就是向量y的第一个元素，那么同样的y的第三个元素就是y[3]。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#矩阵（matrix）："><span class="toc-number"></span> <span class="toc-text">矩阵（matrix）：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#R中的矩阵概念跟数学中完全一样。矩阵可以理解为二维的向量，也就是包括行数和列数。下面我们举个栗子："><span class="toc-number">1.</span> <span class="toc-text">R中的矩阵概念跟数学中完全一样。矩阵可以理解为二维的向量，也就是包括行数和列数。下面我们举个栗子：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#rbind是一个函数，我们简单介绍一下。rbind直接从字面上理解是row-combine，也就是行组合。什么意思呢？就是把几个向量按照行从上到下组合起来。用图可以很好地理解：（灵魂画师上线。。。）"><span class="toc-number">2.</span> <span class="toc-text">rbind是一个函数，我们简单介绍一下。rbind直接从字面上理解是row combine，也就是行组合。什么意思呢？就是把几个向量按照行从上到下组合起来。用图可以很好地理解：（灵魂画师上线。。。）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#rbind函数就是把向量1和2然后按照行组合起来，成为一个新的矩阵。从这上面可以看到必须满足两个条件，向量1和2必须长度一致。同样还有一个函数，cbind，大家应该猜到了，就是column-combine，也就是把几个向量按照列从左到右组合。"><span class="toc-number">3.</span> <span class="toc-text">rbind函数就是把向量1和2然后按照行组合起来，成为一个新的矩阵。从这上面可以看到必须满足两个条件，向量1和2必须长度一致。同样还有一个函数，cbind，大家应该猜到了，就是column combine，也就是把几个向量按照列从左到右组合。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#比如"><span class="toc-number">4.</span> <span class="toc-text">比如</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#dim是查看矩阵的行数和列数。那么，怎么查看矩阵的某个元素呢？和向量一样，需要使用-来看，但是要看单个元素，得使用行数和列数来进行确定，比如"><span class="toc-number">5.</span> <span class="toc-text">dim是查看矩阵的行数和列数。那么，怎么查看矩阵的某个元素呢？和向量一样，需要使用[]来看，但是要看单个元素，得使用行数和列数来进行确定，比如:</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#就是指m2的第1行和第2列的元素是什么东东。"><span class="toc-number">6.</span> <span class="toc-text">就是指m2的第1行和第2列的元素是什么东东。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#那么，能够直接从矩阵中提取子向量和子矩阵呢？当然阔以："><span class="toc-number">7.</span> <span class="toc-text">那么，能够直接从矩阵中提取子向量和子矩阵呢？当然阔以：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#注意：-也就是井号，是注释的意思，也就是-后面的代码是不会运行的，所以如果你想要对代码进行注释说明，那么就可以像上面一样，加一个-号，然后在后面写下注释的内容。"><span class="toc-number">8.</span> <span class="toc-text">注意：#也就是井号，是注释的意思，也就是#后面的代码是不会运行的，所以如果你想要对代码进行注释说明，那么就可以像上面一样，加一个#号，然后在后面写下注释的内容。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据框（data-frame）"><span class="toc-number"></span> <span class="toc-text">数据框（data.frame）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#数据框和矩阵是非常类似的，但是完全不一样的，就是矩阵中的元素类型必须一致，而数据框中的元素类型则可以不同。"><span class="toc-number">1.</span> <span class="toc-text">数据框和矩阵是非常类似的，但是完全不一样的，就是矩阵中的元素类型必须一致，而数据框中的元素类型则可以不同。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#比如我们有3个同学的语文，数学成绩。第一列是同学的名字（字符型，character），第二列是语文成绩（数字型，numeric），第三列是数学成绩（数字型，numeric）。这时候就得使用数据框了。"><span class="toc-number">2.</span> <span class="toc-text">比如我们有3个同学的语文，数学成绩。第一列是同学的名字（字符型，character），第二列是语文成绩（数字型，numeric），第三列是数学成绩（数字型，numeric）。这时候就得使用数据框了。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用函数data-frame建立数据框。name，Yuwen，Shuxue是建立好之后的数据框d的列名。"><span class="toc-number">3.</span> <span class="toc-text">使用函数data.frame建立数据框。name，Yuwen，Shuxue是建立好之后的数据框d的列名。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#前面介绍了R语言中的最为常见的几种数据结构，差不多可以满足我们后面的需求了。后面再遇到新的东西，我们再介绍。"><span class="toc-number">4.</span> <span class="toc-text">前面介绍了R语言中的最为常见的几种数据结构，差不多可以满足我们后面的需求了。后面再遇到新的东西，我们再介绍。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-函数"><span class="toc-number"></span> <span class="toc-text">2. 函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#和其他语言一样，函数是R语言中的战斗机。和数学概念一样，y-f-x-，也就是输入变量x，然后经过函数f的处理，得到结果y。"><span class="toc-number">1.</span> <span class="toc-text">和其他语言一样，函数是R语言中的战斗机。和数学概念一样，y = f(x)，也就是输入变量x，然后经过函数f的处理，得到结果y。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#函数也是一个对象，比如："><span class="toc-number">2.</span> <span class="toc-text">函数也是一个对象，比如：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#fun就是一个最为简单的函数。他要做的就是把a和b加起来，输出a和b之和。在这里面，a和b是形参（形式参数），不是具体的参数。只是用来把位置占起来。那么我们使用fun来做一个简单的计算："><span class="toc-number">3.</span> <span class="toc-text">fun就是一个最为简单的函数。他要做的就是把a和b加起来，输出a和b之和。在这里面，a和b是形参（形式参数），不是具体的参数。只是用来把位置占起来。那么我们使用fun来做一个简单的计算：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#这时候1和2就是实参（实际参数），也就是把1和2带进去，计算1和2的和。很多函数（也就是功能）都是别人已经写好的，比如求和sum，求根sqrt等等。-函数写好之后，很多都在不同的包（package）中，下面就介绍一下R语言中的包。"><span class="toc-number">4.</span> <span class="toc-text">这时候1和2就是实参（实际参数），也就是把1和2带进去，计算1和2的和。很多函数（也就是功能）都是别人已经写好的，比如求和sum，求根sqrt等等。 函数写好之后，很多都在不同的包（package）中，下面就介绍一下R语言中的包。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-包（package）"><span class="toc-number"></span> <span class="toc-text">3. 包（package）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#R包，类似C、Python中库的概念，指包含特定领域的函数、数据、文档等的集合。通过调用包，可以直接使用包中现成的数据、函数等，使开发方便快捷高效。"><span class="toc-number">1.</span> <span class="toc-text">R包，类似C、Python中库的概念，指包含特定领域的函数、数据、文档等的集合。通过调用包，可以直接使用包中现成的数据、函数等，使开发方便快捷高效。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#在R中，所有的函数都是封装好，放在包中的，包是R语言互相交流的最好方法。下面简单介绍一下包的安装，使用，等我们后面会介绍怎么创建，分享自己的R包。"><span class="toc-number">2.</span> <span class="toc-text">在R中，所有的函数都是封装好，放在包中的，包是R语言互相交流的最好方法。下面简单介绍一下包的安装，使用，等我们后面会介绍怎么创建，分享自己的R包。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何找到自己的需要的R包"><span class="toc-number"></span> <span class="toc-text">如何找到自己的需要的R包</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#大家要相信很多方法都已经是存在的了，所以你能想到的功能，很多已经被别人做过了，已经有了现成的工具可以使用，也就是R包。因此，如果想实现一个功能，首先要想到的就是是不是已经存在了这样的工具，而不是自己去写。那么如何找到自己所需要的R包呢，这时候就得靠搜索引擎了（谷歌一下，你就知道）。当然，在我大天朝，谷歌早已经404了，如果你能够使用，或者能够翻墙接触到这个万恶的网站，那是最好的，如果不行，那就用必应（必应内心OS：终于想我到了啊。。。），最次，使用百度（百度：嗯？）。"><span class="toc-number">1.</span> <span class="toc-text">大家要相信很多方法都已经是存在的了，所以你能想到的功能，很多已经被别人做过了，已经有了现成的工具可以使用，也就是R包。因此，如果想实现一个功能，首先要想到的就是是不是已经存在了这样的工具，而不是自己去写。那么如何找到自己所需要的R包呢，这时候就得靠搜索引擎了（谷歌一下，你就知道）。当然，在我大天朝，谷歌早已经404了，如果你能够使用，或者能够翻墙接触到这个万恶的网站，那是最好的，如果不行，那就用必应（必应内心OS：终于想我到了啊。。。），最次，使用百度（百度：嗯？）。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何安装R包"><span class="toc-number"></span> <span class="toc-text">如何安装R包</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#R包一般会公开在三个地方："><span class="toc-number">1.</span> <span class="toc-text">R包一般会公开在三个地方：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何获得R包及函数的帮助文档"><span class="toc-number"></span> <span class="toc-text">如何获得R包及函数的帮助文档</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#安装包之后，如要观察这个包里面所有的函数，以及这个R的说明，比如对于我们刚才安装的sxtTools这个包。我们就可以使用下面代码看这个包里面都含有哪些函数："><span class="toc-number">1.</span> <span class="toc-text">安装包之后，如要观察这个包里面所有的函数，以及这个R的说明，比如对于我们刚才安装的sxtTools这个包。我们就可以使用下面代码看这个包里面都含有哪些函数：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#如果想看某个具体的函数的信息，可以使用下面的代码："><span class="toc-number">2.</span> <span class="toc-text">如果想看某个具体的函数的信息，可以使用下面的代码：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#每个函数都有详细的说明，可以通过看这些详细的官方文档来学习怎么使用，如果想更便捷，那就直接上"><span class="toc-number">3.</span> <span class="toc-text">每个函数都有详细的说明，可以通过看这些详细的官方文档来学习怎么使用，如果想更便捷，那就直接上12345#### 下期预告##### 下期我们开始学习怎么读取，输出数据，敬请期待</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PS：所有的代码，都放在了我的github上，大家猛戳阅读原文获得代码"><span class="toc-number"></span> <span class="toc-text">PS：所有的代码，都放在了我的github上，大家猛戳阅读原文获得代码</span></a>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 16 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href= "/2018/06/03/R-study1/" >Rstudio的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href= "/2018/06/03/R-study2/" >R语言入门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href= "/2018/06/03/R-study3/" >数据的读取和输出</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/16</span><a class="archive-post-title" href= "/2018/05/16/metabolomics-data-normalization/" >代谢组数据标准化包MetNormalizer介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/2018-04-13-hexo-domain-name/2018-04-13-massbank-database-get/" >爬取MassBank数据</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/2018-04-13-hexo-domain-name/" >Hexo博客绑定域名</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/09</span><a class="archive-post-title" href= "/2017/10/09/2017-10-11.pipline.function/" >R管道函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/09</span><a class="archive-post-title" href= "/2017/10/09/2017-10-09.poetry/" >偶然翻到的文章</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/04</span><a class="archive-post-title" href= "/2017/10/04/2017-10-03.in.erdos/" >鄂尔多斯之旅</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2016-11-25-first-blog/" >我的第一篇博客</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2016-11-25-metcleaning/" >MetCleaning instruction</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2017-09-09-metdna-blog/" >MetDNA instruction</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2017-09-09-github-blog/" >使用Github和Hexo建独立博客</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2017-02-12-firstblog2017/" >2017年的第一篇博客</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2016-12-03-keggandhmdb/" >使用R爬取HMDB和KEGG数据库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2017/09/09/2012-02-22-github-pages/" >使用Github Pages建独立博客</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Chinese"><span class="iconfont-archer">&#xe606;</span>Chinese</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Blog"><span class="iconfont-archer">&#xe606;</span>Blog</span>
+    
+        <span class="sidebar-tag-name" data-tags="life"><span class="iconfont-archer">&#xe606;</span>life</span>
+    
+        <span class="sidebar-tag-name" data-tags="R"><span class="iconfont-archer">&#xe606;</span>R</span>
+    
+        <span class="sidebar-tag-name" data-tags="Metabolomics"><span class="iconfont-archer">&#xe606;</span>Metabolomics</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="博客"><span class="iconfont-archer">&#xe606;</span>博客</span>
+    
+        <span class="sidebar-tag-name" data-tags="R语言"><span class="iconfont-archer">&#xe606;</span>R语言</span>
+    
+        <span class="sidebar-tag-name" data-tags="组学基础"><span class="iconfont-archer">&#xe606;</span>组学基础</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="github-technology"><span class="iconfont-archer">&#xe60a;</span>github-technology</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese"><span class="iconfont-archer">&#xe60a;</span>Chinese</span>
+    
+        <span class="sidebar-category-name" data-categories="R-software"><span class="iconfont-archer">&#xe60a;</span>R-software</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R"><span class="iconfont-archer">&#xe60a;</span>Chinese/R</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/Life"><span class="iconfont-archer">&#xe60a;</span>Chinese/Life</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R语言"><span class="iconfont-archer">&#xe60a;</span>Chinese/R语言</span>
+    
+        <span class="sidebar-category-name" data-categories="R-software/Metabolomics"><span class="iconfont-archer">&#xe60a;</span>R-software/Metabolomics</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/Metabolomics"><span class="iconfont-archer">&#xe60a;</span>Chinese/Metabolomics</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R/Hexo"><span class="iconfont-archer">&#xe60a;</span>Chinese/R/Hexo</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R语言/组学基础"><span class="iconfont-archer">&#xe60a;</span>Chinese/R语言/组学基础</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R/Hexo/博客"><span class="iconfont-archer">&#xe60a;</span>Chinese/R/Hexo/博客</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Japser Shen'
+    }
+</script>
+
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+
