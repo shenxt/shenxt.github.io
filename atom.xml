@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-07T06:24:08.000Z</updated>
+  <updated>2018-07-07T07:04:44.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://yoursite.com/2018/07/07/20180707-CSI-FingerID/"/>
     <id>http://yoursite.com/2018/07/07/20180707-CSI-FingerID/</id>
     <published>2018-07-07T06:16:29.000Z</published>
-    <updated>2018-07-07T06:24:08.000Z</updated>
+    <updated>2018-07-07T07:04:44.000Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h4><p>CSI:FingerID是德国Friedrich Schiller University的Sebastian Böckera教授开发的一款基于机器学习和代谢物finger ID的代谢物鉴定软件。发表在<a href="http://www.pnas.org/content/pnas/112/41/12580.full.pdf" target="_blank" rel="external">PNAS</a>上。最近因为需要使用它进行代谢物鉴定，因此下面对其原理以及使用做一个简单介绍。</p><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>CSI:FingerID的基本原来是使用FigerID来表示代谢物，代谢物的Figer ID是一串0 1 0 1的数字，将代谢物转变为一系列碎片表示，然后按照顺序排列，如果某个代谢物含有该碎片，则表示为1，没有该碎片，则表示为0。因此，使用figer ID，可以将代谢物用数字表示。</p><ol><li>训练阶段<br>作者从标准品MS2数据库中提取代谢物，然后将其二级谱图转变为fragmentation tree，fragmentation tree的有关知识可以参考该文章，<a href="http://www.pnas.org/content/pnas/112/41/12580.full.pdf。随后，从代谢物的结构式出发，得到代谢物的finger" target="_blank" rel="external">http://www.pnas.org/content/pnas/112/41/12580.full.pdf。随后，从代谢物的结构式出发，得到代谢物的finger</a> ID，然后对于每一个finger ID的molecular property，对建立fragmentation tree和其之间的SVM模型。从而得到一个使用fragmentation tree预测finger ID的机器学习预测模型。</li></ol><p><img src="leaning.png" alt=""></p><ol><li>预测阶段<br>拿到一个未知代谢物的二级谱图，首选将其转换为fragmentation tree，然后代入预测模型，预测出其理论的molecular property，然后得到其预测的finger ID。</li></ol><p><img src="prediction.png" alt=""></p><ol><li>打分阶段<br>将PubChem以及其他可以拿到的数据库中的所有代谢物的fingerID拿到，然后将未知代谢物的预测fingerID和其进行匹配打分（打分规则具体可以看论文），从而得到每未知代谢物的candidates。</li></ol><p><img src="scoring.png" alt=""></p>]]></content>
+    <content type="html"><![CDATA[<h4 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h4><p>CSI:FingerID是德国Friedrich Schiller University的Sebastian Böckera教授开发的一款基于机器学习和代谢物finger ID的代谢物鉴定软件。发表在<a href="http://www.pnas.org/content/pnas/112/41/12580.full.pdf" target="_blank" rel="external">PNAS</a>上。最近因为需要使用它进行代谢物鉴定，因此下面对其原理以及使用做一个简单介绍。</p><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>CSI:FingerID的基本原来是使用FigerID来表示代谢物，代谢物的Figer ID是一串0 1 0 1的数字，将代谢物转变为一系列碎片表示，然后按照顺序排列，如果某个代谢物含有该碎片，则表示为1，没有该碎片，则表示为0。因此，使用figer ID，可以将代谢物用数字表示。</p><ul><li>训练阶段</li></ul><p>作者从标准品MS2数据库中提取代谢物，然后将其二级谱图转变为fragmentation tree，fragmentation tree的有关知识可以参考该文章，<a href="http://www.pnas.org/content/pnas/112/41/12580.full.pdf" target="_blank" rel="external">http://www.pnas.org/content/pnas/112/41/12580.full.pdf</a>。随后，从代谢物的结构式出发，得到代谢物的finger ID，然后对于每一个finger ID的molecular property，对建立fragmentation tree和其之间的SVM模型。从而得到一个使用fragmentation tree预测finger ID的机器学习预测模型。</p><p><img src="learning.png" alt=""></p><ul><li>预测阶段</li></ul><p>拿到一个未知代谢物的二级谱图，首选将其转换为fragmentation tree，然后代入预测模型，预测出其理论的molecular property，然后得到其预测的finger ID。</p><p><img src="prediction.png" alt=""></p><ul><li>打分阶段</li></ul><p>将PubChem以及其他可以拿到的数据库中的所有代谢物的fingerID拿到，然后将未知代谢物的预测fingerID和其进行匹配打分（打分规则具体可以看论文），从而得到每个未知代谢物的candidates。</p><p><img src="scoring.png" alt=""></p><h4 id="软件使用"><a href="#软件使用" class="headerlink" title="软件使用"></a>软件使用</h4><ul><li>下载</li></ul><p>CSI:FingerID作者使用Java写了本地的软件版本，可以直接从其<a href="http://www.pnas.org/content/pnas/112/41/12580.full.pdf" target="_blank" rel="external">官网</a>上下载。选择自己电脑对应的版本即可。</p><p><img src="download.png" alt=""></p><ul><li>打开软件</li></ul><p>下载到本地之后，无需安装，直接解压缩，然后双击.exe文件即可（我使用的windowns 64位系统）。他们也写有说明文档，不多，一共四十多页，但是真正讲解怎么使用的可能不到20页，还是非常清楚简洁的。可以下载下来仔细看看。</p><p><img src="software.png" alt=""></p><ul><li>开始使用</li></ul><p>打开软件之后，界面如下图所示。</p><p><img src="interface.png" alt=""></p><p>因为我是需要使用批量处理，因此我就从如何批量处理讲解他的使用。首先，该软件接收的文件类型包括txt以及mgf，msp是非常普遍以及常用的，因此，推荐大家使用mgf格式文件。大家可以使用我的示例数据，是R文件，包含5个2级谱图。大家可以<a href="http://oxr5qv74w.bkt.clouddn.com/temp.ms2" target="_blank" rel="external">点击此处下载</a>。下载之后，需要在R中打开，并将其转变为符合软件要求的格式。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">##先加载数据</div><div class="line">load(&quot;temp.ms2&quot;)</div><div class="line">ms2.pos &lt;- temp.ms2</div><div class="line"></div><div class="line">##然后将该数据转为软件所需格式，并写出为mgf格式</div><div class="line">for(i in 1:length(ms2.pos))&#123;</div><div class="line">  cat(i, &quot; &quot;)</div><div class="line">  temp.ms2 &lt;- ms2.pos[[i]]</div><div class="line"></div><div class="line">  fn.save &lt;- paste0(temp.ms2[[1]][1,1], &apos;.mgf&apos;)</div><div class="line">  #</div><div class="line">  info &lt;- temp.ms2[[1]]</div><div class="line">  spec &lt;- temp.ms2[[2]]</div><div class="line">  #</div><div class="line">  sink(fn.save)</div><div class="line">  cat(&quot;BEGIN IONS\n&quot;)</div><div class="line">  cat(paste(&quot;PEPMASS=&quot;, info[2,1], sep = &quot;&quot;))</div><div class="line">  cat(&quot;\n&quot;)</div><div class="line">  cat(&quot;MSLEVEL=1\n&quot;)</div><div class="line">  cat(&quot;CHARGE=1+\n&quot;)</div><div class="line">  cat(c(info[2,1], 1))</div><div class="line">  cat(&quot;\n&quot;)</div><div class="line">  cat(&quot;END IONS\n&quot;)</div><div class="line">  cat(&quot;\n&quot;)</div><div class="line"></div><div class="line">  cat(&quot;BEGIN IONS\n&quot;)</div><div class="line">  cat(paste(&quot;PEPMASS=&quot;, info[2,1], sep = &quot;&quot;))</div><div class="line">  cat(&quot;\n&quot;)</div><div class="line">  cat(&quot;MSLEVEL=2\n&quot;)</div><div class="line">  cat(&quot;CHARGE=1+\n&quot;)</div><div class="line"></div><div class="line">  for(idx in 1:nrow(spec))&#123;</div><div class="line">    cat(paste(spec[idx, ], collapse = &apos; &apos;), &apos;\n&apos;, sep = &apos;&apos;)</div><div class="line">  &#125;</div><div class="line">  cat(&quot;END IONS\n&quot;)</div><div class="line">  sink()</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>每个谱图单独输出为一个文件。</p><ul><li>导入谱图</li></ul><p>点击Batch import按钮（在软件左上角），然后选择要导入的mgf文件。所有导入谱图的信息都在左侧列出。</p><ul><li>开始计算</li></ul><p>点击Compute all按钮（在软件正上方），然后设置参数，参数都是比较常见的，比如polarity，加和物形式等。然后点击CSI：fingerID，并点击submit。开始计算。</p><ul><li>导出结果</li></ul><p>点击Export Results按钮。可以将鉴定结果导出为CSV格式。</p>]]></content>
     
     <summary type="html">
     
@@ -203,6 +203,39 @@
   </entry>
   
   <entry>
+    <title>西雅图之行</title>
+    <link href="http://yoursite.com/2018/04/13/2018-06-28-seatlle/"/>
+    <id>http://yoursite.com/2018/04/13/2018-06-28-seatlle/</id>
+    <published>2018-04-13T01:57:26.000Z</published>
+    <updated>2018-06-28T18:00:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="如何将Hexo博客绑定自己的域名？"><a href="#如何将Hexo博客绑定自己的域名？" class="headerlink" title="如何将Hexo博客绑定自己的域名？"></a><font color="salmon">如何将Hexo博客绑定自己的域名？</font></h3><p>构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。</p><h3 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a><font color="salmon">购买域名</font></h3><p>我是在<a href="https://sg.godaddy.com/zh/" target="_blank" rel="external">godaddy</a>上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。</p><h3 id="域名设置"><a href="#域名设置" class="headerlink" title="域名设置"></a><font color="salmon">域名设置</font></h3><p>购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。</p><p><img src="域名设置1.png" alt=""></p><p>然后点击添加，分别添加两个记录。第一个记录</p><ul><li>类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该<a href="http://ip.chinaz.com/" target="_blank" rel="external">网站</a>，直接输入博客地址即可，如shenxt.github.io。</li><li>类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。</li></ul><p><img src="域名设置2.png" alt=""></p><p>然后保存即可。</p><h3 id="博客设置"><a href="#博客设置" class="headerlink" title="博客设置"></a><font color="salmon">博客设置</font></h3><p>在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo c</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure></p><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a><font color="salmon">测试</font></h3><p>一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;如何将Hexo博客绑定自己的域名？&quot;&gt;&lt;a href=&quot;#如何将Hexo博客绑定自己的域名？&quot; class=&quot;headerlink&quot; title=&quot;如何将Hexo博客绑定自己的域名？&quot;&gt;&lt;/a&gt;&lt;font color=&quot;salmon&quot;&gt;如何将Hexo博客绑定自己的
+      
+    
+    </summary>
+    
+      <category term="Chinese" scheme="http://yoursite.com/categories/Chinese/"/>
+    
+      <category term="博客" scheme="http://yoursite.com/categories/Chinese/%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="随记" scheme="http://yoursite.com/categories/Chinese/%E5%8D%9A%E5%AE%A2/%E9%9A%8F%E8%AE%B0/"/>
+    
+    
+      <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
+    
+      <category term="博客" scheme="http://yoursite.com/tags/%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="随记" scheme="http://yoursite.com/tags/%E9%9A%8F%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hexo博客绑定域名</title>
     <link href="http://yoursite.com/2018/04/13/2018-04-13-hexo-domain-name/"/>
     <id>http://yoursite.com/2018/04/13/2018-04-13-hexo-domain-name/</id>
@@ -233,42 +266,9 @@
     
       <category term="Github" scheme="http://yoursite.com/tags/Github/"/>
     
+      <category term="博客" scheme="http://yoursite.com/tags/%E5%8D%9A%E5%AE%A2/"/>
+    
       <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
-    
-      <category term="博客" scheme="http://yoursite.com/tags/%E5%8D%9A%E5%AE%A2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>西雅图之行</title>
-    <link href="http://yoursite.com/2018/04/13/2018-06-28-seatlle/"/>
-    <id>http://yoursite.com/2018/04/13/2018-06-28-seatlle/</id>
-    <published>2018-04-13T01:57:26.000Z</published>
-    <updated>2018-06-28T18:00:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="如何将Hexo博客绑定自己的域名？"><a href="#如何将Hexo博客绑定自己的域名？" class="headerlink" title="如何将Hexo博客绑定自己的域名？"></a><font color="salmon">如何将Hexo博客绑定自己的域名？</font></h3><p>构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。</p><h3 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a><font color="salmon">购买域名</font></h3><p>我是在<a href="https://sg.godaddy.com/zh/" target="_blank" rel="external">godaddy</a>上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。</p><h3 id="域名设置"><a href="#域名设置" class="headerlink" title="域名设置"></a><font color="salmon">域名设置</font></h3><p>购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。</p><p><img src="域名设置1.png" alt=""></p><p>然后点击添加，分别添加两个记录。第一个记录</p><ul><li>类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该<a href="http://ip.chinaz.com/" target="_blank" rel="external">网站</a>，直接输入博客地址即可，如shenxt.github.io。</li><li>类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。</li></ul><p><img src="域名设置2.png" alt=""></p><p>然后保存即可。</p><h3 id="博客设置"><a href="#博客设置" class="headerlink" title="博客设置"></a><font color="salmon">博客设置</font></h3><p>在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo c</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure></p><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a><font color="salmon">测试</font></h3><p>一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;如何将Hexo博客绑定自己的域名？&quot;&gt;&lt;a href=&quot;#如何将Hexo博客绑定自己的域名？&quot; class=&quot;headerlink&quot; title=&quot;如何将Hexo博客绑定自己的域名？&quot;&gt;&lt;/a&gt;&lt;font color=&quot;salmon&quot;&gt;如何将Hexo博客绑定自己的
-      
-    
-    </summary>
-    
-      <category term="Chinese" scheme="http://yoursite.com/categories/Chinese/"/>
-    
-      <category term="博客" scheme="http://yoursite.com/categories/Chinese/%E5%8D%9A%E5%AE%A2/"/>
-    
-      <category term="随记" scheme="http://yoursite.com/categories/Chinese/%E5%8D%9A%E5%AE%A2/%E9%9A%8F%E8%AE%B0/"/>
-    
-    
-      <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
-    
-      <category term="博客" scheme="http://yoursite.com/tags/%E5%8D%9A%E5%AE%A2/"/>
-    
-      <category term="随记" scheme="http://yoursite.com/tags/%E9%9A%8F%E8%AE%B0/"/>
     
   </entry>
   
