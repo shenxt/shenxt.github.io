@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[使用CSI:FingerID 进行代谢物鉴定]]></title>
+    <url>%2F2018%2F07%2F07%2F20180707-CSI-FingerID%2F</url>
+    <content type="text"><![CDATA[简单介绍CSI:FingerID是德国Friedrich Schiller University的Sebastian Böckera教授开发的一款基于机器学习和代谢物finger ID的代谢物鉴定软件。发表在PNAS上。最近因为需要使用它进行代谢物鉴定，因此下面对其原理以及使用做一个简单介绍。 原理CSI:FingerID的基本原来是使用FigerID来表示代谢物，代谢物的Figer ID是一串0 1 0 1的数字，将代谢物转变为一系列碎片表示，然后按照顺序排列，如果某个代谢物含有该碎片，则表示为1，没有该碎片，则表示为0。因此，使用figer ID，可以将代谢物用数字表示。 训练阶段作者从标准品MS2数据库中提取代谢物，然后将其二级谱图转变为fragmentation tree，fragmentation tree的有关知识可以参考该文章，http://www.pnas.org/content/pnas/112/41/12580.full.pdf。随后，从代谢物的结构式出发，得到代谢物的finger ID，然后对于每一个finger ID的molecular property，对建立fragmentation tree和其之间的SVM模型。从而得到一个使用fragmentation tree预测finger ID的机器学习预测模型。 预测阶段拿到一个未知代谢物的二级谱图，首选将其转换为fragmentation tree，然后代入预测模型，预测出其理论的molecular property，然后得到其预测的finger ID。 打分阶段将PubChem以及其他可以拿到的数据库中的所有代谢物的fingerID拿到，然后将未知代谢物的预测fingerID和其进行匹配打分（打分规则具体可以看论文），从而得到每未知代谢物的candidates。]]></content>
+      <categories>
+        <category>Chinese</category>
+        <category>组学基础</category>
+      </categories>
+      <tags>
+        <tag>Chinese</tag>
+        <tag>组学基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[数据的读取和输出]]></title>
     <url>%2F2018%2F06%2F03%2FR-study3%2F</url>
     <content type="text"><![CDATA[数据的读取和输出我们使用R语言来进行数据处理，那么就需要将本地的数据读取到R中，当在R中进行一定的处理之后，我们也需要将处理之后的数据输出。因此，本文就给大家介绍一下，R语言中最基本的数据读取和输出的方法。 如何设置工作路径工作路径（work directory）是指当前R的文件夹地址在哪？如果想知道自己现在的工作路径是什么，可以使用下列代码： 1getwd() 就会显示出来当前的工作路径在哪里，意思就是你直接输出的各种那文件，就会直接输出到这个文件夹里面。 那么比如我们现在有文件在另外一个文件夹里，在F盘的test里面，我想从这个里面读取我的数据，那么我该怎么做呢？那就需要将路径设置在该文件夹下，使用下列代码： 1setwd(&quot;F:/test&quot;) 注意一定要是使用反斜杠。 记住这两个函数，getwd和setwd，那么就可以将工作路径设置在我们想要的任何文件夹下面了。下面我们开始介绍最为常见的几种文件格式在R语言中的读取和输出。 csv文件csv文件是我们平时最为常见的文件了。全称为逗号分隔符文件。在R中，有现成的函数可以读取它。我们假设现在有一个数据，data.csv，在F盘的test文件夹中。我们现在要读取它，那么可以使用下列代码： 123#首选我们把路径设置到相应文件夹setwd(&quot;F:/test&quot;)data &lt;- read.csv(file = &quot;data.csv&quot;, stringsAsFactors = FALSE) 对的，就是使用read.csv函数，该函数就是用来读取csv文件的函数。他的参数有很多，我们来选几个最为常用的来说明一下，其他的可以使用?read.csv来参考官方文档 file：就是指要读取的文件的名称，比如上面的例子就是data.csv。注意后缀名一定要在。 header：是指文件是否有列名。如果设置为TRUE，则将第一行读取为该文件的列名。 stringsAsFactors：是否把文件的非数值型数据读取为factor类型。一般来说，我们都不需要，如果读取之后，需要将其转换为factor类型，那么后续可以自己手动转变。因此这里一定要将该参数设置为FALSE。 那么我们怎么输出csv文件呢？这就用到另外一个函数write.csv： 12#将data数据输出为csv文件write.csv(x = data, file = &quot;data1.csv&quot;, row.names = FALSE) 我们也来简单介绍一下write.csv函数的常见参数含义： x：就是你要输出的数据的名字，比如我们输出的数据是data，因此就设置为data。 file：是要输出数据的文件名。比如我们将data这个数据输出为data1.csv。 row.names：是指输出的csv文件的行名是否要自动加上。如果设置为TRUE，那么输出的数据会加上行名，设置为FALSE，则不会加上行名。 一般来说，上面的read.csv和write.csv函数就可以满足大多数的csv文件的读取和输出要求了，但是如果文件很大的话，那么这两个函数就会显的速度比较慢了，因此有另外一个由wickham大神写的包readr就非常的厉害了。下面同样使用readr包读取同样的数据，大家可以自行感受一下两者速度的差异： 1234567#首先安装readrinstall.packages(&quot;readr&quot;)library(&quot;readr&quot;)#读取数据data &lt;- read_csv(file = &quot;data.csv&quot;)#输出数据readr::write_csv(x = data, path = &quot;data1.csv&quot;) readr包中的read_csv和write_csv分别用来读取和输出数据。参数更加简洁。因此，强烈推荐大家使用这两个函数来进行数据的读取和输出。 xls和xlsx跟csv相比，excle表格文件就更加普遍了。一般来说，有xlx和xlsx两种文件。在这里，我们直接就推荐wicham的另外一个包，readxl包来进行这两种数据的读取和输出。 1234567#首先安装readxlinstall.packages(&quot;readxl&quot;)library(&quot;readr&quot;)#读取数据data &lt;- readxl::read_excel(path = &quot;data.xlsx&quot;)#输出数据write_excel_csv(x = data, path = &quot;data2.xlsx&quot;) 需要注意的是，write_excel_csv函数是包含在包readr中的。向大家强烈推荐这两个包用来处理csv，xlsx，xls文件的处理。 text文件另外一种常见文件就是txt文件了。可以使用R中自带的函数read.table。 介绍一下read.table的常用参数： file：读取数据的名称。 header：是否要把第一行变为列名，默认为FALSE。 sep：列之间的分隔符是什么？默认是空格，也就是sep=””，还有另外两种比较常见的，逗号，sep=”,”，其实就是csv文件了，还有sep=”\t”，也就是制表符。如果读取数据有问题的话， 可以试着改变sep来看看。 总结我们常见的几种数据的读取和输出就介绍到这了，其实就两个包和一个函数，readr，readxl和read.table。所有数据及代码已放到github上，请猛戳阅读原文获得链接。]]></content>
@@ -11,8 +24,8 @@
       </categories>
       <tags>
         <tag>Chinese</tag>
-        <tag>R语言</tag>
         <tag>组学基础</tag>
+        <tag>R语言</tag>
       </tags>
   </entry>
   <entry>
@@ -26,8 +39,8 @@
       </categories>
       <tags>
         <tag>Chinese</tag>
-        <tag>R语言</tag>
         <tag>组学基础</tag>
+        <tag>R语言</tag>
       </tags>
   </entry>
   <entry>
@@ -41,8 +54,8 @@
       </categories>
       <tags>
         <tag>Chinese</tag>
-        <tag>R语言</tag>
         <tag>组学基础</tag>
+        <tag>R语言</tag>
       </tags>
   </entry>
   <entry>
@@ -72,21 +85,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[西雅图之行]]></title>
-    <url>%2F2018%2F04%2F13%2F2018-06-28-seatlle%2F</url>
-    <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
-      <categories>
-        <category>Chinese</category>
-        <category>博客</category>
-        <category>随记</category>
-      </categories>
-      <tags>
-        <tag>Chinese</tag>
-        <tag>博客</tag>
-        <tag>随记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Hexo博客绑定域名]]></title>
     <url>%2F2018%2F04%2F13%2F2018-04-13-hexo-domain-name%2F</url>
     <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
@@ -104,6 +102,21 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[西雅图之行]]></title>
+    <url>%2F2018%2F04%2F13%2F2018-06-28-seatlle%2F</url>
+    <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
+      <categories>
+        <category>Chinese</category>
+        <category>博客</category>
+        <category>随记</category>
+      </categories>
+      <tags>
+        <tag>Chinese</tag>
+        <tag>博客</tag>
+        <tag>随记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[偶然翻到的文章]]></title>
     <url>%2F2017%2F10%2F09%2F2017-10-09.poetry%2F</url>
     <content type="text"><![CDATA[整理笔记的发现别人都说翻看以前的空间觉得自己以前写的东西宛若智障，这两天在翻看以前的笔记，也有这种感觉，因此，该删的删，直到看到了这篇文章，是在15年6月26号写的，现在想起来，虽然只有两年多的时间，但是物是人非，恍如隔世啊。这篇正好其实写的还不错，自己以前也是一个文艺青年，所以不舍得删掉，放在博客，充实一下内容。 谁让我遇到了你谁让我遇到了你，在春末夏初，当柳枝恢复了颜色，在花落蝉鸣，那姗姗来迟的雨季。生命一直如此平淡，我也从未期望奇迹，我过着我自己的生活，人生对我来说也许就是密密麻麻的正楷书写的履历，波澜不惊，平淡无奇。时间像流水般流逝，流逝而变化的是我周围的环境，呼吸以及空气，沉寂的是我自己，看似乐观的外表，其实内心的孤寂，没有人会在意我的在意，直到我遇到了你，在那个我也记不清的独特而不浪漫的某个时刻的某个过去。从此我的脑海里便有了挥散不去的，让我回想的你的笑容，你的身影，以及，你并不夸张而又足够吸引我的的气息。我对你的爱，不知怎么形容，也许你会觉得俗气：不变专一。此情难抑，如荷塘蜻蜓戏水，随波而散的青色涟漪，像我手中的铅笔，涂画在围城上的白色封皮。不知你是否还记得，我总是小心翼翼，而你总是不睬不理，当然我知道的，这不是你的心意，正像你说的，我没有飞蛾的勇气，也不像叶芝那样，完全的放开自己。你知道我的心里，容不下别人，此爱唯你。我知道随着岁月的流去，你会看到如今挂在我口上的，也的的确确刻在我心中的那句：不离不弃。直到有一天，当我老了，牙齿脱落，四肢无力，我也会坚守着对你的爱，用尽最后一丝力气，我甚至可以想象有一天，当我魂归天际，藏在我心中的，除了此生我从未改变的对父母家人的爱，便是独一无二的，在未来的昨天我遇到的你谁让我遇到了你，窗外的秋雨拍打着五颜六色的雨伞，也像一个声音的到来打断了我的思绪，或许这就是命中注定，或许这就是天意，我不知道我为什么爱你，就像我不知道我为什么不爱你。感觉就是这么奇妙的难以，难以用话语，难以用铅笔，勾勒出色彩斑斓的奇妙的爱的境地。谁让我遇到了你是缘分，抑或是机遇，缘分是什么？是你我虽然并未见到过的上帝，他也许偶然在做高数题，而他给出的答案就是随机，随机抽取，在未来的日子里我们需要互相珍惜，珍惜这段来之不易的，上帝赋予我们的非同一般的意义。]]></content>
@@ -112,8 +125,8 @@
         <category>Life</category>
       </categories>
       <tags>
-        <tag>Chinese</tag>
         <tag>life</tag>
+        <tag>Chinese</tag>
       </tags>
   </entry>
   <entry>
@@ -138,8 +151,8 @@
         <category>Life</category>
       </categories>
       <tags>
-        <tag>Chinese</tag>
         <tag>life</tag>
+        <tag>Chinese</tag>
       </tags>
   </entry>
   <entry>
