@@ -72,9 +72,9 @@
     
       <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
     
-      <category term="组学基础" scheme="http://yoursite.com/tags/%E7%BB%84%E5%AD%A6%E5%9F%BA%E7%A1%80/"/>
-    
       <category term="R语言" scheme="http://yoursite.com/tags/R%E8%AF%AD%E8%A8%80/"/>
+    
+      <category term="组学基础" scheme="http://yoursite.com/tags/%E7%BB%84%E5%AD%A6%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
@@ -105,9 +105,9 @@
     
       <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
     
-      <category term="组学基础" scheme="http://yoursite.com/tags/%E7%BB%84%E5%AD%A6%E5%9F%BA%E7%A1%80/"/>
-    
       <category term="R语言" scheme="http://yoursite.com/tags/R%E8%AF%AD%E8%A8%80/"/>
+    
+      <category term="组学基础" scheme="http://yoursite.com/tags/%E7%BB%84%E5%AD%A6%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
@@ -138,9 +138,42 @@
     
       <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
     
+      <category term="R语言" scheme="http://yoursite.com/tags/R%E8%AF%AD%E8%A8%80/"/>
+    
       <category term="组学基础" scheme="http://yoursite.com/tags/%E7%BB%84%E5%AD%A6%E5%9F%BA%E7%A1%80/"/>
     
+  </entry>
+  
+  <entry>
+    <title>使用R语言下载KEGG数据库</title>
+    <link href="http://yoursite.com/2018/06/03/20180827-R-KEGG/"/>
+    <id>http://yoursite.com/2018/06/03/20180827-R-KEGG/</id>
+    <published>2018-06-03T14:37:47.000Z</published>
+    <updated>2018-08-27T08:42:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在群里发现大家经常交流如何下载各种数据库，确实，数据库对做各种组学来说，确实是非常重要的，但是很多数据库的下载做的并不是那么友好。KEGG是我们平时接触最多，以及最受大家欢迎的数据库之一，因此，这次我把一个非常好用的R包，KEGGREST下载KEGG数据库的用法进行了总结。</p><h4 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h4><p>KEGGREST包是一个bioconductor包，是由bioconductor的核心小组成员之一，Dan Tenenbaum写的，主要就是用来下载KEGG数据库。链接如下，<a href="https://bioconductor.org/packages/release/bioc/html/KEGGREST.html。" target="_blank" rel="external">https://bioconductor.org/packages/release/bioc/html/KEGGREST.html。</a></p><h4 id="安装KEGGREST"><a href="#安装KEGGREST" class="headerlink" title="安装KEGGREST"></a>安装KEGGREST</h4><p>可以直接使用Bioconductor提供的下载方式进行下载，在R控制面板中输入下列代码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## try http:// if https:// URLs are not supported</div><div class="line">source(&quot;https://bioconductor.org/biocLite.R&quot;)</div><div class="line">biocLite(&quot;KEGGREST&quot;)</div></pre></td></tr></table></figure><p>如果出错，不能安装，可以考虑把https换为http，输入下列代码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## try http:// if https:// URLs are not supported</div><div class="line">source(&quot;http://bioconductor.org/biocLite.R&quot;)</div><div class="line">biocLite(&quot;KEGGREST&quot;)</div></pre></td></tr></table></figure><p>安装成功之后，就可以使用了。</p><h4 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h4><p>成功安装之后，这个包有自己的说明文档，输入下列代码可以打开说明文档。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">browseVignettes(&quot;KEGGREST&quot;)</div></pre></td></tr></table></figure><p>文档如下：</p><p><img src="http://note.youdao.com/yws/res/22270/A8AD689E39964E6ABC1247C8B000B46F" alt="image"></p><p>输入下列代码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">library(KEGGREST)</div><div class="line">listDatabases()</div></pre></td></tr></table></figure><p>可以看到该包可以下载的数据类型：</p><p><img src="http://note.youdao.com/yws/res/22276/25A75A1CA92A41188D6A370BCB756EC4" alt="image"></p><p>可以看到KEGG中几乎所有数据库都可以下载下来，我们以我们最为常用的pathway和compound数据为例，来说明如何使用KEGGREST。</p><h4 id="下载pathway信息"><a href="#下载pathway信息" class="headerlink" title="下载pathway信息"></a>下载pathway信息</h4><p>我们知道pathway信息有不同的物种，因此我们首先需要弄清楚有哪些物种，可以使用以下代码获得包含哪些物种：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">org &lt;- keggList(&quot;organism&quot;)</div><div class="line">head(org)</div></pre></td></tr></table></figure><p><img src="http://note.youdao.com/yws/res/22289/37E2A56668464E4DB7253300397F90F9" alt="image"></p><p>org是一个matrix，其中第三列是各个物种的名字，第二列是各个物种的简称。</p><p>下面我们就来获取人类所有的pathway。</p><p>可以看到人类的简称是hsa。下面再获得人类的所有通路的代码简称：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hsa.pathway &lt;- keggLink(&quot;pathway&quot;, &quot;hsa&quot;)</div><div class="line">hsa.pathway &lt;- unique(hsa.pathway)</div></pre></td></tr></table></figure><p><img src="http://note.youdao.com/yws/res/22294/152B7B22AD96490BBC5B1B6AB85179A1" alt="image"></p><p>hsa.pahtway就是所有人类pathway的代码简称。</p><p>然后使用keggGet函数就可以将每个pathway的信息全部爬去下来，比如第一个pathway是：path:hsa00010”</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hsa.pathway[1]</div><div class="line">hsa00010 &lt;- keggGet(dbentries = hsa.pathway[1])[[1]]</div></pre></td></tr></table></figure><p>hsa00010是一个list格式的数据，它的内容分别是：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">names(hsa00010)</div></pre></td></tr></table></figure><p><img src="http://note.youdao.com/yws/res/22312/280787566FE4413493DBB2D6DDDDF0AD" alt="image"></p><p>与KEGG网页版的数据是一一对应的。</p><p><img src="http://note.youdao.com/yws/res/22316/62B015FA37234929AAA6BD3C2ABC3B3A" alt="image"></p><p>如果想要得到人类所有KEGG pahtway的信息，则可以使用下列代码得到，以为该函数每次最多只接受10个pathway的下载请求（推测是为了防止KEGG的下载崩溃），因此更为便捷的办法是，循环获得所有的pathway信息：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">hsa.pathway.database &lt;- vector(mode = &quot;list&quot;, length = length(hsa.pathway))</div><div class="line"></div><div class="line">for(i in 1:length(hsa.pathway))&#123;</div><div class="line">  cat(i, &quot; &quot;)</div><div class="line">  hsa.pathway.database[[i]] &lt;- keggGet(dbentries = hsa.pathway[i])</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>最后可以将得到的信息保存下来：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">save(hsa.pathway.database, file = &quot;hsa.pathway.database&quot;)</div></pre></td></tr></table></figure><h4 id="下载compound信息"><a href="#下载compound信息" class="headerlink" title="下载compound信息"></a>下载compound信息</h4><p>首先需要获得所有代谢物的ID</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">compound.id &lt;- keggList(&quot;compound&quot;)</div><div class="line">compound.id &lt;- names(compound.id)</div></pre></td></tr></table></figure><p>然后仍然通过keggGet函数获得所有代谢物的详细信息：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">kegg.compound.database &lt;- vector(mode = &quot;list&quot;, length = length(compound.id))</div><div class="line"></div><div class="line">for(i in 1:length(compound.id))&#123;</div><div class="line">  cat(i, &quot; &quot;)</div><div class="line">  kegg.compound.database[[i]] &lt;- keggGet(dbentries = compound.id[i])</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>得到的kegg.compound.database也是一个list数据，如果想要将其转换为datafrmae格式，然后输出位csv或者xlsx格式，自己进行转换即可。</p><h4 id="写在后面的话"><a href="#写在后面的话" class="headerlink" title="写在后面的话"></a>写在后面的话</h4><p>这个包用来下载KEGG数据库真的是非常方便，以前用过，后来忘掉了，最近又找出来，为了防止自己忘掉，所以写了一篇文章来记录一下，其他的功能后面会再研究记录。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近在群里发现大家经常交流如何下载各种数据库，确实，数据库对做各种组学来说，确实是非常重要的，但是很多数据库的下载做的并不是那么友好。KEGG是我们平时接触最多，以及最受大家欢迎的数据库之一，因此，这次我把一个非常好用的R包，KEGGREST下载KEGG数据库的用法进行了总
+      
+    
+    </summary>
+    
+      <category term="Chinese" scheme="http://yoursite.com/categories/Chinese/"/>
+    
+      <category term="R语言" scheme="http://yoursite.com/categories/Chinese/R%E8%AF%AD%E8%A8%80/"/>
+    
+      <category term="组学基础" scheme="http://yoursite.com/categories/Chinese/R%E8%AF%AD%E8%A8%80/%E7%BB%84%E5%AD%A6%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
+    
       <category term="R语言" scheme="http://yoursite.com/tags/R%E8%AF%AD%E8%A8%80/"/>
+    
+      <category term="组学基础" scheme="http://yoursite.com/tags/%E7%BB%84%E5%AD%A6%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
@@ -203,6 +236,43 @@
   </entry>
   
   <entry>
+    <title>Hexo博客绑定域名</title>
+    <link href="http://yoursite.com/2018/04/13/2018-04-13-hexo-domain-name/"/>
+    <id>http://yoursite.com/2018/04/13/2018-04-13-hexo-domain-name/</id>
+    <published>2018-04-13T01:57:26.000Z</published>
+    <updated>2018-04-13T01:57:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="如何将Hexo博客绑定自己的域名？"><a href="#如何将Hexo博客绑定自己的域名？" class="headerlink" title="如何将Hexo博客绑定自己的域名？"></a><font color="salmon">如何将Hexo博客绑定自己的域名？</font></h3><p>构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。</p><h3 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a><font color="salmon">购买域名</font></h3><p>我是在<a href="https://sg.godaddy.com/zh/" target="_blank" rel="external">godaddy</a>上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。</p><h3 id="域名设置"><a href="#域名设置" class="headerlink" title="域名设置"></a><font color="salmon">域名设置</font></h3><p>购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。</p><p><img src="域名设置1.png" alt=""></p><p>然后点击添加，分别添加两个记录。第一个记录</p><ul><li>类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该<a href="http://ip.chinaz.com/" target="_blank" rel="external">网站</a>，直接输入博客地址即可，如shenxt.github.io。</li><li>类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。</li></ul><p><img src="域名设置2.png" alt=""></p><p>然后保存即可。</p><h3 id="博客设置"><a href="#博客设置" class="headerlink" title="博客设置"></a><font color="salmon">博客设置</font></h3><p>在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo c</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure></p><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a><font color="salmon">测试</font></h3><p>一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;如何将Hexo博客绑定自己的域名？&quot;&gt;&lt;a href=&quot;#如何将Hexo博客绑定自己的域名？&quot; class=&quot;headerlink&quot; title=&quot;如何将Hexo博客绑定自己的域名？&quot;&gt;&lt;/a&gt;&lt;font color=&quot;salmon&quot;&gt;如何将Hexo博客绑定自己的
+      
+    
+    </summary>
+    
+      <category term="Chinese" scheme="http://yoursite.com/categories/Chinese/"/>
+    
+      <category term="R" scheme="http://yoursite.com/categories/Chinese/R/"/>
+    
+      <category term="Hexo" scheme="http://yoursite.com/categories/Chinese/R/Hexo/"/>
+    
+      <category term="博客" scheme="http://yoursite.com/categories/Chinese/R/Hexo/%E5%8D%9A%E5%AE%A2/"/>
+    
+    
+      <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
+    
+      <category term="Github" scheme="http://yoursite.com/tags/Github/"/>
+    
+      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+    
+      <category term="博客" scheme="http://yoursite.com/tags/%E5%8D%9A%E5%AE%A2/"/>
+    
+  </entry>
+  
+  <entry>
     <title>西雅图之行</title>
     <link href="http://yoursite.com/2018/04/13/2018-06-28-seatlle/"/>
     <id>http://yoursite.com/2018/04/13/2018-06-28-seatlle/</id>
@@ -236,19 +306,19 @@
   </entry>
   
   <entry>
-    <title>Hexo博客绑定域名</title>
-    <link href="http://yoursite.com/2018/04/13/2018-04-13-hexo-domain-name/"/>
-    <id>http://yoursite.com/2018/04/13/2018-04-13-hexo-domain-name/</id>
-    <published>2018-04-13T01:57:26.000Z</published>
-    <updated>2018-04-13T01:57:26.000Z</updated>
+    <title>R管道函数</title>
+    <link href="http://yoursite.com/2017/10/09/2017-10-11.pipline.function/"/>
+    <id>http://yoursite.com/2017/10/09/2017-10-11.pipline.function/</id>
+    <published>2017-10-09T07:29:51.000Z</published>
+    <updated>2017-10-11T14:11:04.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="如何将Hexo博客绑定自己的域名？"><a href="#如何将Hexo博客绑定自己的域名？" class="headerlink" title="如何将Hexo博客绑定自己的域名？"></a><font color="salmon">如何将Hexo博客绑定自己的域名？</font></h3><p>构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。</p><h3 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a><font color="salmon">购买域名</font></h3><p>我是在<a href="https://sg.godaddy.com/zh/" target="_blank" rel="external">godaddy</a>上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。</p><h3 id="域名设置"><a href="#域名设置" class="headerlink" title="域名设置"></a><font color="salmon">域名设置</font></h3><p>购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。</p><p><img src="域名设置1.png" alt=""></p><p>然后点击添加，分别添加两个记录。第一个记录</p><ul><li>类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该<a href="http://ip.chinaz.com/" target="_blank" rel="external">网站</a>，直接输入博客地址即可，如shenxt.github.io。</li><li>类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。</li></ul><p><img src="域名设置2.png" alt=""></p><p>然后保存即可。</p><h3 id="博客设置"><a href="#博客设置" class="headerlink" title="博客设置"></a><font color="salmon">博客设置</font></h3><p>在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo c</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure></p><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a><font color="salmon">测试</font></h3><p>一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="R中的管道函数"><a href="#R中的管道函数" class="headerlink" title="R中的管道函数"></a><font color="salmon">R中的管道函数</font></h3><p>管道函数是R语言中为了减少过多使用中间变量而创建的，R语言本身没有没有自带管道函数，第三方包中提供了管道函数的使用，我使用的是<a href="https://cran.r-project.org/web/packages/stringr/index.html" target="_blank" rel="external">stringr</a>包。以前不怎么使用，现在开始试着使用管道函数，因为可以使代码更加简洁，并且节省内存空间。下面以一个小的例子来进行说明，这个例子是从<a href="http://mp.weixin.qq.com/s/uKSIAg1kEIj0dDqnVTdYvA" target="_blank" rel="external">别人那拷贝而来</a>。</p><h3 id="如何使用管道函数"><a href="#如何使用管道函数" class="headerlink" title="如何使用管道函数"></a><font color="salmon">如何使用管道函数</font></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">library(&quot;rvest&quot;)</div><div class="line">library(&quot;stringr&quot;)</div><div class="line">url&lt;- &quot;http://www.zyzw.com/twzs010.htm&quot;</div></pre></td></tr></table></figure><p>在不久前的一篇关于中国世界文遗产仪表盘的案例中，我在目标网站上抓取了52个中国世界自然文遗产的名称。按照传统的引入中间变量的写法，代码应该是这样的：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">web&lt;-read_html(url,encoding=&quot;GBK&quot;)</div><div class="line">web1&lt;-html_nodes(web,&quot;b&quot;)</div><div class="line">content1&lt;-html_text(web1,trim = FALSE)</div><div class="line">content2&lt;-gsub(&quot;(\\n\\t|，|\\d|、)&quot;,&quot;&quot;,content1)</div><div class="line">content3&lt;-grep(&quot;\\S&quot;,content2,value=T)</div><div class="line">content4&lt;-str_trim(content3,side=&quot;both&quot;)</div><div class="line">content5&lt;-content4[1:54]</div><div class="line">content6&lt;-content5[setdiff(1:54,c(35,39))];content6</div></pre></td></tr></table></figure><p><img src="http://ow5z7hup5.bkt.clouddn.com/20171011piplineFunction.fig1.png" width="600" class="img-topic"></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h3 id=&quot;如何将Hexo博客绑定自己的域名？&quot;&gt;&lt;a href=&quot;#如何将Hexo博客绑定自己的域名？&quot; class=&quot;headerlink&quot; title=&quot;如何将Hexo博客绑定自己的域名？&quot;&gt;&lt;/a&gt;&lt;font color=&quot;salmon&quot;&gt;如何将Hexo博客绑定自己的
+        &lt;h3 id=&quot;R中的管道函数&quot;&gt;&lt;a href=&quot;#R中的管道函数&quot; class=&quot;headerlink&quot; title=&quot;R中的管道函数&quot;&gt;&lt;/a&gt;&lt;font color=&quot;salmon&quot;&gt;R中的管道函数&lt;/font&gt;&lt;/h3&gt;&lt;p&gt;管道函数是R语言中为了减少过多使用中间变量而
       
     
     </summary>
@@ -257,18 +327,10 @@
     
       <category term="R" scheme="http://yoursite.com/categories/Chinese/R/"/>
     
-      <category term="Hexo" scheme="http://yoursite.com/categories/Chinese/R/Hexo/"/>
-    
-      <category term="博客" scheme="http://yoursite.com/categories/Chinese/R/Hexo/%E5%8D%9A%E5%AE%A2/"/>
-    
     
       <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
     
-      <category term="Github" scheme="http://yoursite.com/tags/Github/"/>
-    
-      <category term="博客" scheme="http://yoursite.com/tags/%E5%8D%9A%E5%AE%A2/"/>
-    
-      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+      <category term="R" scheme="http://yoursite.com/tags/R/"/>
     
   </entry>
   
@@ -295,35 +357,6 @@
       <category term="life" scheme="http://yoursite.com/tags/life/"/>
     
       <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>R管道函数</title>
-    <link href="http://yoursite.com/2017/10/09/2017-10-11.pipline.function/"/>
-    <id>http://yoursite.com/2017/10/09/2017-10-11.pipline.function/</id>
-    <published>2017-10-09T07:29:51.000Z</published>
-    <updated>2017-10-11T14:11:04.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="R中的管道函数"><a href="#R中的管道函数" class="headerlink" title="R中的管道函数"></a><font color="salmon">R中的管道函数</font></h3><p>管道函数是R语言中为了减少过多使用中间变量而创建的，R语言本身没有没有自带管道函数，第三方包中提供了管道函数的使用，我使用的是<a href="https://cran.r-project.org/web/packages/stringr/index.html" target="_blank" rel="external">stringr</a>包。以前不怎么使用，现在开始试着使用管道函数，因为可以使代码更加简洁，并且节省内存空间。下面以一个小的例子来进行说明，这个例子是从<a href="http://mp.weixin.qq.com/s/uKSIAg1kEIj0dDqnVTdYvA" target="_blank" rel="external">别人那拷贝而来</a>。</p><h3 id="如何使用管道函数"><a href="#如何使用管道函数" class="headerlink" title="如何使用管道函数"></a><font color="salmon">如何使用管道函数</font></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">library(&quot;rvest&quot;)</div><div class="line">library(&quot;stringr&quot;)</div><div class="line">url&lt;- &quot;http://www.zyzw.com/twzs010.htm&quot;</div></pre></td></tr></table></figure><p>在不久前的一篇关于中国世界文遗产仪表盘的案例中，我在目标网站上抓取了52个中国世界自然文遗产的名称。按照传统的引入中间变量的写法，代码应该是这样的：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">web&lt;-read_html(url,encoding=&quot;GBK&quot;)</div><div class="line">web1&lt;-html_nodes(web,&quot;b&quot;)</div><div class="line">content1&lt;-html_text(web1,trim = FALSE)</div><div class="line">content2&lt;-gsub(&quot;(\\n\\t|，|\\d|、)&quot;,&quot;&quot;,content1)</div><div class="line">content3&lt;-grep(&quot;\\S&quot;,content2,value=T)</div><div class="line">content4&lt;-str_trim(content3,side=&quot;both&quot;)</div><div class="line">content5&lt;-content4[1:54]</div><div class="line">content6&lt;-content5[setdiff(1:54,c(35,39))];content6</div></pre></td></tr></table></figure><p><img src="http://ow5z7hup5.bkt.clouddn.com/20171011piplineFunction.fig1.png" width="600" class="img-topic"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;R中的管道函数&quot;&gt;&lt;a href=&quot;#R中的管道函数&quot; class=&quot;headerlink&quot; title=&quot;R中的管道函数&quot;&gt;&lt;/a&gt;&lt;font color=&quot;salmon&quot;&gt;R中的管道函数&lt;/font&gt;&lt;/h3&gt;&lt;p&gt;管道函数是R语言中为了减少过多使用中间变量而
-      
-    
-    </summary>
-    
-      <category term="Chinese" scheme="http://yoursite.com/categories/Chinese/"/>
-    
-      <category term="R" scheme="http://yoursite.com/categories/Chinese/R/"/>
-    
-    
-      <category term="Chinese" scheme="http://yoursite.com/tags/Chinese/"/>
-    
-      <category term="R" scheme="http://yoursite.com/tags/R/"/>
     
   </entry>
   

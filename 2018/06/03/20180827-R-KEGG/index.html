@@ -10,7 +10,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <meta name="description" content="">
-    <title>Shen Blog</title>
+    <title>使用R语言下载KEGG数据库 · Shen Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -65,6 +65,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         
     <link rel="icon" href= /favicon.ico>
     <script>
@@ -175,12 +177,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Xiaotao Shen</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">使用R语言下载KEGG数据库</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Xiaotao Shen</a>
 </header>
@@ -194,24 +207,71 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(http://ow5z7hup5.bkt.clouddn.com/moutin.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            使用R语言下载KEGG数据库
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "R语言">R语言</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "组学基础">组学基础</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/06/03</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
@@ -295,38 +355,99 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>最近在群里发现大家经常交流如何下载各种数据库，确实，数据库对做各种组学来说，确实是非常重要的，但是很多数据库的下载做的并不是那么友好。KEGG是我们平时接触最多，以及最受大家欢迎的数据库之一，因此，这次我把一个非常好用的R包，KEGGREST下载KEGG数据库的用法进行了总结。</p>
+<h4 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h4><p>KEGGREST包是一个bioconductor包，是由bioconductor的核心小组成员之一，Dan Tenenbaum写的，主要就是用来下载KEGG数据库。链接如下，<a href="https://bioconductor.org/packages/release/bioc/html/KEGGREST.html。" target="_blank" rel="external">https://bioconductor.org/packages/release/bioc/html/KEGGREST.html。</a></p>
+<h4 id="安装KEGGREST"><a href="#安装KEGGREST" class="headerlink" title="安装KEGGREST"></a>安装KEGGREST</h4><p>可以直接使用Bioconductor提供的下载方式进行下载，在R控制面板中输入下列代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## try http:// if https:// URLs are not supported</div><div class="line">source(&quot;https://bioconductor.org/biocLite.R&quot;)</div><div class="line">biocLite(&quot;KEGGREST&quot;)</div></pre></td></tr></table></figure>
+<p>如果出错，不能安装，可以考虑把https换为http，输入下列代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## try http:// if https:// URLs are not supported</div><div class="line">source(&quot;http://bioconductor.org/biocLite.R&quot;)</div><div class="line">biocLite(&quot;KEGGREST&quot;)</div></pre></td></tr></table></figure>
+<p>安装成功之后，就可以使用了。</p>
+<h4 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h4><p>成功安装之后，这个包有自己的说明文档，输入下列代码可以打开说明文档。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">browseVignettes(&quot;KEGGREST&quot;)</div></pre></td></tr></table></figure>
+<p>文档如下：</p>
+<p><img src="http://note.youdao.com/yws/res/22270/A8AD689E39964E6ABC1247C8B000B46F" alt="image"></p>
+<p>输入下列代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">library(KEGGREST)</div><div class="line">listDatabases()</div></pre></td></tr></table></figure>
+<p>可以看到该包可以下载的数据类型：</p>
+<p><img src="http://note.youdao.com/yws/res/22276/25A75A1CA92A41188D6A370BCB756EC4" alt="image"></p>
+<p>可以看到KEGG中几乎所有数据库都可以下载下来，我们以我们最为常用的pathway和compound数据为例，来说明如何使用KEGGREST。</p>
+<h4 id="下载pathway信息"><a href="#下载pathway信息" class="headerlink" title="下载pathway信息"></a>下载pathway信息</h4><p>我们知道pathway信息有不同的物种，因此我们首先需要弄清楚有哪些物种，可以使用以下代码获得包含哪些物种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">org &lt;- keggList(&quot;organism&quot;)</div><div class="line">head(org)</div></pre></td></tr></table></figure>
+<p><img src="http://note.youdao.com/yws/res/22289/37E2A56668464E4DB7253300397F90F9" alt="image"></p>
+<p>org是一个matrix，其中第三列是各个物种的名字，第二列是各个物种的简称。</p>
+<p>下面我们就来获取人类所有的pathway。</p>
+<p>可以看到人类的简称是hsa。下面再获得人类的所有通路的代码简称：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hsa.pathway &lt;- keggLink(&quot;pathway&quot;, &quot;hsa&quot;)</div><div class="line">hsa.pathway &lt;- unique(hsa.pathway)</div></pre></td></tr></table></figure>
+<p><img src="http://note.youdao.com/yws/res/22294/152B7B22AD96490BBC5B1B6AB85179A1" alt="image"></p>
+<p>hsa.pahtway就是所有人类pathway的代码简称。</p>
+<p>然后使用keggGet函数就可以将每个pathway的信息全部爬去下来，比如第一个pathway是：path:hsa00010”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hsa.pathway[1]</div><div class="line">hsa00010 &lt;- keggGet(dbentries = hsa.pathway[1])[[1]]</div></pre></td></tr></table></figure>
+<p>hsa00010是一个list格式的数据，它的内容分别是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">names(hsa00010)</div></pre></td></tr></table></figure>
+<p><img src="http://note.youdao.com/yws/res/22312/280787566FE4413493DBB2D6DDDDF0AD" alt="image"></p>
+<p>与KEGG网页版的数据是一一对应的。</p>
+<p><img src="http://note.youdao.com/yws/res/22316/62B015FA37234929AAA6BD3C2ABC3B3A" alt="image"></p>
+<p>如果想要得到人类所有KEGG pahtway的信息，则可以使用下列代码得到，以为该函数每次最多只接受10个pathway的下载请求（推测是为了防止KEGG的下载崩溃），因此更为便捷的办法是，循环获得所有的pathway信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">hsa.pathway.database &lt;- vector(mode = &quot;list&quot;, length = length(hsa.pathway))</div><div class="line"></div><div class="line">for(i in 1:length(hsa.pathway))&#123;</div><div class="line">  cat(i, &quot; &quot;)</div><div class="line">  hsa.pathway.database[[i]] &lt;- keggGet(dbentries = hsa.pathway[i])</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后可以将得到的信息保存下来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">save(hsa.pathway.database, file = &quot;hsa.pathway.database&quot;)</div></pre></td></tr></table></figure>
+<h4 id="下载compound信息"><a href="#下载compound信息" class="headerlink" title="下载compound信息"></a>下载compound信息</h4><p>首先需要获得所有代谢物的ID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">compound.id &lt;- keggList(&quot;compound&quot;)</div><div class="line">compound.id &lt;- names(compound.id)</div></pre></td></tr></table></figure>
+<p>然后仍然通过keggGet函数获得所有代谢物的详细信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">kegg.compound.database &lt;- vector(mode = &quot;list&quot;, length = length(compound.id))</div><div class="line"></div><div class="line">for(i in 1:length(compound.id))&#123;</div><div class="line">  cat(i, &quot; &quot;)</div><div class="line">  kegg.compound.database[[i]] &lt;- keggGet(dbentries = compound.id[i])</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>得到的kegg.compound.database也是一个list数据，如果想要将其转换为datafrmae格式，然后输出位csv或者xlsx格式，自己进行转换即可。</p>
+<h4 id="写在后面的话"><a href="#写在后面的话" class="headerlink" title="写在后面的话"></a>写在后面的话</h4><p>这个包用来下载KEGG数据库真的是非常方便，以前用过，后来忘掉了，最近又找出来，为了防止自己忘掉，所以写了一篇文章来记录一下，其他的功能后面会再研究记录。</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/06/03/R-study1/" title= Rstudio的使用 >
+                    <div class="nextTitle">Rstudio的使用</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/05/16/metabolomics-data-normalization/" title= 代谢组数据标准化包MetNormalizer介绍 >
+                    <div class="prevTitle">代谢组数据标准化包MetNormalizer介绍</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMDc2Ny83MzE5>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+
+<!-- City版安装代码已完成 -->
     
     
+    <!--PC版-->
+
+    <!--PC版-->
+
+
     
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/07/07/20180707-CSI-FingerID/" >
-                
-                    <span>使用CSI:FingerID 进行代谢物鉴定</span>
-            </a>
-            <div class="abstract-content">
-                简单介绍CSI:FingerID是德国Friedrich Schiller University的Sebastian Böckera教授开发的一款基于机器学习和代谢物finger ID的代谢物鉴...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "组学基础">组学基础</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    <!-- paginator  -->
-    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -415,6 +536,24 @@
 
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#简单介绍"><span class="toc-number">1.</span> <span class="toc-text">简单介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装KEGGREST"><span class="toc-number">2.</span> <span class="toc-text">安装KEGGREST</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#概览"><span class="toc-number">3.</span> <span class="toc-text">概览</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#下载pathway信息"><span class="toc-number">4.</span> <span class="toc-text">下载pathway信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#下载compound信息"><span class="toc-number">5.</span> <span class="toc-text">下载compound信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写在后面的话"><span class="toc-number">6.</span> <span class="toc-text">写在后面的话</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -880,6 +1019,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
