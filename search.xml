@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Comments for MetFlow]]></title>
+    <url>%2F2018%2F10%2F13%2F20181013-metflow-comment%2F</url>
+    <content type="text"><![CDATA[If you have any question for MetFlow, please leave a message for us.]]></content>
+      <categories>
+        <category>English</category>
+        <category>Metabolomics</category>
+        <category>MetFlow</category>
+      </categories>
+      <tags>
+        <tag>Metabolomics</tag>
+        <tag>English</tag>
+        <tag>MetFlow</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用CSI:FingerID 进行代谢物鉴定]]></title>
     <url>%2F2018%2F07%2F07%2F20180707-CSI-FingerID%2F</url>
     <content type="text"><![CDATA[简单介绍CSI:FingerID是德国Friedrich Schiller University的Sebastian Böckera教授开发的一款基于机器学习和代谢物finger ID的代谢物鉴定软件。发表在PNAS上。最近因为需要使用它进行代谢物鉴定，因此下面对其原理以及使用做一个简单介绍。 原理CSI:FingerID的基本原来是使用FigerID来表示代谢物，代谢物的Figer ID是一串0 1 0 1的数字，将代谢物转变为一系列碎片表示，然后按照顺序排列，如果某个代谢物含有该碎片，则表示为1，没有该碎片，则表示为0。因此，使用figer ID，可以将代谢物用数字表示。 训练阶段 作者从标准品MS2数据库中提取代谢物，然后将其二级谱图转变为fragmentation tree，fragmentation tree的有关知识可以参考该文章，http://www.pnas.org/content/pnas/112/41/12580.full.pdf。随后，从代谢物的结构式出发，得到代谢物的finger ID，然后对于每一个finger ID的molecular property，对建立fragmentation tree和其之间的SVM模型。从而得到一个使用fragmentation tree预测finger ID的机器学习预测模型。 预测阶段 拿到一个未知代谢物的二级谱图，首选将其转换为fragmentation tree，然后代入预测模型，预测出其理论的molecular property，然后得到其预测的finger ID。 打分阶段 将PubChem以及其他可以拿到的数据库中的所有代谢物的fingerID拿到，然后将未知代谢物的预测fingerID和其进行匹配打分（打分规则具体可以看论文），从而得到每个未知代谢物的candidates。 软件使用 下载 CSI:FingerID作者使用Java写了本地的软件版本，可以直接从其官网上下载。选择自己电脑对应的版本即可。 打开软件 下载到本地之后，无需安装，直接解压缩，然后双击.exe文件即可（我使用的windowns 64位系统）。他们也写有说明文档，不多，一共四十多页，但是真正讲解怎么使用的可能不到20页，还是非常清楚简洁的。可以下载下来仔细看看。 开始使用 打开软件之后，界面如下图所示。 因为我是需要使用批量处理，因此我就从如何批量处理讲解他的使用。首先，该软件接收的文件类型包括txt以及mgf，msp是非常普遍以及常用的，因此，推荐大家使用mgf格式文件。大家可以使用我的示例数据，是R文件，包含5个2级谱图。大家可以点击此处下载。下载之后，需要在R中打开，并将其转变为符合软件要求的格式。 12345678910111213141516171819202122232425262728293031323334353637##先加载数据load(&quot;temp.ms2&quot;)ms2.pos &lt;- temp.ms2##然后将该数据转为软件所需格式，并写出为mgf格式for(i in 1:length(ms2.pos))&#123; cat(i, &quot; &quot;) temp.ms2 &lt;- ms2.pos[[i]] fn.save &lt;- paste0(temp.ms2[[1]][1,1], &apos;.mgf&apos;) # info &lt;- temp.ms2[[1]] spec &lt;- temp.ms2[[2]] # sink(fn.save) cat(&quot;BEGIN IONS\n&quot;) cat(paste(&quot;PEPMASS=&quot;, info[2,1], sep = &quot;&quot;)) cat(&quot;\n&quot;) cat(&quot;MSLEVEL=1\n&quot;) cat(&quot;CHARGE=1+\n&quot;) cat(c(info[2,1], 1)) cat(&quot;\n&quot;) cat(&quot;END IONS\n&quot;) cat(&quot;\n&quot;) cat(&quot;BEGIN IONS\n&quot;) cat(paste(&quot;PEPMASS=&quot;, info[2,1], sep = &quot;&quot;)) cat(&quot;\n&quot;) cat(&quot;MSLEVEL=2\n&quot;) cat(&quot;CHARGE=1+\n&quot;) for(idx in 1:nrow(spec))&#123; cat(paste(spec[idx, ], collapse = &apos; &apos;), &apos;\n&apos;, sep = &apos;&apos;) &#125; cat(&quot;END IONS\n&quot;) sink()&#125; 每个谱图单独输出为一个文件。 导入谱图 点击Batch import按钮（在软件左上角），然后选择要导入的mgf文件。所有导入谱图的信息都在左侧列出。 开始计算 点击Compute all按钮（在软件正上方），然后设置参数，参数都是比较常见的，比如polarity，加和物形式等。然后点击CSI：fingerID，并点击submit。开始计算。 导出结果 点击Export Results按钮。可以将鉴定结果导出为CSV格式。]]></content>
@@ -112,8 +127,8 @@
       <tags>
         <tag>Chinese</tag>
         <tag>Github</tag>
-        <tag>博客</tag>
         <tag>Hexo</tag>
+        <tag>博客</tag>
       </tags>
   </entry>
   <entry>

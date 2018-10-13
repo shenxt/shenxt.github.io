@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-07T07:04:44.000Z</updated>
+  <updated>2018-10-13T06:12:57.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Comments for MetFlow</title>
+    <link href="http://yoursite.com/2018/10/13/20181013-metflow-comment/"/>
+    <id>http://yoursite.com/2018/10/13/20181013-metflow-comment/</id>
+    <published>2018-10-13T06:10:44.000Z</published>
+    <updated>2018-10-13T06:12:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>If you have any question for <code>MetFlow</code>, please leave a message for us.</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;If you have any question for &lt;code&gt;MetFlow&lt;/code&gt;, please leave a message for us.&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="English" scheme="http://yoursite.com/categories/English/"/>
+    
+      <category term="Metabolomics" scheme="http://yoursite.com/categories/English/Metabolomics/"/>
+    
+      <category term="MetFlow" scheme="http://yoursite.com/categories/English/Metabolomics/MetFlow/"/>
+    
+    
+      <category term="Metabolomics" scheme="http://yoursite.com/tags/Metabolomics/"/>
+    
+      <category term="English" scheme="http://yoursite.com/tags/English/"/>
+    
+      <category term="MetFlow" scheme="http://yoursite.com/tags/MetFlow/"/>
+    
+  </entry>
   
   <entry>
     <title>使用CSI:FingerID 进行代谢物鉴定</title>
@@ -266,9 +300,9 @@
     
       <category term="Github" scheme="http://yoursite.com/tags/Github/"/>
     
-      <category term="博客" scheme="http://yoursite.com/tags/%E5%8D%9A%E5%AE%A2/"/>
-    
       <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+    
+      <category term="博客" scheme="http://yoursite.com/tags/%E5%8D%9A%E5%AE%A2/"/>
     
   </entry>
   
