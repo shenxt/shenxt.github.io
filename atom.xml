@@ -42,9 +42,9 @@
       <category term="MetFlow" scheme="http://yoursite.com/categories/English/Metabolomics/MetFlow/"/>
     
     
-      <category term="Metabolomics" scheme="http://yoursite.com/tags/Metabolomics/"/>
-    
       <category term="English" scheme="http://yoursite.com/tags/English/"/>
+    
+      <category term="Metabolomics" scheme="http://yoursite.com/tags/Metabolomics/"/>
     
       <category term="MetFlow" scheme="http://yoursite.com/tags/MetFlow/"/>
     
