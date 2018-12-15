@@ -115,6 +115,21 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[西雅图之行]]></title>
+    <url>%2F2018%2F04%2F13%2F2018-06-28-seatlle%2F</url>
+    <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
+      <categories>
+        <category>Chinese</category>
+        <category>博客</category>
+        <category>随记</category>
+      </categories>
+      <tags>
+        <tag>Chinese</tag>
+        <tag>博客</tag>
+        <tag>随记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo博客绑定域名]]></title>
     <url>%2F2018%2F04%2F13%2F2018-04-13-hexo-domain-name%2F</url>
     <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
@@ -129,21 +144,6 @@
         <tag>Github</tag>
         <tag>Hexo</tag>
         <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[西雅图之行]]></title>
-    <url>%2F2018%2F04%2F13%2F2018-06-28-seatlle%2F</url>
-    <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
-      <categories>
-        <category>Chinese</category>
-        <category>博客</category>
-        <category>随记</category>
-      </categories>
-      <tags>
-        <tag>Chinese</tag>
-        <tag>博客</tag>
-        <tag>随记</tag>
       </tags>
   </entry>
   <entry>
