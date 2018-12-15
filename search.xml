@@ -39,8 +39,8 @@
       </categories>
       <tags>
         <tag>Chinese</tag>
-        <tag>组学基础</tag>
         <tag>R语言</tag>
+        <tag>组学基础</tag>
       </tags>
   </entry>
   <entry>
@@ -54,8 +54,8 @@
       </categories>
       <tags>
         <tag>Chinese</tag>
-        <tag>组学基础</tag>
         <tag>R语言</tag>
+        <tag>组学基础</tag>
       </tags>
   </entry>
   <entry>
@@ -69,8 +69,8 @@
       </categories>
       <tags>
         <tag>Chinese</tag>
-        <tag>组学基础</tag>
         <tag>R语言</tag>
+        <tag>组学基础</tag>
       </tags>
   </entry>
   <entry>
@@ -84,8 +84,8 @@
       </categories>
       <tags>
         <tag>Chinese</tag>
-        <tag>组学基础</tag>
         <tag>R语言</tag>
+        <tag>组学基础</tag>
       </tags>
   </entry>
   <entry>
@@ -115,23 +115,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hexo博客绑定域名]]></title>
-    <url>%2F2018%2F04%2F13%2F2018-04-13-hexo-domain-name%2F</url>
-    <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
-      <categories>
-        <category>Chinese</category>
-        <category>R</category>
-        <category>Hexo</category>
-        <category>博客</category>
-      </categories>
-      <tags>
-        <tag>Chinese</tag>
-        <tag>Github</tag>
-        <tag>Hexo</tag>
-        <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[西雅图之行]]></title>
     <url>%2F2018%2F04%2F13%2F2018-06-28-seatlle%2F</url>
     <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
@@ -147,6 +130,23 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Hexo博客绑定域名]]></title>
+    <url>%2F2018%2F04%2F13%2F2018-04-13-hexo-domain-name%2F</url>
+    <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
+      <categories>
+        <category>Chinese</category>
+        <category>R</category>
+        <category>Hexo</category>
+        <category>博客</category>
+      </categories>
+      <tags>
+        <tag>Chinese</tag>
+        <tag>Github</tag>
+        <tag>博客</tag>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[偶然翻到的文章]]></title>
     <url>%2F2017%2F10%2F09%2F2017-10-09.poetry%2F</url>
     <content type="text"><![CDATA[整理笔记的发现别人都说翻看以前的空间觉得自己以前写的东西宛若智障，这两天在翻看以前的笔记，也有这种感觉，因此，该删的删，直到看到了这篇文章，是在15年6月26号写的，现在想起来，虽然只有两年多的时间，但是物是人非，恍如隔世啊。这篇正好其实写的还不错，自己以前也是一个文艺青年，所以不舍得删掉，放在博客，充实一下内容。 谁让我遇到了你谁让我遇到了你，在春末夏初，当柳枝恢复了颜色，在花落蝉鸣，那姗姗来迟的雨季。生命一直如此平淡，我也从未期望奇迹，我过着我自己的生活，人生对我来说也许就是密密麻麻的正楷书写的履历，波澜不惊，平淡无奇。时间像流水般流逝，流逝而变化的是我周围的环境，呼吸以及空气，沉寂的是我自己，看似乐观的外表，其实内心的孤寂，没有人会在意我的在意，直到我遇到了你，在那个我也记不清的独特而不浪漫的某个时刻的某个过去。从此我的脑海里便有了挥散不去的，让我回想的你的笑容，你的身影，以及，你并不夸张而又足够吸引我的的气息。我对你的爱，不知怎么形容，也许你会觉得俗气：不变专一。此情难抑，如荷塘蜻蜓戏水，随波而散的青色涟漪，像我手中的铅笔，涂画在围城上的白色封皮。不知你是否还记得，我总是小心翼翼，而你总是不睬不理，当然我知道的，这不是你的心意，正像你说的，我没有飞蛾的勇气，也不像叶芝那样，完全的放开自己。你知道我的心里，容不下别人，此爱唯你。我知道随着岁月的流去，你会看到如今挂在我口上的，也的的确确刻在我心中的那句：不离不弃。直到有一天，当我老了，牙齿脱落，四肢无力，我也会坚守着对你的爱，用尽最后一丝力气，我甚至可以想象有一天，当我魂归天际，藏在我心中的，除了此生我从未改变的对父母家人的爱，便是独一无二的，在未来的昨天我遇到的你谁让我遇到了你，窗外的秋雨拍打着五颜六色的雨伞，也像一个声音的到来打断了我的思绪，或许这就是命中注定，或许这就是天意，我不知道我为什么爱你，就像我不知道我为什么不爱你。感觉就是这么奇妙的难以，难以用话语，难以用铅笔，勾勒出色彩斑斓的奇妙的爱的境地。谁让我遇到了你是缘分，抑或是机遇，缘分是什么？是你我虽然并未见到过的上帝，他也许偶然在做高数题，而他给出的答案就是随机，随机抽取，在未来的日子里我们需要互相珍惜，珍惜这段来之不易的，上帝赋予我们的非同一般的意义。]]></content>
@@ -155,8 +155,8 @@
         <category>Life</category>
       </categories>
       <tags>
-        <tag>Chinese</tag>
         <tag>life</tag>
+        <tag>Chinese</tag>
       </tags>
   </entry>
   <entry>
@@ -181,8 +181,8 @@
         <category>Life</category>
       </categories>
       <tags>
-        <tag>Chinese</tag>
         <tag>life</tag>
+        <tag>Chinese</tag>
       </tags>
   </entry>
   <entry>
