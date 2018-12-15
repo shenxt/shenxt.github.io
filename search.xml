@@ -39,8 +39,8 @@
       </categories>
       <tags>
         <tag>Chinese</tag>
-        <tag>R语言</tag>
         <tag>组学基础</tag>
+        <tag>R语言</tag>
       </tags>
   </entry>
   <entry>
@@ -54,23 +54,8 @@
       </categories>
       <tags>
         <tag>Chinese</tag>
-        <tag>R语言</tag>
         <tag>组学基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Rstudio的使用]]></title>
-    <url>%2F2018%2F06%2F03%2FR-study1%2F</url>
-    <content type="text"><![CDATA[为什么要做标准化基于质谱的代谢组学数据由于各种因素，比如质谱信号漂移，色谱柱污染，等等，会导致采集的数据有很多的系统误差存在，这些系统误差如果不去除掉，会严重影响数据质量，并进而影响从数据中挖掘有效信息的能力。比如下面图就分别显示了批次内（intra-batch）以及批次间（inter-batch）的系统误差，可以看到系统误差还是非常严重和明显的。因此对于质谱代谢组学数据来说，数据的标准化（data normalization）是必不可少的一步。 代谢组学数据标准化的方法代谢组学数据进行标准化的方法大致可以分为三种。 内标标准化：在样品中加入内标，然后对所有的峰都使用该内标进行校正。但是这种方法使用一个或者几个内标对所有的峰进行标准哈，并不可靠，因此用的不多。 基于样品本身：比如使用样品中所有峰的平均值、中位值或者总和对所有峰进行校正。另外还有比如PQN等等方法。 第三种在代谢组学数据中最为常见的标准化方法是基于QC（质量控制）样本的数据标准化。简单来说，就是将所要采集的所有样本取等量混合起来，组成QC样本，然后在采集数据的时候，每隔一定数量的样品，插入一针QC样本。因为QC样本都是一样的，因此可以用QC样本来模拟数据采集过程中信号的变化。得到数据之后，对每一个峰（peak），都将QC作为训练集，然后建立预测模型，预测信号变化，从而对样品中的信号进行校正。 基于QC和支持向量机的数据标准化R包：MetNormalizer我再读博期间的第一个项目就是建立一个基于QC样品的数据标准化方法，我们最后选择了一个非常有用并且常用的机器学习方法，SVR（支持向量机回归），最后的方法我们做成了一个R包，MetNormalizer。具体的内容可以参考我的文章，Normalization and Integration of Large-Scale Metabolomics Data Using Support Vector Regression。下面就用MetNormalizer自带的示例数据示范如何使用。 安装MetNormalizerMetNormalizer的源代码托管在github上，可以直接从github安装。在R控制台中输入下列代码，进行安装。 1234if(!require(devtools))&#123;install.packages(&quot;devtools&quot;)&#125;devtools::install_github(&quot;jaspershen/MetNormalizer&quot;) 准备数据以MetNormalizer自带数据为例。 12345678#首先加载MetNormalizer包library(MetNormalizer)#设置工作路径setwd(&quot;F:/test&quot;)#根据自己实际情况设置路径data(DemoData, package = &quot;MetNormalizer&quot;)#输出数据为csv格式write.csv(data, &quot;data.csv&quot;, row.names = FALSE)write.csv(sample.info, &quot;sample.info.csv&quot;, row.names = FALSE) 其中data为MS1 peak table，可以来源于任何的处理软件，如XCMS，MS-DIAL等。注意前三列必须为name(峰的名字)，m/z和RT。然后其他列为样本的intensity。 sample.info为样品信息，用来提供样品的信息。一共三列，第一列sample.name(样品名字)，然后依次是injection.order和class。class用来指明样品的种类，”Subject”说明该样品为生物样品，注意S要大写；QC是指样品为QC样品。 开始处理数据然后开始运行函数。 1234MetNormalizer(minfrac.qc = 0, minfrac.sample = 0, threads = 3, peakplot = TRUE) 处理结果 最后所有的处理结果都存放在svr normalization result文件夹中。]]></content>
-      <categories>
-        <category>Chinese</category>
-        <category>R语言</category>
-        <category>组学基础</category>
-      </categories>
-      <tags>
-        <tag>Chinese</tag>
         <tag>R语言</tag>
-        <tag>组学基础</tag>
       </tags>
   </entry>
   <entry>
@@ -84,8 +69,23 @@
       </categories>
       <tags>
         <tag>Chinese</tag>
-        <tag>R语言</tag>
         <tag>组学基础</tag>
+        <tag>R语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Rstudio的使用]]></title>
+    <url>%2F2018%2F06%2F03%2FR-study1%2F</url>
+    <content type="text"><![CDATA[为什么要做标准化基于质谱的代谢组学数据由于各种因素，比如质谱信号漂移，色谱柱污染，等等，会导致采集的数据有很多的系统误差存在，这些系统误差如果不去除掉，会严重影响数据质量，并进而影响从数据中挖掘有效信息的能力。比如下面图就分别显示了批次内（intra-batch）以及批次间（inter-batch）的系统误差，可以看到系统误差还是非常严重和明显的。因此对于质谱代谢组学数据来说，数据的标准化（data normalization）是必不可少的一步。 代谢组学数据标准化的方法代谢组学数据进行标准化的方法大致可以分为三种。 内标标准化：在样品中加入内标，然后对所有的峰都使用该内标进行校正。但是这种方法使用一个或者几个内标对所有的峰进行标准哈，并不可靠，因此用的不多。 基于样品本身：比如使用样品中所有峰的平均值、中位值或者总和对所有峰进行校正。另外还有比如PQN等等方法。 第三种在代谢组学数据中最为常见的标准化方法是基于QC（质量控制）样本的数据标准化。简单来说，就是将所要采集的所有样本取等量混合起来，组成QC样本，然后在采集数据的时候，每隔一定数量的样品，插入一针QC样本。因为QC样本都是一样的，因此可以用QC样本来模拟数据采集过程中信号的变化。得到数据之后，对每一个峰（peak），都将QC作为训练集，然后建立预测模型，预测信号变化，从而对样品中的信号进行校正。 基于QC和支持向量机的数据标准化R包：MetNormalizer我再读博期间的第一个项目就是建立一个基于QC样品的数据标准化方法，我们最后选择了一个非常有用并且常用的机器学习方法，SVR（支持向量机回归），最后的方法我们做成了一个R包，MetNormalizer。具体的内容可以参考我的文章，Normalization and Integration of Large-Scale Metabolomics Data Using Support Vector Regression。下面就用MetNormalizer自带的示例数据示范如何使用。 安装MetNormalizerMetNormalizer的源代码托管在github上，可以直接从github安装。在R控制台中输入下列代码，进行安装。 1234if(!require(devtools))&#123;install.packages(&quot;devtools&quot;)&#125;devtools::install_github(&quot;jaspershen/MetNormalizer&quot;) 准备数据以MetNormalizer自带数据为例。 12345678#首先加载MetNormalizer包library(MetNormalizer)#设置工作路径setwd(&quot;F:/test&quot;)#根据自己实际情况设置路径data(DemoData, package = &quot;MetNormalizer&quot;)#输出数据为csv格式write.csv(data, &quot;data.csv&quot;, row.names = FALSE)write.csv(sample.info, &quot;sample.info.csv&quot;, row.names = FALSE) 其中data为MS1 peak table，可以来源于任何的处理软件，如XCMS，MS-DIAL等。注意前三列必须为name(峰的名字)，m/z和RT。然后其他列为样本的intensity。 sample.info为样品信息，用来提供样品的信息。一共三列，第一列sample.name(样品名字)，然后依次是injection.order和class。class用来指明样品的种类，”Subject”说明该样品为生物样品，注意S要大写；QC是指样品为QC样品。 开始处理数据然后开始运行函数。 1234MetNormalizer(minfrac.qc = 0, minfrac.sample = 0, threads = 3, peakplot = TRUE) 处理结果 最后所有的处理结果都存放在svr normalization result文件夹中。]]></content>
+      <categories>
+        <category>Chinese</category>
+        <category>R语言</category>
+        <category>组学基础</category>
+      </categories>
+      <tags>
+        <tag>Chinese</tag>
+        <tag>组学基础</tag>
+        <tag>R语言</tag>
       </tags>
   </entry>
   <entry>
@@ -115,6 +115,23 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Hexo博客绑定域名]]></title>
+    <url>%2F2018%2F04%2F13%2F2018-04-13-hexo-domain-name%2F</url>
+    <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
+      <categories>
+        <category>Chinese</category>
+        <category>R</category>
+        <category>Hexo</category>
+        <category>博客</category>
+      </categories>
+      <tags>
+        <tag>Chinese</tag>
+        <tag>Github</tag>
+        <tag>Hexo</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[西雅图之行]]></title>
     <url>%2F2018%2F04%2F13%2F2018-06-28-seatlle%2F</url>
     <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
@@ -130,20 +147,16 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hexo博客绑定域名]]></title>
-    <url>%2F2018%2F04%2F13%2F2018-04-13-hexo-domain-name%2F</url>
-    <content type="text"><![CDATA[如何将Hexo博客绑定自己的域名？构建基于Hexo和Github之后的博客之后，默认地址为example@github.io，可以将该博客绑定为自己的域名。比如我的博客地址域名为shenxt.me。 购买域名我是在godaddy上购买的，一般博客的域名可以使用.me结尾的域名，这个在个人博客上用的非常多。 域名设置购买域名之后，需要对该域名进行设置。在godaddy官网上，点击自己已经购买的域名，如下图所示点击管理DNS。 然后点击添加，分别添加两个记录。第一个记录 类型为A，名称为@，值为你该博客的IP地址，查询博客地址的IP地址，可以使用该网站，直接输入博客地址即可，如shenxt.github.io。 类型为CNAME，名称为www，值为博客地址，如shenxt.guthub.io。 然后保存即可。 博客设置在博客本地文件夹source下，新建一个空白文件，CNAME，没有后缀名，然后使用文本打开，输入自己的域名，比如shenxt.me，注意前面不需要任何的前缀。然后关闭。打开终端，像发布新的博客一样进行操作。123hexo chexo ghexo d 测试一般需要稍等一会，然后在浏览器中输入自己的域名，即可打开自己的博客。]]></content>
+    <title><![CDATA[偶然翻到的文章]]></title>
+    <url>%2F2017%2F10%2F09%2F2017-10-09.poetry%2F</url>
+    <content type="text"><![CDATA[整理笔记的发现别人都说翻看以前的空间觉得自己以前写的东西宛若智障，这两天在翻看以前的笔记，也有这种感觉，因此，该删的删，直到看到了这篇文章，是在15年6月26号写的，现在想起来，虽然只有两年多的时间，但是物是人非，恍如隔世啊。这篇正好其实写的还不错，自己以前也是一个文艺青年，所以不舍得删掉，放在博客，充实一下内容。 谁让我遇到了你谁让我遇到了你，在春末夏初，当柳枝恢复了颜色，在花落蝉鸣，那姗姗来迟的雨季。生命一直如此平淡，我也从未期望奇迹，我过着我自己的生活，人生对我来说也许就是密密麻麻的正楷书写的履历，波澜不惊，平淡无奇。时间像流水般流逝，流逝而变化的是我周围的环境，呼吸以及空气，沉寂的是我自己，看似乐观的外表，其实内心的孤寂，没有人会在意我的在意，直到我遇到了你，在那个我也记不清的独特而不浪漫的某个时刻的某个过去。从此我的脑海里便有了挥散不去的，让我回想的你的笑容，你的身影，以及，你并不夸张而又足够吸引我的的气息。我对你的爱，不知怎么形容，也许你会觉得俗气：不变专一。此情难抑，如荷塘蜻蜓戏水，随波而散的青色涟漪，像我手中的铅笔，涂画在围城上的白色封皮。不知你是否还记得，我总是小心翼翼，而你总是不睬不理，当然我知道的，这不是你的心意，正像你说的，我没有飞蛾的勇气，也不像叶芝那样，完全的放开自己。你知道我的心里，容不下别人，此爱唯你。我知道随着岁月的流去，你会看到如今挂在我口上的，也的的确确刻在我心中的那句：不离不弃。直到有一天，当我老了，牙齿脱落，四肢无力，我也会坚守着对你的爱，用尽最后一丝力气，我甚至可以想象有一天，当我魂归天际，藏在我心中的，除了此生我从未改变的对父母家人的爱，便是独一无二的，在未来的昨天我遇到的你谁让我遇到了你，窗外的秋雨拍打着五颜六色的雨伞，也像一个声音的到来打断了我的思绪，或许这就是命中注定，或许这就是天意，我不知道我为什么爱你，就像我不知道我为什么不爱你。感觉就是这么奇妙的难以，难以用话语，难以用铅笔，勾勒出色彩斑斓的奇妙的爱的境地。谁让我遇到了你是缘分，抑或是机遇，缘分是什么？是你我虽然并未见到过的上帝，他也许偶然在做高数题，而他给出的答案就是随机，随机抽取，在未来的日子里我们需要互相珍惜，珍惜这段来之不易的，上帝赋予我们的非同一般的意义。]]></content>
       <categories>
         <category>Chinese</category>
-        <category>R</category>
-        <category>Hexo</category>
-        <category>博客</category>
+        <category>Life</category>
       </categories>
       <tags>
+        <tag>life</tag>
         <tag>Chinese</tag>
-        <tag>Github</tag>
-        <tag>博客</tag>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -160,19 +173,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[偶然翻到的文章]]></title>
-    <url>%2F2017%2F10%2F09%2F2017-10-09.poetry%2F</url>
-    <content type="text"><![CDATA[整理笔记的发现别人都说翻看以前的空间觉得自己以前写的东西宛若智障，这两天在翻看以前的笔记，也有这种感觉，因此，该删的删，直到看到了这篇文章，是在15年6月26号写的，现在想起来，虽然只有两年多的时间，但是物是人非，恍如隔世啊。这篇正好其实写的还不错，自己以前也是一个文艺青年，所以不舍得删掉，放在博客，充实一下内容。 谁让我遇到了你谁让我遇到了你，在春末夏初，当柳枝恢复了颜色，在花落蝉鸣，那姗姗来迟的雨季。生命一直如此平淡，我也从未期望奇迹，我过着我自己的生活，人生对我来说也许就是密密麻麻的正楷书写的履历，波澜不惊，平淡无奇。时间像流水般流逝，流逝而变化的是我周围的环境，呼吸以及空气，沉寂的是我自己，看似乐观的外表，其实内心的孤寂，没有人会在意我的在意，直到我遇到了你，在那个我也记不清的独特而不浪漫的某个时刻的某个过去。从此我的脑海里便有了挥散不去的，让我回想的你的笑容，你的身影，以及，你并不夸张而又足够吸引我的的气息。我对你的爱，不知怎么形容，也许你会觉得俗气：不变专一。此情难抑，如荷塘蜻蜓戏水，随波而散的青色涟漪，像我手中的铅笔，涂画在围城上的白色封皮。不知你是否还记得，我总是小心翼翼，而你总是不睬不理，当然我知道的，这不是你的心意，正像你说的，我没有飞蛾的勇气，也不像叶芝那样，完全的放开自己。你知道我的心里，容不下别人，此爱唯你。我知道随着岁月的流去，你会看到如今挂在我口上的，也的的确确刻在我心中的那句：不离不弃。直到有一天，当我老了，牙齿脱落，四肢无力，我也会坚守着对你的爱，用尽最后一丝力气，我甚至可以想象有一天，当我魂归天际，藏在我心中的，除了此生我从未改变的对父母家人的爱，便是独一无二的，在未来的昨天我遇到的你谁让我遇到了你，窗外的秋雨拍打着五颜六色的雨伞，也像一个声音的到来打断了我的思绪，或许这就是命中注定，或许这就是天意，我不知道我为什么爱你，就像我不知道我为什么不爱你。感觉就是这么奇妙的难以，难以用话语，难以用铅笔，勾勒出色彩斑斓的奇妙的爱的境地。谁让我遇到了你是缘分，抑或是机遇，缘分是什么？是你我虽然并未见到过的上帝，他也许偶然在做高数题，而他给出的答案就是随机，随机抽取，在未来的日子里我们需要互相珍惜，珍惜这段来之不易的，上帝赋予我们的非同一般的意义。]]></content>
-      <categories>
-        <category>Chinese</category>
-        <category>Life</category>
-      </categories>
-      <tags>
-        <tag>Chinese</tag>
-        <tag>life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[鄂尔多斯之旅]]></title>
     <url>%2F2017%2F10%2F04%2F2017-10-03.in.erdos%2F</url>
     <content type="text"><![CDATA[重返内蒙虽然在呼和浩特待了四年的时间，度过了自己的大学生活，但是对内蒙古和呼市的了解却非常的匮乏，也仅仅限于内蒙古大学周围的那片区域。毕业已经四年多了，博士都快毕业了，但是自从毕业之后还没有到过内蒙来。终于趁着这个十一，回到了内蒙，当刚下飞机的那一刻，看到汉蒙双文的招牌，思维一下子就回到了在内大读书的时候。 第一次到鄂尔多斯第一次看到传说中的鄂尔多斯，第一次看到准格尔旗，确实不愧是中国百强县，显得很繁华，比地处中原腹地的卫辉好多了。卫辉曾经的辉煌也只在四五百年前了。如今更像一个破败的小城，找不到任何发展的生机和希望。不知道未来委会人民能否找到适合自己的发展方向和产业。卫辉当然也有很多优势，比如交通，地理位置等等。 一些感悟大学期间就知道内蒙人民喜欢喝酒，也确实酒量很好。但是因为当时在上学，喝酒的机会不是很多，但是这次来到鄂尔多斯之后，很多场合都需要喝酒，才发现大家的热情喝酒量真的是非常的好，另外就是对自己也有一个新的认识，我也是可以喝酒的，原来我对白酒真的是低酒不沾，而且觉得白酒除了辣之外，真的是没有任何的特点，没有任何好喝的一点，但是自从上次喝了半瓶白酒之后，醉的一塌糊涂，到现在为止，已经将近一年半的时间了，没有再喝过白酒，不过这次，感觉也还好，自己也还挺能喝，喝了不少，没有醉，对自己的酒量有了新的认识，只是毕竟酒不是什么好东西，以后，除了在一些必须的场合，其他时候，还是不要喝酒了。和内蒙的朋友们在一起真的很高兴，大家的热情也感染了我，希望以后每年都有机会回到这来，和大家里聊天，喝酒。]]></content>
@@ -181,8 +181,8 @@
         <category>Life</category>
       </categories>
       <tags>
-        <tag>Chinese</tag>
         <tag>life</tag>
+        <tag>Chinese</tag>
       </tags>
   </entry>
   <entry>
