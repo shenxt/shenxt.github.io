@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>使用R语言下载KEGG数据库 · Shen Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /favicon.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Xiaotao Shen, Ph.D.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">使用R语言下载KEGG数据库</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Xiaotao Shen, Ph.D.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(http://shenxt.me/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            使用R语言下载KEGG数据库
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Chinese">Chinese</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "组学基础">组学基础</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "R语言">R语言</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2019/01/04</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>最近在群里发现大家经常交流如何下载各种数据库，确实，数据库对做各种组学来说，确实是非常重要的，但是很多数据库的下载做的并不是那么友好。KEGG是我们平时接触最多，以及最受大家欢迎的数据库之一，因此，这次我把一个非常好用的R包，KEGGREST下载KEGG数据库的用法进行了总结。</p>
+<h4 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h4><p>KEGGREST包是一个bioconductor包，是由bioconductor的核心小组成员之一，Dan Tenenbaum写的，主要就是用来下载KEGG数据库。链接如下，<a href="https://bioconductor.org/packages/release/bioc/html/KEGGREST.html。" target="_blank" rel="external">https://bioconductor.org/packages/release/bioc/html/KEGGREST.html。</a></p>
+<h4 id="安装KEGGREST"><a href="#安装KEGGREST" class="headerlink" title="安装KEGGREST"></a>安装KEGGREST</h4><p>可以直接使用Bioconductor提供的下载方式进行下载，在R控制面板中输入下列代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## try http:// if https:// URLs are not supported</div><div class="line">source(&quot;https://bioconductor.org/biocLite.R&quot;)</div><div class="line">biocLite(&quot;KEGGREST&quot;)</div></pre></td></tr></table></figure>
+<p>如果出错，不能安装，可以考虑把https换为http，输入下列代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## try http:// if https:// URLs are not supported</div><div class="line">source(&quot;http://bioconductor.org/biocLite.R&quot;)</div><div class="line">biocLite(&quot;KEGGREST&quot;)</div></pre></td></tr></table></figure>
+<p>安装成功之后，就可以使用了。</p>
+<h4 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h4><p>成功安装之后，这个包有自己的说明文档，输入下列代码可以打开说明文档。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">browseVignettes(&quot;KEGGREST&quot;)</div></pre></td></tr></table></figure>
+<p>文档如下：</p>
+<p><img src="http://note.youdao.com/yws/res/22270/A8AD689E39964E6ABC1247C8B000B46F" alt="image"></p>
+<p>输入下列代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">library(KEGGREST)</div><div class="line">listDatabases()</div></pre></td></tr></table></figure>
+<p>可以看到该包可以下载的数据类型：</p>
+<p><img src="http://note.youdao.com/yws/res/22276/25A75A1CA92A41188D6A370BCB756EC4" alt="image"></p>
+<p>可以看到KEGG中几乎所有数据库都可以下载下来，我们以我们最为常用的pathway和compound数据为例，来说明如何使用KEGGREST。</p>
+<h4 id="下载pathway信息"><a href="#下载pathway信息" class="headerlink" title="下载pathway信息"></a>下载pathway信息</h4><p>我们知道pathway信息有不同的物种，因此我们首先需要弄清楚有哪些物种，可以使用以下代码获得包含哪些物种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">org &lt;- keggList(&quot;organism&quot;)</div><div class="line">head(org)</div></pre></td></tr></table></figure>
+<p><img src="http://note.youdao.com/yws/res/22289/37E2A56668464E4DB7253300397F90F9" alt="image"></p>
+<p>org是一个matrix，其中第三列是各个物种的名字，第二列是各个物种的简称。</p>
+<p>下面我们就来获取人类所有的pathway。</p>
+<p>可以看到人类的简称是hsa。下面再获得人类的所有通路的代码简称：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hsa.pathway &lt;- keggLink(&quot;pathway&quot;, &quot;hsa&quot;)</div><div class="line">hsa.pathway &lt;- unique(hsa.pathway)</div></pre></td></tr></table></figure>
+<p><img src="http://note.youdao.com/yws/res/22294/152B7B22AD96490BBC5B1B6AB85179A1" alt="image"></p>
+<p>hsa.pahtway就是所有人类pathway的代码简称。</p>
+<p>然后使用keggGet函数就可以将每个pathway的信息全部爬去下来，比如第一个pathway是：path:hsa00010”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hsa.pathway[1]</div><div class="line">hsa00010 &lt;- keggGet(dbentries = hsa.pathway[1])[[1]]</div></pre></td></tr></table></figure>
+<p>hsa00010是一个list格式的数据，它的内容分别是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">names(hsa00010)</div></pre></td></tr></table></figure>
+<p><img src="http://note.youdao.com/yws/res/22312/280787566FE4413493DBB2D6DDDDF0AD" alt="image"></p>
+<p>与KEGG网页版的数据是一一对应的。</p>
+<p><img src="http://note.youdao.com/yws/res/22316/62B015FA37234929AAA6BD3C2ABC3B3A" alt="image"></p>
+<p>如果想要得到人类所有KEGG pahtway的信息，则可以使用下列代码得到，以为该函数每次最多只接受10个pathway的下载请求（推测是为了防止KEGG的下载崩溃），因此更为便捷的办法是，循环获得所有的pathway信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">hsa.pathway.database &lt;- vector(mode = &quot;list&quot;, length = length(hsa.pathway))</div><div class="line"></div><div class="line">for(i in 1:length(hsa.pathway))&#123;</div><div class="line">  cat(i, &quot; &quot;)</div><div class="line">  hsa.pathway.database[[i]] &lt;- keggGet(dbentries = hsa.pathway[i])</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后可以将得到的信息保存下来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">save(hsa.pathway.database, file = &quot;hsa.pathway.database&quot;)</div></pre></td></tr></table></figure>
+<h4 id="下载compound信息"><a href="#下载compound信息" class="headerlink" title="下载compound信息"></a>下载compound信息</h4><p>首先需要获得所有代谢物的ID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">compound.id &lt;- keggList(&quot;compound&quot;)</div><div class="line">compound.id &lt;- names(compound.id)</div></pre></td></tr></table></figure>
+<p>然后仍然通过keggGet函数获得所有代谢物的详细信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">kegg.compound.database &lt;- vector(mode = &quot;list&quot;, length = length(compound.id))</div><div class="line"></div><div class="line">for(i in 1:length(compound.id))&#123;</div><div class="line">  cat(i, &quot; &quot;)</div><div class="line">  kegg.compound.database[[i]] &lt;- keggGet(dbentries = compound.id[i])</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>得到的kegg.compound.database也是一个list数据，如果想要将其转换为datafrmae格式，然后输出位csv或者xlsx格式，自己进行转换即可。</p>
+<h4 id="写在后面的话"><a href="#写在后面的话" class="headerlink" title="写在后面的话"></a>写在后面的话</h4><p>这个包用来下载KEGG数据库真的是非常方便，以前用过，后来忘掉了，最近又找出来，为了防止自己忘掉，所以写了一篇文章来记录一下，其他的功能后面会再研究记录。</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/01/04/20181013-metflow-comment/" title= Comments for MetFlow >
+                    <div class="nextTitle">Comments for MetFlow</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/01/04/20180707-CSI-FingerID/" title= 使用CSI:FingerID 进行代谢物鉴定 >
+                    <div class="prevTitle">使用CSI:FingerID 进行代谢物鉴定</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMDc2Ny83MzE5>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:shenxt1990@163.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/jaspershen" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="http://shenxt.me/image/wechat_QR.jpg" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="http://shenxt.me/image/qq_QR.jpg" />
+                </span>
+            
+        
+    
+        
+            
+                <a href="http://weibo.com/u/2717397881?wvr=5&c=spr_web_sq_baidub_weibo_t001&sudaref=www.baidu.com" class="iconfont-archer weibo" target="_blank" title=weibo></a>
+            
+        
+    
+        
+            
+                <a href="https://www.zhihu.com/people/shen-zu-tao-73/activities" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+            
+                <a href="https://www.facebook.com/xiaotao.shen.3" class="iconfont-archer facebook" target="_blank" title=facebook></a>
+            
+        
+    
+        
+            
+                <a href="https://twitter.com/" class="iconfont-archer twitter" target="_blank" title=twitter></a>
+            
+        
+    
+        
+            
+                <a href="https://stackoverflow.com/users/7579484/jasper-shen" class="iconfont-archer stack-overflow" target="_blank" title=stack-overflow></a>
+            
+        
+    
+        
+            
+                <a href="https://www.linkedin.com/in/xiaotao-shen-b7544b106/" class="iconfont-archer linkedin" target="_blank" title=linkedin></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info"><a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank"></a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#简单介绍"><span class="toc-number">1.</span> <span class="toc-text">简单介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装KEGGREST"><span class="toc-number">2.</span> <span class="toc-text">安装KEGGREST</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#概览"><span class="toc-number">3.</span> <span class="toc-text">概览</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#下载pathway信息"><span class="toc-number">4.</span> <span class="toc-text">下载pathway信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#下载compound信息"><span class="toc-number">5.</span> <span class="toc-text">下载compound信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写在后面的话"><span class="toc-number">6.</span> <span class="toc-text">写在后面的话</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 20 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/20181013-metflow-comment/" >Comments for MetFlow</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2019/01/04/2018-04-13-hexo-domain-name/2018-04-13-massbank-database-get/" >爬取MassBank数据</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/20180827-R-KEGG/" >使用R语言下载KEGG数据库</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2016-11-25-first-blog/" >我的第一篇博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/R-study1/" >Rstudio的使用</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2016-11-25-metcleaning/" >MetCleaning instruction</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/R-study3/" >数据的读取和输出</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2017-10-03.in.erdos/" >鄂尔多斯之旅</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/metabolomics-data-normalization/" >代谢组数据标准化包MetNormalizer介绍</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2017-10-11.pipline.function/" >R管道函数</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2018-06-28-seatlle/" >西雅图之行</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2017-09-09-metdna-blog/" >MetDNA instruction</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2012-02-22-github-pages/" >使用Github Pages建独立博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/R-study2/" >R语言入门</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2016-12-03-keggandhmdb/" >使用R爬取HMDB和KEGG数据库</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/20180707-CSI-FingerID/" >使用CSI:FingerID 进行代谢物鉴定</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2018-04-13-hexo-domain-name/" >Hexo博客绑定域名</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2017-10-09.poetry/" >偶然翻到的文章</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2017-09-09-github-blog/" >使用Github和Hexo建独立博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/04/2017-02-12-firstblog2017/" >2017年的第一篇博客</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="life"><span class="iconfont-archer">&#xe606;</span>life</span>
+    
+        <span class="sidebar-tag-name" data-tags="Chinese"><span class="iconfont-archer">&#xe606;</span>Chinese</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Blog"><span class="iconfont-archer">&#xe606;</span>Blog</span>
+    
+        <span class="sidebar-tag-name" data-tags="R"><span class="iconfont-archer">&#xe606;</span>R</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="博客"><span class="iconfont-archer">&#xe606;</span>博客</span>
+    
+        <span class="sidebar-tag-name" data-tags="随记"><span class="iconfont-archer">&#xe606;</span>随记</span>
+    
+        <span class="sidebar-tag-name" data-tags="组学基础"><span class="iconfont-archer">&#xe606;</span>组学基础</span>
+    
+        <span class="sidebar-tag-name" data-tags="English"><span class="iconfont-archer">&#xe606;</span>English</span>
+    
+        <span class="sidebar-tag-name" data-tags="Metabolomics"><span class="iconfont-archer">&#xe606;</span>Metabolomics</span>
+    
+        <span class="sidebar-tag-name" data-tags="MetFlow"><span class="iconfont-archer">&#xe606;</span>MetFlow</span>
+    
+        <span class="sidebar-tag-name" data-tags="R语言"><span class="iconfont-archer">&#xe606;</span>R语言</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="github-technology"><span class="iconfont-archer">&#xe60a;</span>github-technology</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese"><span class="iconfont-archer">&#xe60a;</span>Chinese</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/博客"><span class="iconfont-archer">&#xe60a;</span>Chinese/博客</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/Life"><span class="iconfont-archer">&#xe60a;</span>Chinese/Life</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/组学基础"><span class="iconfont-archer">&#xe60a;</span>Chinese/组学基础</span>
+    
+        <span class="sidebar-category-name" data-categories="English"><span class="iconfont-archer">&#xe60a;</span>English</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R语言"><span class="iconfont-archer">&#xe60a;</span>Chinese/R语言</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R"><span class="iconfont-archer">&#xe60a;</span>Chinese/R</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/Metabolomics"><span class="iconfont-archer">&#xe60a;</span>Chinese/Metabolomics</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/博客/随记"><span class="iconfont-archer">&#xe60a;</span>Chinese/博客/随记</span>
+    
+        <span class="sidebar-category-name" data-categories="English/Metabolomics"><span class="iconfont-archer">&#xe60a;</span>English/Metabolomics</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R语言/组学基础"><span class="iconfont-archer">&#xe60a;</span>Chinese/R语言/组学基础</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R/Hexo"><span class="iconfont-archer">&#xe60a;</span>Chinese/R/Hexo</span>
+    
+        <span class="sidebar-category-name" data-categories="English/Metabolomics/MetFlow"><span class="iconfont-archer">&#xe60a;</span>English/Metabolomics/MetFlow</span>
+    
+        <span class="sidebar-category-name" data-categories="Chinese/R/Hexo/博客"><span class="iconfont-archer">&#xe60a;</span>Chinese/R/Hexo/博客</span>
+    
+        <span class="sidebar-category-name" data-categories="R-software"><span class="iconfont-archer">&#xe60a;</span>R-software</span>
+    
+        <span class="sidebar-category-name" data-categories="R-software/Metabolomics"><span class="iconfont-archer">&#xe60a;</span>R-software/Metabolomics</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Japser Shen'
+    }
+</script>
+
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>
+    
+    </body>
+
+    
+
+</html>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){
+    i["DaoVoiceObject"]=r;
+    i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
+    a=s.createElement(o),m=s.getElementsByTagName(o)[0];
+    a.async=1;a.src=g;a.charset="utf-8";
+    m.parentNode.insertBefore(a,m)}
+  )(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/" + "042960b5" + ".js","daovoice")
+</script>
+
+<script>
+  daovoice('init', {
+    app_id: "042960b5",
+    user_id: "",
+    email: "",
+    name: "",
+    signed_up: 
+  });
+  daovoice('update');
+</script>
+
+<script>
+  daovoice('init', {
+    app_id: ""
+  });
+  daovoice('update');
+</script>
+
